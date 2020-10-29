@@ -1,0 +1,27 @@
+{
+  "name": "wepage",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev:admin": "yarn workspace wepage-admin serve",
+    "dev:web": "yarn workspace wepage-web serve",
+    "build:admin": "yarn workspace wepage-admin build",
+    "build:web": "yarn workspace wepage-web build",
+    "build:components": "yarn workspace wepage-components build",
+    "build": "npm run build:admin && npm run build:web",
+    "lint:admin": "yarn workspace wepage-admin lint",
+    "lint:web": "yarn workspace wepage-web lint",
+    "lint:components": "yarn workspace wepage-components lint",
+    "lint": "yarn run lint:admin & yarn run lint:web & yarn run lint:components"
+  },
+  "workspaces": [
+    "wepage-admin",
+    "wepage-web",
+    "wepage-components"
+  ],
+  "dependencies": {
+    "husky": "^4.3.0"
+  }
+}

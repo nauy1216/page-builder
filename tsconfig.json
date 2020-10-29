@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "rootDirs": [
+    ],
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
+    "paths": {
+      "wepage-admin/*": [
+        "wepage-admin/src/*"
+      ],
+      "wepage-web/*": [
+        "wepage-web/src/*"
+      ],
+      "wepage-components/*": [
+        "wepage-components/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
