@@ -4,12 +4,12 @@
       <el-button @click="createApp">创建页面</el-button>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="id" label="Id" width="180"></el-table-column>
+      <el-table-column prop="id" label="ID" width="300"></el-table-column>
       <el-table-column prop="pageName" label="名称" width="180"> </el-table-column>
       <el-table-column prop="pageType" label="类型" width="180"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button @click="editPage(scope.row.id)">编辑页面</el-button>
+          <el-button type="text" @click="editPage(scope.row.id)">编辑页面</el-button>
         </template>
       </el-table-column>
     </el-table>

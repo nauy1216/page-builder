@@ -1,26 +1,6 @@
 <template>
   <div class="header">
-    <div class="collapse-btn" @click="collapseChage">
-      <i v-if="!collapse" class="el-icon-s-fold"></i>
-      <i v-else class="el-icon-s-unfold"></i>
-    </div>
-    <div class="logo">wepage后台管理</div>
-    <div class="header-right">
-      <div class="header-user-con">
-        <div class="user-avator">
-          <img src="../../assets/logo.png" />
-        </div>
-        <el-dropdown class="user-name" trigger="click" @command="handleCommand">
-          <span class="el-dropdown-link">
-            {{ username }}
-            <i class="el-icon-caret-bottom"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="loginout">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </div>
+    <div class="logo">wepage</div>
   </div>
 </template>
 <script lang="ts">
@@ -32,23 +12,6 @@ export default defineComponent({
       fullscreen: false,
       username: "admin"
     };
-  },
-  methods: {
-    handleCommand(command) {
-      if (command == "loginout") {
-        // localStorage.removeItem("ms_username");
-        // this.$router.push("/login");
-      }
-    },
-    collapseChage() {
-      this.collapse = !this.collapse;
-      this.$eventBus.$emit("collapse", this.collapse);
-    }
-  },
-  mounted() {
-    if (document.body.clientWidth < 1500) {
-      this.collapseChage();
-    }
   }
 });
 </script>
@@ -57,43 +20,16 @@ export default defineComponent({
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  height: 70px;
-  font-size: 22px;
-}
-.collapse-btn {
-  float: left;
-  padding: 0 21px;
-  cursor: pointer;
-  line-height: 70px;
+  height: 50px;
+  padding: 0 30px;
+  font-size: 16px;
+  background: #ffffff;
+  box-shadow: rgba(141, 158, 167, 0.13) 0px 4px 10px 0px;
+  z-index: 100;
 }
 .header .logo {
   float: left;
   width: 250px;
-  line-height: 70px;
-}
-.header-right {
-  float: right;
-  padding-right: 50px;
-}
-.header-user-con {
-  display: flex;
-  height: 70px;
-  align-items: center;
-}
-.user-name {
-  margin-left: 10px;
-}
-.user-avator {
-  margin-left: 20px;
-}
-.user-avator img {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-.el-dropdown-link {
-  color: #999999;
-  cursor: pointer;
+  line-height: 50px;
 }
 </style>

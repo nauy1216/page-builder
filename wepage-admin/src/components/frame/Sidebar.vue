@@ -39,6 +39,28 @@ export default defineComponent({
           icon: "el-icon-s-tools",
           index: "appManage",
           title: "应用管理"
+        },
+        {
+          icon: "el-icon-s-tools",
+          index: "1",
+          title: "数据源管理",
+          subs: [
+            {
+              icon: "el-icon-s-tools",
+              index: "2",
+              title: "静态数据源"
+            },
+            {
+              icon: "el-icon-s-tools",
+              index: "3",
+              title: "数据模型"
+            }
+          ]
+        },
+        {
+          icon: "el-icon-s-tools",
+          index: "4",
+          title: "应用实例管理"
         }
       ]
     };
@@ -63,7 +85,7 @@ export default defineComponent({
   display: block;
   position: absolute;
   left: 0;
-  top: 70px;
+  top: 50px;
   bottom: 0;
   overflow-y: scroll;
 }

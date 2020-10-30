@@ -46,12 +46,12 @@ export default defineComponent({
     position: absolute;
     left: 250px;
     right: 0;
-    top: 70px;
+    top: 50px;
     bottom: 0;
     padding: 20px;
     box-sizing: border-box;
     transition: left 0.3s ease-in-out;
-    background: #f0f0f0;
+    background: #f9f9f9;
     height: calc(100vh - 70px);
     overflow: auto;
     .content {

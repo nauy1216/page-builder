@@ -2,7 +2,7 @@
 const path = require("path");
 module.exports = {
   devServer: {
-    port: "8002",
+    port: "9502",
     proxy: {
       "/apis": {
         target: "http://localhost:3000",
