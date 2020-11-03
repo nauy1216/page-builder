@@ -43,13 +43,16 @@ export interface StateWidthNamespace<ModuleName, ModuleType> {
 
   <Map extends Record<string, (this: CustomVue, state: ModuleType, getters: any) => any> = {}>(namespace: ModuleName, map: Map): { [K in keyof Map]: InlineComputed<Map[K]> };
 
-  <Map extends Record<string, keyof ModuleType>>(namespace: string, map: Map): { [K in keyof Map]: () => ModuleType[Map[K]] };
+  <Map extends Record<string, keyof ModuleType>>(namespace: string, map: Map): {
+    [K in keyof Map]: () => ModuleType[Map[K]];
+  };
 }
 
 // ==================== mapMutationsTyped ===================
 type PickMutation<U, T extends keyof U> = Pick<U, T>[T];
 type ParamsType<T> = T extends (p1, ...p2: infer V) => void ? V : any[];
-type MutationFunc<Mutations, T extends keyof Mutations> = (...p: ParamsType<PickMutation<Mutations, T>>) => void;
+type MutationFunc<Mutations, T extends keyof Mutations> = 
+(...p: ParamsType<PickMutation<Mutations, T>>) => void;
 
 type InlineMethod<T extends (fn: any, ...args: any[]) => any> = T extends (fn: any, ...args: infer Args) => infer R ? (...args: Args) => R : never;
 
@@ -76,11 +79,17 @@ export interface MutatonsWidthNamespace<ModuleName, ModuleType> {
 // ==================== mapGetters ===================
 type GettersType = { [key: string]: (...args: any[]) => any };
 export interface MapGettersTyped<Getters extends GettersType> {
-  <Key extends keyof Getters>(map: Key[]): { [K in Key]: () => ReturnType<Getters[Key]> };
-  <Map extends Record<string, keyof Getters>>(map: Map): { [K in keyof Map]: () => ReturnType<Getters[Map[K]]> };
+  <Key extends keyof Getters>(map: Key[]): {
+    [K in Key]: () => ReturnType<Getters[Key]>;
+  };
+  <Map extends Record<string, keyof Getters>>(map: Map): {
+    [K in keyof Map]: () => ReturnType<Getters[Map[K]]>;
+  };
 }
 export interface GettersWithNamespace<ModuleName, ModuleType extends GettersType> {
-  <Key extends keyof ModuleType>(namespace: ModuleName, map: Key[]): { [K in Key]: () => ReturnType<ModuleType[K]> };
+  <Key extends keyof ModuleType>(namespace: ModuleName, map: Key[]): {
+    [K in Key]: () => ReturnType<ModuleType[K]>;
+  };
   <Map extends Record<string, keyof ModuleType>>(namespace: ModuleName, map: Map): { [K in keyof Map]: () => ReturnType<ModuleType[Map[K]]> };
 }
 
@@ -89,12 +98,18 @@ export interface GettersWithNamespace<ModuleName, ModuleType extends GettersType
 type ActionMethod = (...args: any[]) => Promise<any>;
 export interface MapActionsTyped<Actions> {
   <Key extends keyof Actions>(map: Key[]): { [K in Key]: ActionMethod };
-  <Map extends Record<string, keyof Actions>>(map: Map): { [K in keyof Map]: ActionMethod };
+  <Map extends Record<string, keyof Actions>>(map: Map): {
+    [K in keyof Map]: ActionMethod;
+  };
   <Map extends Record<string, (this: CustomVue, dispatch: Dispatch, ...args: any[]) => any>>(map: Map): { [K in keyof Map]: InlineMethod<Map[K]> };
 }
 
 export interface MapActionsWithNamespace<ModuleName, ModuleType> {
-  <Key extends keyof ModuleType>(namespace: ModuleName, map: Key[]): { [K in Key]: ActionMethod };
-  <Map extends Record<string, keyof ModuleType>>(namespace: string, map: Map): { [K in keyof Map]: ActionMethod };
+  <Key extends keyof ModuleType>(namespace: ModuleName, map: Key[]): {
+    [K in Key]: ActionMethod;
+  };
+  <Map extends Record<string, keyof ModuleType>>(namespace: string, map: Map): {
+    [K in keyof Map]: ActionMethod;
+  };
   <Map extends Record<string, (this: CustomVue, dispatch: Dispatch, ...args: any[]) => any>>(namespace: string, map: Map): { [K in keyof Map]: InlineMethod<Map[K]> };
 }

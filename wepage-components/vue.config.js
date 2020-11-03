@@ -12,11 +12,11 @@ module.exports = {
       }
     }
   },
-  outputDir: path.resolve(process.cwd(), "../dist/components"),
+  outputDir: path.resolve(process.cwd(), "./dist/components"),
   configureWebpack(config) {
     config.mode = "development"
     config.entry = {
-      "wepage-components": "./index.ts"
+      "wepage-components": "./wepage-components/index.ts"
     }
     delete config.optimization
     config.output["filename"] = "wepage-components.js"

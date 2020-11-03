@@ -7,38 +7,35 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "noImplicitAny": false,
+    "sourceMap": true,
     "baseUrl": ".",
-    "rootDirs": [
-    ],
-    "types": [
-      "webpack-env",
-      "jest"
-    ],
+    "types": ["webpack-env", "jest"],
     "paths": {
-      "wepage-admin/*": [
-        "wepage-admin/src/*"
-      ],
-      "wepage-web/*": [
-        "wepage-web/src/*"
-      ],
-      "wepage-components/*": [
-        "wepage-components/*"
-      ]
+      "wepage-admin/*": ["wepage-admin/src/*"],
+      "wepage-web/*": ["wepage-web/src/*"],
+      "wepage-components/*": ["wepage-components/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [
+    "wepage-admin/src/**/*.ts",
+    "wepage-admin/src/**/*.tsx",
+    "wepage-admin/src/**/*.vue",
+    "wepage-admin/tests/**/*.ts",
+    "wepage-admin/tests/**/*.tsx",
+    "wepage-web/src/**/*.ts",
+    "wepage-web/src/**/*.tsx",
+    "wepage-web/src/**/*.vue",
+    "wepage-web/tests/**/*.ts",
+    "wepage-web/tests/**/*.tsx",
+    "wepage-components/*.ts",
+    "wepage-components/**/*.ts",
+    "wepage-components/**/*.tsx",
+    "wepage-components/**/*.vue"
+  ],
+  "exclude": ["node_modules"]
 }

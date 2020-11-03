@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Hello></Hello>
     <keep-alive>
       <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </keep-alive>
@@ -8,11 +7,6 @@
   </div>
 </template>
 <script lang="ts">
-import Hello from "wepage-admin/components/HelloWorld.vue";
-export default {
-  components: {
-    Hello
-  }
-};
+export default {};
 </script>
 <style lang="scss"></style>

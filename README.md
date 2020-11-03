@@ -1,35 +1,29 @@
-## 需要安装的 vscode 插件
+# wepage
 
-1. ESLint
-2. Prettier
-3. Vetur
-
-## 安装 yarn
-
+## Project setup
 ```
-npm i yarn -g
+npm install
 ```
 
-## 安装项目依赖
-
+### Compiles and hot-reloads for development
 ```
-yarn
-```
-
-## 启动 wepage-admin
-
-```
-yarn run dev:admin
+npm run serve
 ```
 
-## 启动 wepage-web
+### Compiles and minifies for production
+```
+npm run build
+```
 
+### Run your unit tests
 ```
-yarn run dev:web
+npm run test:unit
 ```
 
-## 手动格式化代码
+### Lints and fixes files
+```
+npm run lint
+```
 
-```
-yarn run lint
-```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

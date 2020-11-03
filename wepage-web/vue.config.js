@@ -11,9 +11,12 @@ module.exports = {
       }
     }
   },
-  outputDir: path.resolve(process.cwd(), "../dist/web"),
+  outputDir: path.resolve(process.cwd(), "./dist/web"),
   configureWebpack(config) {
-    config.resolve.alias["wepage-components"] = path.resolve(process.cwd(), "../wepage-components");
-    config.resolve.alias["wepage-web"] = path.resolve(process.cwd(), "src");
+    config.entry = {
+      "wepage-web": path.resolve(process.cwd(), "wepage-web/src/main.ts")
+    }
+    config.resolve.alias["wepage-components"] = path.resolve(process.cwd(), "./wepage-components");
+    config.resolve.alias["wepage-web"] = path.resolve(process.cwd(), "./wepage-web/src");
   }
 };
