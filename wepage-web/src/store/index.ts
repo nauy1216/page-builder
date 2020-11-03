@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex, { MutationTree } from "vuex";
 import { AppConfig } from "wepage-web/types/appConfig";
-import FrameMessage from "wepage-components/shared/utils/message";
-import ajax from "wepage-components/shared/utils/ajax";
-import { getAppId, getPageId } from "wepage-components/shared/utils/app";
+import FrameMessage from "shared/utils/message";
+import ajax from "shared/utils/ajax";
+import { getAppId, getPageId } from "shared/utils/app";
 import api from "wepage-web/api";
 const frameMessage = new FrameMessage("wepage-web", window.top);
 

@@ -14,7 +14,7 @@ import RightTool from "./right-tool/index.vue";
 import TopTool from "./top-tool/index.vue";
 import PageContent from "./page-content/inex.vue";
 import { mapStateTyped, mapMutationsTyped } from "wepage-admin/types/store";
-import keepAlive from "wepage-components/shared/mixins/keepAliveMixin";
+import keepAlive from "shared/mixins/keepAliveMixin";
 
 const mixin = keepAlive(["/pageShow"]);
 export default UseMixin<Mixin<typeof mixin>>()({

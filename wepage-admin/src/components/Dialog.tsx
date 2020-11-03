@@ -1,4 +1,4 @@
-import { ExportPublicProps } from "wepage-components/shared/typed/utils";
+import { ExportPublicProps } from "shared/typed/utils";
 import { VNode } from "vue";
 import defineComponent from "wepage-admin/types/defineComponent";
 

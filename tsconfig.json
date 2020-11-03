@@ -17,7 +17,8 @@
     "paths": {
       "wepage-admin/*": ["wepage-admin/src/*"],
       "wepage-web/*": ["wepage-web/src/*"],
-      "wepage-components/*": ["wepage-components/*"]
+      "wepage-components/*": ["wepage-components/*"],
+      "shared/*": ["shared/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },

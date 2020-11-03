@@ -36,7 +36,7 @@ import defineComponent from "wepage-admin/types/defineComponent";
 import ContextMenu, { MenuCommand } from "../components/ContextMenu.vue";
 import { PageComponentOptionsConfig, PageConfig } from "wepage-admin/types/page";
 import { mapStateTyped, mapMutationsTyped } from "wepage-admin/types/store";
-import { uuid } from "wepage-components/shared/utils";
+import { uuid } from "shared/utils";
 import LayoutPosition from "./layout-position.vue";
 
 const defaultConfig: PageComponentOptionsConfig = {

@@ -1,6 +1,6 @@
 <script lang="tsx">
 import defineComponent from "wepage-admin/types/defineComponent";
-import FrameMessage from "wepage-components/shared/utils/message";
+import FrameMessage from "shared/utils/message";
 import { mapStateTyped } from "wepage-admin/types/store";
 
 export default defineComponent({

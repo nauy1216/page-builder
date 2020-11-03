@@ -7,7 +7,7 @@ import "./style/reset.scss";
 import "./style/index.scss";
 import WepageComponents from "wepage-components";
 import apis from "wepage-web/api";
-import ajax from "wepage-components/shared/utils/ajax";
+import ajax from "shared/utils/ajax";
 
 Vue.use(WepageComponents);
 

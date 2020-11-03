@@ -11,7 +11,7 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import WepageComponents from "wepage-components";
 import apis from "wepage-admin/api";
-import ajax from "wepage-components/shared/utils/ajax";
+import ajax from "shared/utils/ajax";
 
 Vue.use(WepageComponents);
 Vue.prototype.$api = apis;

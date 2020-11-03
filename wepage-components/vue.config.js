@@ -23,5 +23,6 @@ module.exports = {
     config.output["library"] = "WepageComponents"
     config.output["libraryTarget"] = "umd"
     config.plugins.push(new WebpackPlugin())
+    config.resolve.alias["shared"] = path.resolve(process.cwd(), "./shared");
   }
 };

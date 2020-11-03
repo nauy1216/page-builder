@@ -17,6 +17,7 @@ module.exports = {
       "wepage-admin": path.resolve(process.cwd(), "wepage-admin/src/main.ts")
     }
     config.resolve.alias["wepage-components"] = path.resolve(process.cwd(), "./wepage-components");
+    config.resolve.alias["shared"] = path.resolve(process.cwd(), "./shared");
     config.resolve.alias["wepage-admin"] = path.resolve(process.cwd(), "./wepage-admin/src");
   }
 };

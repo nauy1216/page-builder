@@ -1,5 +1,5 @@
 import apis from "../api";
-import ajax from "wepage-components/shared/utils/ajax";
+import ajax from "shared/utils/ajax";
 import { VueConstructor } from "vue";
 
 // 在组件实例或者原型上增加的属性可以在这里声明

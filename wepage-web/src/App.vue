@@ -6,7 +6,7 @@
 <script lang="ts">
 import defineComponent from "wepage-web/types/defineComponent";
 import { mapMutationsTyped, mapStateTyped } from "wepage-web/types/store";
-import { getAppId, getPageId } from "wepage-components/shared/utils/app";
+import { getAppId, getPageId } from "shared/utils/app";
 export default defineComponent({
   created() {
     this.getAppConfig();

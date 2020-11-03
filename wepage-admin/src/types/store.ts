@@ -1,5 +1,5 @@
 import { mapMutations, mapState, mapGetters, mapActions } from "vuex";
-import { MapStateTyped, StateWidthNamespace, MapMutationsTyped, MutatonsWidthNamespace, MapGettersTyped, MapActionsTyped } from "wepage-components/shared/typed/vuex";
+import { MapStateTyped, StateWidthNamespace, MapMutationsTyped, MutatonsWidthNamespace, MapGettersTyped, MapActionsTyped } from "shared/typed/vuex";
 import { State, Mutations, Getters, Actions } from "../store";
 import { PageStoreType } from "../store/page";
 import { EditorStoreType } from "../store/editor";

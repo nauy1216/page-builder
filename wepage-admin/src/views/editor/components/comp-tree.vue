@@ -31,7 +31,7 @@ import defineComponent from "wepage-admin/types/defineComponent";
 import { mapMutationsTyped, mapStateTyped } from "wepage-admin/types/store";
 import { PageLyout, PageComponentOptions } from "wepage-admin/types/page";
 import Dialog, { DialogType } from "wepage-admin/components/Dialog";
-import { uuid } from "wepage-components/shared/utils";
+import { uuid } from "shared/utils";
 type TreeNode = {
   id: string;
   label: string;

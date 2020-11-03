@@ -1,6 +1,6 @@
 import axios from "axios";
 // import { Message } from "element-ui";
-import { guid, serialize } from "wepage-components/shared/utils";
+import { guid, serialize } from "shared/utils";
 
 function showError(err) {
   console.log("请求错误", err);

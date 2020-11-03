@@ -1,6 +1,6 @@
 import { Store } from "vuex";
 import { PageConfig, PureComp, PageComp, PageComponentOptions, PageLyout } from "wepage-admin/types/page";
-import { uuid } from "wepage-components/shared/utils";
+import { uuid } from "shared/utils";
 import { debounce } from "throttle-debounce";
 
 export interface State {
