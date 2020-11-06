@@ -1,5 +1,5 @@
 <template>
-  <div class="app-manage">
+  <div class="rp-app-manage">
     <div class="opera">
       <el-button @click="createApp">创建应用</el-button>
     </div>
@@ -81,7 +81,10 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-.opera {
-  margin: 20px 0;
+@import "shared/style/bem.scss";
+@include b(app-manage) {
+  .opera {
+    margin: 20px 0;
+  }
 }
 </style>

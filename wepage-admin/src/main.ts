@@ -3,6 +3,7 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import "./style/var.scss";
 import "./style/reset.scss";
 import "./style/index.scss";
 import VueDraggableResizable from "vue-draggable-resizable-gorkys";

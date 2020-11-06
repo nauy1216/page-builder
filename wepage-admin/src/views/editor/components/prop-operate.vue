@@ -15,7 +15,7 @@ export default defineComponent({
     ...mapStateTyped("editor", ["editorConfig"]),
     // 当前活动组件的属性
     activeCompProps() {
-      return this.activeComp && this.$compList[this.activeComp.name].extendOptions.props;
+      return this.activeComp && this.$components[this.activeComp.name].extendOptions.props;
     }
   }
 });

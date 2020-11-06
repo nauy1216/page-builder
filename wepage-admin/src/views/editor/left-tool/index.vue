@@ -17,7 +17,7 @@
         <el-tab-pane label="组件列表" name="1">
           <div calss="left-tool-list">
             <div
-              v-for="(comp, index) in $compList"
+              v-for="(comp, index) in $components"
               :key="comp.name + index"
               class="left-tool-item"
               draggable="true"

@@ -1,69 +1,52 @@
-<template>
-  <div class="app-frame">
-    <v-head></v-head>
-    <v-sidebar></v-sidebar>
-    <div class="content-box" :class="{ 'content-collapse': collapse }">
-      <div class="content">
-        <transition name="move" mode="out-in">
-          <keep-alive :include="tagsList">
-            <router-view></router-view>
-          </keep-alive>
-        </transition>
-        <el-backtop target=".content"></el-backtop>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
+<script lang="tsx">
+import BaseVue from "wepage-admin/BaseVue";
+import { Component } from "vue-property-decorator";
 import vHead from "./Header.vue";
 import vSidebar from "./Sidebar.vue";
-export default defineComponent({
+@Component({
   components: {
     vHead,
     vSidebar
-  },
-  data() {
-    return {
-      tagsList: [],
-      collapse: false
-    };
-  },
-  created() {
-    this.$eventBus.$on("collapse-content", msg => {
-      this.collapse = msg;
-    });
   }
-});
+})
+export default class Sidebar extends BaseVue {
+  render() {
+    return (
+      <div class="rp-frame">
+        <v-head></v-head>
+        <v-sidebar></v-sidebar>
+        <div staticClass="rp-frame__content-box">
+          <div class="rp-frame__content">
+            <router-view></router-view>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 </script>
 <style scoped lang="scss">
-.app-frame {
+@import "shared/style/bem.scss";
+@include b(frame) {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  .content-box {
-    position: absolute;
-    left: 250px;
-    right: 0;
-    top: 50px;
-    bottom: 0;
+  @include e(content-box) {
+    margin-left: var(--sidebar-width);
     padding: 20px;
     box-sizing: border-box;
     transition: left 0.3s ease-in-out;
     background: #f9f9f9;
-    height: calc(100vh - 70px);
+    height: calc(100vh - var(--header-height));
     overflow: auto;
-    .content {
-      width: auto;
-      overflow: auto;
-      padding: 20px;
-      box-sizing: border-box;
-      background: #ffffff;
-    }
   }
-  .content-collapse {
-    left: 65px;
+  @include e(content) {
+    width: auto;
+    overflow: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: calc(100vh - var(--header-height) - 40px);
+    background: #ffffff;
   }
 }
 </style>

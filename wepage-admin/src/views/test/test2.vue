@@ -42,7 +42,7 @@ export default defineComponent({
       });
     }
 
-    const compList = this.$compList;
+    const compList = this.$components;
     // TODO: 这里采用的是定位， 后期可考虑改成transform，或做成可配置的
     return (
       <div class="view-port">

@@ -51,7 +51,7 @@ export default defineComponent({
     ...mapStateTyped("editor", ["editorConfig"]),
     // 当前活动组件的属性
     activeCompProps(): any {
-      return this.activeComp && this.$compList[this.activeComp.name];
+      return this.activeComp && this.$components[this.activeComp.name];
     }
   },
   methods: {

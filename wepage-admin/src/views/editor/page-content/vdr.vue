@@ -23,7 +23,7 @@
         height: comp.config.height + 'px'
       }"
     >
-      <component ref="component" :is="$compList[comp.name]" v-bind="comp.data"></component>
+      <component ref="component" :is="$components[comp.name]" v-bind="comp.data"></component>
     </div>
   </vue-draggable-resizable>
 </template>

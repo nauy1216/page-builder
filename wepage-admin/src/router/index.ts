@@ -46,6 +46,14 @@ const routes: Array<RouteConfig> = [
   }
 ];
 
+// 开发环境加入playground，用于组件测试
+if (process.env.NODE_ENV === "development") {
+  routes.push({
+    path: "/playground",
+    component: () => import(/* webpackChunkName: "app-playground" */ "../views/playground/index.vue")
+  });
+}
+
 const router = new VueRouter({
   routes
 });
