@@ -16,9 +16,11 @@ import PageContent from "./page-content/inex.vue";
 import { mapStateTyped, mapMutationsTyped } from "wepage-admin/types/store";
 import keepAlive from "shared/mixins/keepAliveMixin";
 
+import Vue from "vue";
+import { Component, Mixins } from "vue-property-decorator";
 const mixin = keepAlive(["/pageShow"]);
-export default UseMixin<Mixin<typeof mixin>>()({
-  mixins: [mixin],
+
+@Component({
   components: {
     TopTool,
     LeftTool,
@@ -39,7 +41,32 @@ export default UseMixin<Mixin<typeof mixin>>()({
   methods: {
     ...mapMutationsTyped("page", ["addComponent"])
   }
-});
+})
+export default class EditorIndex extends Mixins<Vue>(Vue.extend(mixin)) {}
+
+// export default UseMixin<Mixin<typeof mixin>>()({
+//   mixins: [mixin],
+//   components: {
+//     TopTool,
+//     LeftTool,
+//     RightTool,
+//     PageContent
+//   },
+//   computed: {
+//     ...mapStateTyped("page", ["pageConfig"]),
+//     ...mapStateTyped("editor", {
+//       showLeftTool(state): boolean {
+//         return state.editorConfig.showLeftTool;
+//       },
+//       showRightTool(state): boolean {
+//         return state.editorConfig.showRightTool;
+//       }
+//     })
+//   },
+//   methods: {
+//     ...mapMutationsTyped("page", ["addComponent"])
+//   }
+// });
 </script>
 <style scoped lang="scss">
 .editor {

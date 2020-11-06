@@ -1,18 +1,14 @@
-// import Vue from "vue";
+import Vue from "vue";
 
-// declare module "vue/types/vue" {
-//   // interface Vue {}
-// }
-// declare module "vue/types/options" {
-//   interface PropOptions {
-//     label?: string; // 属性名称，用于展示
-//     inputComponent?: string; // 用于编辑该属性的组件
-//   }
-//   interface ComponentOptions<V extends Vue> {
-//     config?: {
-//       alias: string; // 组件名称
-//       icon: string; // 组件图标
-//       [key: string]: any;
-//     };
-//   }
-// }
+import { Route, RawLocation } from "vue-router";
+
+declare module "vue/types/vue" {
+  // Augment component instance type
+  interface Vue {
+    beforeRouteEnter?(to: Route, from: Route, next: (to?: RawLocation | false | ((vm: Vue) => void)) => void): void;
+
+    beforeRouteLeave?(to: Route, from: Route, next: (to?: RawLocation | false | ((vm: Vue) => void)) => void): void;
+
+    beforeRouteUpdate?(to: Route, from: Route, next: (to?: RawLocation | false | ((vm: Vue) => void)) => void): void;
+  }
+}
