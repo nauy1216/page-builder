@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { UseMixin, Mixin } from "wepage-admin/types/defineComponent";
+// import { UseMixin, Mixin } from "wepage-admin/types/defineComponent";
 import LeftTool from "./left-tool/index.vue";
 import RightTool from "./right-tool/index.vue";
 import TopTool from "./top-tool/index.vue";
