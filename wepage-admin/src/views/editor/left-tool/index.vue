@@ -1,85 +1,97 @@
-<template>
-  <div class="left-tool" :style="{ width: width + 'px' }">
-    <vue-draggable-resizable
-      :x="0"
-      :y="0"
-      :w="width"
-      :maxWidth="500"
-      :minWidth="250"
-      :draggable="false"
-      :handles="['mr']"
-      :active="true"
-      :prevent-deactivation="true"
-      class="left-tool-vdr"
-      @resizing="handleResize"
-    >
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="组件列表" name="1">
-          <div calss="left-tool-list">
-            <div
-              v-for="(comp, index) in $components"
-              :key="comp.name + index"
-              class="left-tool-item"
-              draggable="true"
-              @dragstart.stop="handleDragStart($event, comp)"
-              @dragend.stop="handleDragEnd($event, comp)"
-            >
-              <!-- <i :class="comp.extendOptions.config.icon" class="icon"></i> -->
-              <span class="name">{{ comp.extendOptions.config.alias }}</span>
-            </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="图层管理" name="2">
-          <CompTree></CompTree>
-        </el-tab-pane>
-        <el-tab-pane label="页面" name="3">
-          <PageOperate></PageOperate>
-        </el-tab-pane>
-        <el-tab-pane label="代码" name="4">
-          <CodeOperate></CodeOperate>
-        </el-tab-pane>
-        <el-tab-pane label="编辑器" name="5">
-          <EditorOperate></EditorOperate>
-        </el-tab-pane>
-      </el-tabs>
-    </vue-draggable-resizable>
-  </div>
-</template>
-
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
+<script lang="tsx">
 import CompTree from "../components/comp-tree.vue";
 import PageOperate from "../components/page-operate.vue";
 import CodeOperate from "../components/code-operate.vue";
 import EditorOperate from "../components/editor-operate.vue";
-import { mapMutationsTyped } from "wepage-admin/types/store";
+import { Component } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
+import { PageStore } from "wepage-admin/store/modules";
 
-export default defineComponent({
+@Component({
   components: {
     CompTree,
     PageOperate,
     CodeOperate,
     EditorOperate
-  },
-  data() {
-    return {
-      activeName: "1",
-      width: 250
-    };
-  },
-  methods: {
-    ...mapMutationsTyped("page", ["addComponent", "setActiveComp", "setDragComp"]),
-    handleDragStart(event, comp) {
-      this.setDragComp(comp);
-    },
-    handleDragEnd() {
-      this.setDragComp(null);
-    },
-    handleResize(left, top, width) {
-      this.width = width;
-    }
   }
-});
+})
+export default class LeftTool extends BaseVue {
+  activeName = "1";
+  width = 250;
+
+  handleDragStart(event, comp) {
+    PageStore.setDragComp(comp);
+  }
+
+  handleDragEnd() {
+    PageStore.setDragComp(null);
+  }
+
+  handleResize(left, top, width) {
+    this.width = width;
+  }
+
+  render() {
+    return (
+      <div class="left-tool" style={{ width: this.width + "px" }}>
+        <vue-draggable-resizable
+          x={0}
+          y={0}
+          w={this.width}
+          maxWidth={500}
+          minWidth={250}
+          draggable={false}
+          handles={["mr"]}
+          active={true}
+          prevent-deactivation={true}
+          class="left-tool-vdr"
+          onResizing={this.handleResize}
+        >
+          <el-tabs vModel={this.activeName}>
+            <el-tab-pane label="组件列表" name="1">
+              <div calss="left-tool-list">
+                {Object.keys(this.$components).map((compName, index) => {
+                  return (
+                    <div
+                      Key={compName + index}
+                      class="left-tool-item"
+                      draggable="true"
+                      onDragstart={($event: MouseEvent) => {
+                        $event.stopPropagation();
+                        this.handleDragStart($event, this.$components[compName]);
+                      }}
+                      onDragend={($event: MouseEvent) => {
+                        $event.stopPropagation();
+                        this.handleDragEnd();
+                      }}
+                    >
+                      <span class="name">{this.$components[compName].extendOptions.config.alias}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="图层管理" name="2">
+              <CompTree></CompTree>
+            </el-tab-pane>
+            <el-tab-pane label="页面" name="3">
+              <PageOperate></PageOperate>
+            </el-tab-pane>
+
+            {/**
+             代码出现死循环
+            <el-tab-pane label="代码" name="4">
+              <CodeOperate></CodeOperate>
+            </el-tab-pane>
+            <el-tab-pane label="编辑器" name="5">
+              <EditorOperate></EditorOperate>
+            </el-tab-pane> */}
+          </el-tabs>
+        </vue-draggable-resizable>
+      </div>
+    );
+  }
+}
 </script>
 <style scoped lang="scss">
 .left-tool-vdr {

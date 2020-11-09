@@ -7,14 +7,13 @@
   </div>
 </template>
 
-<script lang="ts">
-// import { UseMixin, Mixin } from "wepage-admin/types/defineComponent";
+<script lang="tsx">
 import LeftTool from "./left-tool/index.vue";
 import RightTool from "./right-tool/index.vue";
 import TopTool from "./top-tool/index.vue";
-import PageContent from "./page-content/inex.vue";
-import { mapStateTyped, mapMutationsTyped } from "wepage-admin/types/store";
+import PageContent from "./page-content/index.vue";
 import keepAlive from "shared/mixins/keepAliveMixin";
+import { EditorStore } from "wepage-admin/store/modules";
 
 import Vue from "vue";
 import { Component, Mixins } from "vue-property-decorator";
@@ -26,47 +25,16 @@ const mixin = keepAlive(["/pageShow"]);
     LeftTool,
     RightTool,
     PageContent
-  },
-  computed: {
-    ...mapStateTyped("page", ["pageConfig"]),
-    ...mapStateTyped("editor", {
-      showLeftTool(state): boolean {
-        return state.editorConfig.showLeftTool;
-      },
-      showRightTool(state): boolean {
-        return state.editorConfig.showRightTool;
-      }
-    })
-  },
-  methods: {
-    ...mapMutationsTyped("page", ["addComponent"])
   }
 })
-export default class EditorIndex extends Mixins<Vue>(Vue.extend(mixin)) {}
-
-// export default UseMixin<Mixin<typeof mixin>>()({
-//   mixins: [mixin],
-//   components: {
-//     TopTool,
-//     LeftTool,
-//     RightTool,
-//     PageContent
-//   },
-//   computed: {
-//     ...mapStateTyped("page", ["pageConfig"]),
-//     ...mapStateTyped("editor", {
-//       showLeftTool(state): boolean {
-//         return state.editorConfig.showLeftTool;
-//       },
-//       showRightTool(state): boolean {
-//         return state.editorConfig.showRightTool;
-//       }
-//     })
-//   },
-//   methods: {
-//     ...mapMutationsTyped("page", ["addComponent"])
-//   }
-// });
+export default class EditorIndex extends Mixins<Vue>(Vue.extend(mixin)) {
+  get showLeftTool() {
+    return EditorStore.showLeftTool;
+  }
+  get showRightTool() {
+    return EditorStore.showRightTool;
+  }
+}
 </script>
 <style scoped lang="scss">
 .editor {

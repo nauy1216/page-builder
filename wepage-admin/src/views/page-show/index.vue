@@ -1,9 +1,16 @@
 <script lang="tsx">
-import defineComponent from "wepage-admin/types/defineComponent";
 import FrameMessage from "shared/utils/message";
-import { mapStateTyped } from "wepage-admin/types/store";
+import { PageStore } from "wepage-admin/store/modules";
 
-export default defineComponent({
+import { Component } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
+
+@Component({})
+export default class PageShow extends BaseVue {
+  get pageConfig() {
+    return { ...PageStore };
+  }
+
   mounted() {
     const frameMessage = new FrameMessage("wepage-admin", (this.$refs.app as any).contentWindow);
     frameMessage.onMessage("getAppConfig", () => {
@@ -16,16 +23,14 @@ export default defineComponent({
       });
       return config;
     });
-  },
-  computed: {
-    ...mapStateTyped("page", ["pageConfig"])
-  },
+  }
+
   render() {
     const host = process.env.VUE_APP_PAGE_SHOW_HOST || location.origin;
     const url = `${host}/${this.$route.query.appId}#/page/${this.$route.query.pageId}`;
     return <iframe ref="app" src={url} style="width: 100vw; height: 100vh;"></iframe>;
   }
-});
+}
 </script>
 
 <style></style>

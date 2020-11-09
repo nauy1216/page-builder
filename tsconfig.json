@@ -36,7 +36,9 @@
     "wepage-components/*.ts",
     "wepage-components/**/*.ts",
     "wepage-components/**/*.tsx",
-    "wepage-components/**/*.vue"
+    "wepage-components/**/*.vue",
+    "shared/*.ts",
+    "shared/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,49 +1,46 @@
-<template>
-  <div class="code-operate">
-    <el-button @click="handleCodeChange" style="margin-bottom: 10px;">提交</el-button>
-    <el-input type="textarea" v-model="code" class="code"></el-input>
-  </div>
-</template>
+<script lang="tsx">
+import { Component, Watch } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
+import { PageStore } from "wepage-admin/store/modules";
 
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
-import { mapStateTyped, mapMutationsTyped } from "wepage-admin/types/store";
-export default defineComponent({
-  data() {
+@Component
+export default class CodeOperate extends BaseVue {
+  code = "";
+
+  get pageConfig() {
     return {
-      code: ""
+      ...PageStore
     };
-  },
-  computed: {
-    ...mapStateTyped("page", ["pageConfig", "activeComp"]),
-    ...mapStateTyped("editor", ["editorConfig"]),
-    // 当前活动组件的属性
-    activeCompProps(): any {
-      return this.activeComp && this.$components[this.activeComp.name];
-    }
-  },
-  watch: {
-    pageConfig: {
-      handler(this: any) {
-        this.code = JSON.stringify(this.pageConfig, null, 2);
-      },
-      deep: true,
-      immediate: true
-    }
-  },
-  methods: {
-    ...mapMutationsTyped("page", ["addComponent", "setPageConfig"]),
-    ...mapMutationsTyped("editor", ["setEditorConfig"]),
-    handleCodeChange() {
-      try {
-        const config = JSON.parse(this.code);
-        this.setPageConfig(config);
-      } catch {
-        this.$message.error("json解析错误");
-      }
+  }
+
+  @Watch("pageConfig", {
+    immediate: true,
+    deep: true
+  })
+  watchPageConfig() {
+    this.code = JSON.stringify(this.pageConfig, null, 2);
+  }
+
+  handleCodeChange() {
+    try {
+      const config = JSON.parse(this.code);
+      PageStore.setPageConfig(config);
+    } catch {
+      this.$message.error("json解析错误");
     }
   }
-});
+
+  render() {
+    return (
+      <div class="code-operate">
+        <el-button onClick={this.handleCodeChange} style="margin-bottom: 10px;">
+          提交
+        </el-button>
+        <el-input type="textarea" vModel={this.code} class="code"></el-input>
+      </div>
+    );
+  }
+}
 </script>
 
 <style lang="scss" scoped>

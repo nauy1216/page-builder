@@ -1,65 +1,59 @@
-<template>
-  <div class="right-tool" :style="{ width: width + 'px' }">
-    <vue-draggable-resizable
-      :x="0"
-      :y="0"
-      :w="width"
-      :maxWidth="500"
-      :minWidth="250"
-      :draggable="false"
-      :handles="['ml']"
-      :active="true"
-      :prevent-deactivation="true"
-      class="right-tool-vdr"
-      @resizing="handleResize"
-    >
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="布局" name="1">
-          <LayoutOperate></LayoutOperate>
-        </el-tab-pane>
-        <el-tab-pane label="属性" name="2">
-          <div v-if="activeCompProps">
-            <PropOperate></PropOperate>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="数据" name="3"> </el-tab-pane>
-        <el-tab-pane label="交互" name="4"> </el-tab-pane>
-      </el-tabs>
-    </vue-draggable-resizable>
-  </div>
-</template>
-
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
+<script lang="tsx">
 import LayoutOperate from "../components/layout-operate.vue";
 import PropOperate from "../components/prop-operate.vue";
-import { mapStateTyped } from "wepage-admin/types/store";
+import { Component } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
+import { PageStore } from "wepage-admin/store/modules";
 
-export default defineComponent({
-  data() {
-    return {
-      activeName: "1",
-      width: 250
-    };
-  },
+@Component({
   components: {
     LayoutOperate,
     PropOperate
-  },
-  computed: {
-    ...mapStateTyped("page", ["pageConfig", "activeComp"]),
-    ...mapStateTyped("editor", ["editorConfig"]),
-    // 当前活动组件的属性
-    activeCompProps(): any {
-      return this.activeComp && this.$components[this.activeComp.name];
-    }
-  },
-  methods: {
-    handleResize(left, top, width) {
-      this.width = width;
-    }
   }
-});
+})
+export default class RightTool extends BaseVue {
+  activeName = "1";
+  width = 250;
+
+  handleResize(left, top, width) {
+    this.width = width;
+  }
+
+  get activeCompProps() {
+    return PageStore.activeComp && this.$components[PageStore.activeComp.name];
+  }
+
+  render() {
+    return (
+      <div class="right-tool" style={{ width: this.width + "px" }}>
+        <vue-draggable-resizable
+          x={0}
+          y={0}
+          w={this.width}
+          maxWidth={500}
+          minWidth={250}
+          draggable={false}
+          handles={["ml"]}
+          active={true}
+          prevent-deactivation={true}
+          class="right-tool-vdr"
+          onResizing={this.handleResize}
+        >
+          <el-tabs vModel={this.activeName}>
+            <el-tab-pane label="布局" name="1">
+              <LayoutOperate></LayoutOperate>
+            </el-tab-pane>
+            <el-tab-pane label="属性" name="2">
+              {this.activeCompProps && <PropOperate></PropOperate>}
+            </el-tab-pane>
+            <el-tab-pane label="数据" name="3"></el-tab-pane>
+            <el-tab-pane label="交互" name="4"></el-tab-pane>
+          </el-tabs>
+        </vue-draggable-resizable>
+      </div>
+    );
+  }
+}
 </script>
 <style scoped lang="scss">
 .right-tool-vdr {

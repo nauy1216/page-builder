@@ -1,24 +1,46 @@
-<template>
-  <el-form label-position="right" label-width="100px">
-    <el-form-item v-for="(prop, key) in activeCompProps" :key="key" :label="prop.label">
-      <component :is="prop.inputComponent" v-model="activeComp.data[key]"></component>
-    </el-form-item>
-  </el-form>
-</template>
+<script lang="tsx">
+import { Component } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
+import { PageStore } from "wepage-admin/store/modules";
 
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
-import { mapStateTyped } from "wepage-admin/types/store";
-export default defineComponent({
-  computed: {
-    ...mapStateTyped("page", ["pageConfig", "activeComp"]),
-    ...mapStateTyped("editor", ["editorConfig"]),
-    // 当前活动组件的属性
-    activeCompProps() {
-      return this.activeComp && this.$components[this.activeComp.name].extendOptions.props;
-    }
+@Component
+export default class PropOperate extends BaseVue {
+  get activeCompProps() {
+    return PageStore.activeComp && this.$components[PageStore.activeComp.name].extendOptions.props;
   }
-});
+
+  get activeComp() {
+    return PageStore.activeComp;
+  }
+
+  render(h) {
+    return (
+      <el-form label-position="right" label-width="100px">
+        {this.activeComp &&
+          this.activeCompProps.map((prop, index) => {
+            return (
+              <el-form-item key={index} label={prop.label}>
+                {this.activeComp &&
+                  h(prop.inputComponent, {
+                    key: index,
+                    props: {
+                      value: this.activeComp.data[index]
+                    },
+                    on: {
+                      input: value => {
+                        if (PageStore.activeComp) {
+                          PageStore.activeComp.data[index] = value;
+                        }
+                      }
+                    }
+                  })}
+              </el-form-item>
+            );
+          })}
+      </el-form>
+    );
+  }
+}
 </script>
 
 <style></style>

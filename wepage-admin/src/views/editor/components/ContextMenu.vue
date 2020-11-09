@@ -1,63 +1,59 @@
-<template>
-  <div :style="{ left: x + 'px', top: y + 'px', position: 'fixed' }">
-    <el-dropdown trigger="click" @command="handleCommand">
-      <span ref="trigger" class="trigger"></span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="command in options" :key="command.command" :command="command.command">{{ command.name }}</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
-  </div>
-</template>
+<script lang="tsx">
+import { Component, Prop } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
 
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
-import { mapMutationsTyped } from "wepage-admin/types/store";
 export interface MenuCommand {
   command: string;
   name: string;
   handle: (comp: any) => void;
 }
-interface Data {
-  x: number;
-  y: number;
-  component: Vue | null;
-}
-interface Props {
-  options: MenuCommand[];
-}
-export default defineComponent({
-  props: {
-    options: {
-      type: Array,
-      required: true,
-      default: () => [] as MenuCommand[]
-    }
-  },
-  data(): Data {
-    return {
-      x: 0,
-      y: 0,
-      component: null
-    };
-  },
-  methods: {
-    ...mapMutationsTyped("page", ["removeComponent", "addComponent"]),
-    show(x: number, y: number, component: Vue) {
-      this.x = x;
-      this.y = y;
-      this.component = component;
-      (this.$refs.trigger as HTMLElement).click();
-    },
-    handleCommand(command: string) {
-      for (const c of this.options as MenuCommand[]) {
-        if (c.command === command) {
-          c.handle(this.component);
-          break;
-        }
+
+@Component
+export default class ContextMenu extends BaseVue {
+  @Prop({
+    type: Array,
+    required: true,
+    default: () => [] as MenuCommand[]
+  })
+  options;
+
+  x = 0;
+  y = 0;
+  component: Vue | null = null;
+
+  show(x: number, y: number, component: Vue) {
+    this.x = x;
+    this.y = y;
+    this.component = component;
+    (this.$refs.trigger as HTMLElement).click();
+  }
+
+  handleCommand(command: string) {
+    for (const c of this.options as MenuCommand[]) {
+      if (c.command === command) {
+        c.handle(this.component);
+        break;
       }
     }
   }
-});
+
+  render() {
+    return (
+      <div style={{ left: this.x + "px", top: this.y + "px", position: "fixed" }}>
+        <el-dropdown trigger="click" onCommand={this.handleCommand}>
+          <span ref="trigger" class="trigger"></span>
+          <el-dropdown-menu slot="dropdown">
+            {this.options.map(command => (
+              <el-dropdown-item key={command.command} command={command.command}>
+                {command.name}
+              </el-dropdown-item>
+            ))}
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+    );
+  }
+}
 </script>
 
 <style lang="scss" scoped>

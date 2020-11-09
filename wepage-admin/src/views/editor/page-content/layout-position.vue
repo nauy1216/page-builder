@@ -1,40 +1,45 @@
-<template>
-  <div :style="{ width: width + 'px', height: height + 'px' }" class="layout-position">
-    <Vdr v-for="comp in components" :key="comp.id" :comp="comp" @contextmenu="handleComponentContextMenu"> </Vdr>
-  </div>
-</template>
-
-<script lang="ts">
-import defineComponent from "wepage-admin/types/defineComponent";
-import { mapStateTyped } from "wepage-admin/types/store";
-import { PageComponentOptions } from "wepage-admin/types/page";
+<script lang="tsx">
+import { Component, Prop } from "vue-property-decorator";
+import BaseVue from "wepage-admin/BaseVue";
+import { PageStore } from "wepage-admin/store/modules";
 import Vdr from "./vdr.vue";
-export default defineComponent({
+
+@Component({
   components: {
     Vdr
-  },
-  props: {
-    width: {
-      type: Number
-    },
-    height: {
-      type: Number
-    }
-  },
-  computed: {
-    ...mapStateTyped("page", ["pageConfig"]),
-    ...mapStateTyped("editor", ["editorConfig"]),
-    components(): PageComponentOptions[] {
-      const showLayouts = this.pageConfig.layouts.filter(lay => lay.show).map(lay => lay.id);
-      return this.pageConfig.children.filter(comp => showLayouts.indexOf(comp.layoutId) > -1);
-    }
-  },
-  methods: {
-    handleComponentContextMenu($event, comp) {
-      this.$emit("contextmenu", $event, comp);
-    }
   }
-});
+})
+export default class LayoutPosition extends BaseVue {
+  @Prop({
+    type: Number
+  })
+  width;
+
+  @Prop({
+    type: Number
+  })
+  height;
+
+  get components() {
+    const showLayouts = PageStore.layouts.filter(lay => lay.show).map(lay => lay.id);
+    return PageStore.children.filter(comp => showLayouts.indexOf(comp.layoutId) > -1);
+  }
+
+  handleComponentContextMenu($event, comp) {
+    this.$emit("contextmenu", $event, comp);
+  }
+
+  render() {
+    return (
+      <div style={{ width: this.width + "px", height: this.height + "px" }} class="layout-position">
+        {this.components.length > 0 &&
+          this.components.map(comp => {
+            return <Vdr key={comp.id} comp={comp} onContextmenu={this.handleComponentContextMenu}></Vdr>;
+          })}
+      </div>
+    );
+  }
+}
 </script>
 
 <style lang="scss" scoped>
