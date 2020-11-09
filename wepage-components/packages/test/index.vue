@@ -5,16 +5,20 @@
 </template>
 
 <script lang="ts">
-import defineComponent from "../defineComponent";
+import { Component } from "vue-property-decorator";
+import BaseVue from "wepage-components/BaseVue";
 import config from "./config";
-export default defineComponent({
+
+@Component({
   name: "Test",
   config: config.config,
+  props: config.props
+})
+export default class Test extends BaseVue {
   created() {
     console.log("测试");
-  },
-  props: config.props
-});
+  }
+}
 </script>
 <style scoped lang="scss">
 .test {

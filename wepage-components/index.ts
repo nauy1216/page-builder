@@ -22,6 +22,6 @@ export default {
       }
     });
 
-    Vue.prototype.$compList = compList;
+    Vue.prototype.$components = compList;
   }
 };

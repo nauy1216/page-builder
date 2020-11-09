@@ -4,7 +4,6 @@ declare module "*.vue" {
 }
 
 declare module "vue-draggable-resizable-gorkys" {}
-declare module "v-charts" {}
 declare module "throttle-debounce" {
   // TODO: 这里暂时所有参数声明为any，有时间再改
   export function debounce(...args: any[]): any;
