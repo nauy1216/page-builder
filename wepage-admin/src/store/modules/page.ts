@@ -44,6 +44,19 @@ export default class PageModule extends VuexModule implements PageConfig {
   layouts = [defaultPageConfig.layouts[0]]; // 图层
   children = defaultPageConfig.children;
 
+  get config() {
+    return {
+      id: this.id,
+      key: this.key,
+      alias: this.alias,
+      width: this.width,
+      height: this.height,
+      background: this.background,
+      layouts: this.layouts, // 图层
+      children: this.children
+    };
+  }
+
   // 获取指定组件的索引
   private getCompIndex(comp: PageComponentOptions | CompId) {
     if (!comp) return -1;
