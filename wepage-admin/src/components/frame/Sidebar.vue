@@ -69,6 +69,7 @@ export default class Sidebar extends BaseVue {
   position: absolute;
   left: 0;
   top: var(--header-height);
+  width: var(--sidebar-width);
   height: calc(100vh - var(--header-height));
   overflow: auto;
   .el-menu {

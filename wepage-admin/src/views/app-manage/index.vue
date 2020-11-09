@@ -72,20 +72,23 @@ export default class AppManage extends BaseVue {
           <el-table-column prop="id" label="ID" width="300"></el-table-column>
           <el-table-column prop="appName" label="名称" width="180"></el-table-column>
           <el-table-column prop="appType" label="类型" width="180"></el-table-column>
-          <el-table-column label="操作">
-            {scope => {
-              return (
-                <el-button
-                  type="text"
-                  onClick={() => {
-                    this.pageManage(scope.row.id);
-                  }}
-                >
-                  页面管理
-                </el-button>
-              );
+          <el-table-column
+            label="操作"
+            scopedSlots={{
+              default: scope => {
+                return (
+                  <el-button
+                    type="text"
+                    onClick={() => {
+                      this.pageManage(scope.row.id);
+                    }}
+                  >
+                    页面管理
+                  </el-button>
+                );
+              }
             }}
-          </el-table-column>
+          ></el-table-column>
         </el-table>
       </div>
     );

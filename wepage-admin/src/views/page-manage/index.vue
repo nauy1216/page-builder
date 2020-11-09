@@ -1,21 +1,3 @@
-<template>
-  <div class="app-manage">
-    <div class="opera">
-      <el-button @click="createApp">创建页面</el-button>
-    </div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="id" label="ID" width="300"></el-table-column>
-      <el-table-column prop="pageName" label="名称" width="180"> </el-table-column>
-      <el-table-column prop="pageType" label="类型" width="180"> </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button type="text" @click="editPage(scope.row.id)">编辑页面</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
-</template>
-
 <script lang="tsx">
 import { getDialog } from "wepage-admin/components/Dialog";
 import { Component } from "vue-property-decorator";
@@ -74,30 +56,35 @@ export default class PageManage extends BaseVue {
   }
 
   render() {
-    <div class="app-manage">
-      <div class="opera">
-        <el-button onClick={this.createApp}>创建页面</el-button>
+    return (
+      <div class="app-manage">
+        <div class="opera">
+          <el-button onClick={this.createApp}>创建页面</el-button>
+        </div>
+        <el-table data={this.tableData} style="width: 100%">
+          <el-table-column prop="id" label="ID" width="300"></el-table-column>
+          <el-table-column prop="pageName" label="名称" width="180"></el-table-column>
+          <el-table-column prop="pageType" label="类型" width="180"></el-table-column>
+          <el-table-column
+            label="操作"
+            scopedSlots={{
+              default: scope => {
+                return (
+                  <el-button
+                    type="text"
+                    onClick={() => {
+                      this.editPage(scope.row.id);
+                    }}
+                  >
+                    编辑页面
+                  </el-button>
+                );
+              }
+            }}
+          ></el-table-column>
+        </el-table>
       </div>
-      <el-table data={this.tableData} style="width: 100%">
-        <el-table-column prop="id" label="ID" width="300"></el-table-column>
-        <el-table-column prop="pageName" label="名称" width="180"></el-table-column>
-        <el-table-column prop="pageType" label="类型" width="180"></el-table-column>
-        <el-table-column label="操作">
-          {scope => {
-            return (
-              <el-button
-                type="text"
-                onClick={() => {
-                  this.editPage(scope.row.id);
-                }}
-              >
-                编辑页面
-              </el-button>
-            );
-          }}
-        </el-table-column>
-      </el-table>
-    </div>;
+    );
   }
 }
 </script>
