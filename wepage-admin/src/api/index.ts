@@ -1,6 +1,7 @@
 const apis = {
-  appAdd: "/apis/app/add",
+  appAddOrUpdate: "/apis/app/addOrUpdate",
   appList: "/apis/app/list",
+  appDelete: "/apis/app/delete",
   pageAdd: "/apis/page/add",
   pageList: "/apis/page/list",
   pageEdit: "/apis/page/edit",
