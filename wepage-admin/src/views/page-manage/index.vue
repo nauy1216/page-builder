@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { getDialog } from "wepage-admin/components/Dialog";
+import { getDialog } from "wepage-admin/components/dialog/index";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 
@@ -32,7 +32,9 @@ export default class PageManage extends BaseVue {
   createApp() {
     getDialog()
       .show({
-        title: "创建页面",
+        dialogProps: {
+          title: "创建页面"
+        },
         renderContent: () => {
           return (
             <el-form ref="form" {...{ props: { model: this.formData } }} rules={this.rules} label-width="80px">

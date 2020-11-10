@@ -1,7 +1,8 @@
 <script lang="tsx">
-import { getDialog } from "wepage-admin/components/Dialog";
+import { getDialog } from "wepage-admin/components/dialog/index";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
+import { directives } from "shared/utils";
 
 @Component({})
 export default class AppManage extends BaseVue {
@@ -13,13 +14,16 @@ export default class AppManage extends BaseVue {
     height: 1080
   };
   rules = {};
+  loading = false;
 
   created() {
     this.getAppList();
   }
 
   getAppList() {
+    this.loading = true;
     this.$ajax("get", this.$api.appList).then(res => {
+      this.loading = false;
       this.tableData = res.data;
     });
   }
@@ -31,7 +35,9 @@ export default class AppManage extends BaseVue {
   createApp() {
     getDialog()
       .show({
-        title: "创建应用",
+        dialogProps: {
+          title: "创建应用"
+        },
         renderContent: () => {
           return (
             <el-form ref="form" {...{ props: { model: this.formData } }} rules={this.rules} label-width="80px">
@@ -64,7 +70,7 @@ export default class AppManage extends BaseVue {
 
   render() {
     return (
-      <div class="rp-app-manage">
+      <div class="rp-app-manage" {...directives({ loading: this.loading })}>
         <div class="opera">
           <el-button onClick={this.createApp}>创建应用</el-button>
         </div>

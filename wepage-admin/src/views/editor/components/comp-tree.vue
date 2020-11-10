@@ -1,6 +1,5 @@
 <script lang="tsx">
-import { PageLyout, PageComponentOptions } from "wepage-admin/types/page";
-import Dialog, { DialogType } from "wepage-admin/components/Dialog";
+import { getDialog } from "wepage-admin/components/dialog/index";
 import { uuid } from "shared/utils";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
@@ -12,11 +11,7 @@ type TreeNode = {
   data: PageLyout | PageComponentOptions;
   children: TreeNode[];
 };
-@Component({
-  components: {
-    Dialog
-  }
-})
+@Component({})
 export default class CompTree extends BaseVue {
   formData = {
     name: ""
@@ -97,8 +92,10 @@ export default class CompTree extends BaseVue {
   }
 
   showAddDialog() {
-    ((this.$refs.dialog as any) as DialogType).show({
-      title: "新增图层",
+    getDialog().show({
+      dialogProps: {
+        title: "新增图层"
+      },
       renderContent: () => (
         <div>
           <el-form ref="form" {...{ props: { model: this.formData } }} rules={this.rules} label-width="80px">
@@ -162,7 +159,6 @@ export default class CompTree extends BaseVue {
             }}
           </div>
         </el-tree>
-        <Dialog ref="dialog"></Dialog>
       </div>
     );
   }

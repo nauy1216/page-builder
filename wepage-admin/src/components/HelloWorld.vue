@@ -5,15 +5,10 @@
 </template>
 
 <script lang="ts">
-import Dialog from "./Dialog";
 import { Component, Prop, PropSync, Vue } from "vue-property-decorator";
 
 @Component
 export default class HelloWorld extends Vue {
-  components = {
-    Dialog
-  };
-
   @Prop({
     type: String,
     default: "123"

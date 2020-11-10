@@ -12,7 +12,8 @@
     "lint:admin": "cross-env targetApp=admin vue-cli-service lint wepage-admin",
     "lint:web": "cross-env targetApp=web vue-cli-service lint wepage-web",
     "lint:components": "cross-env targetApp=components vue-cli-service lint wepage-components",
-    "lint": "npm run lint:admin & npm run lint:web & npm run lint:components"
+    "lint": "npm run lint:admin & npm run lint:web & npm run lint:components",
+    "build:file": "node ./script/build-file.js"
   },
   "dependencies": {
     "axios": "^0.21.0",
@@ -25,6 +26,7 @@
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-draggable-resizable-gorkys": "^2.4.4",
+    "vue-grid-layout": "^2.3.11",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
