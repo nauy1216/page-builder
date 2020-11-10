@@ -1,18 +1,21 @@
 <script lang="tsx">
 import FrameMessage from "shared/utils/message";
 import { PageStore } from "wepage-admin/store/modules";
-
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 
 @Component({})
 export default class PageShow extends BaseVue {
+  $refs!: {
+    app: HTMLFrameElement;
+  };
+
   get pageConfig() {
     return { ...PageStore };
   }
 
   mounted() {
-    const frameMessage = new FrameMessage("wepage-admin", (this.$refs.app as any).contentWindow);
+    const frameMessage = new FrameMessage("wepage-admin", this.$refs.app.contentWindow!);
     frameMessage.onMessage("getAppConfig", () => {
       return "appConfig 给你啦";
     });

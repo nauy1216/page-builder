@@ -29,7 +29,7 @@ export default class PageManage extends BaseVue {
     this.$router.push(`/editor?appId=${this.$route.query.appId}&pageId=` + pageId);
   }
 
-  createApp() {
+  createPage() {
     getDialog()
       .show({
         dialogProps: {
@@ -40,9 +40,6 @@ export default class PageManage extends BaseVue {
             <el-form ref="form" {...{ props: { model: this.formData } }} rules={this.rules} label-width="80px">
               <el-form-item label="页面名称" prop="pageName">
                 <el-input vModel={this.formData.pageName}></el-input>
-              </el-form-item>
-              <el-form-item label="页面类型" prop="pageType">
-                <el-input vModel={this.formData.pageType}></el-input>
               </el-form-item>
             </el-form>
           );
@@ -61,7 +58,7 @@ export default class PageManage extends BaseVue {
     return (
       <div class="app-manage">
         <div class="opera">
-          <el-button onClick={this.createApp}>创建页面</el-button>
+          <el-button onClick={this.createPage}>创建页面</el-button>
         </div>
         <el-table data={this.tableData} style="width: 100%">
           <el-table-column prop="id" label="ID" width="300"></el-table-column>

@@ -77,7 +77,8 @@ export default class AppManage extends BaseVue {
     }
   }
 
-  createApp() {
+  createApp(data) {
+    this.setFormData(data);
     getDialog()
       .show({
         dialogProps: {
@@ -147,8 +148,7 @@ export default class AppManage extends BaseVue {
                 <el-button
                   type="text"
                   onClick={() => {
-                    this.setFormData(scope.row);
-                    this.createApp();
+                    this.createApp(scope.row);
                   }}
                 >
                   编辑
