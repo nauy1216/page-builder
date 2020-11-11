@@ -8,8 +8,7 @@ export default class PageManage extends BaseVue {
   tableData = [];
   formData = {
     appId: "",
-    pageName: "",
-    pageType: "web"
+    pageName: ""
   };
   rules = {};
 
@@ -47,7 +46,15 @@ export default class PageManage extends BaseVue {
       })
       .then(() => {
         this.formData.appId = this.$route.query.appId as any;
-        this.$ajax("postJson", this.$api.pageAdd, this.formData).then(() => {
+        this.$ajax("postJson", this.$api.pageAdd, {
+          id: "",
+          appId: this.formData.appId,
+          pageName: this.formData.pageName,
+          designWidth: 1920,
+          designHeight: 1080,
+          desc: "",
+          config: ""
+        }).then(() => {
           this.$message.success("操作成功");
           this.getPageList();
         });
@@ -63,7 +70,6 @@ export default class PageManage extends BaseVue {
         <el-table data={this.tableData} style="width: 100%">
           <el-table-column prop="id" label="ID" width="300"></el-table-column>
           <el-table-column prop="pageName" label="名称" width="180"></el-table-column>
-          <el-table-column prop="pageType" label="类型" width="180"></el-table-column>
           <el-table-column
             label="操作"
             scopedSlots={{
