@@ -10,17 +10,13 @@ export default class PageShow extends BaseVue {
     app: HTMLFrameElement;
   };
 
-  get pageConfig() {
-    return { ...PageStore };
-  }
-
   mounted() {
     const frameMessage = new FrameMessage("wepage-admin", this.$refs.app.contentWindow!);
     frameMessage.onMessage("getAppConfig", () => {
       return "appConfig 给你啦";
     });
     frameMessage.onMessage("getPageConfig", () => {
-      const config = JSON.parse(JSON.stringify(this.pageConfig));
+      const config = JSON.parse(JSON.stringify(PageStore.config));
       config.children.forEach(child => {
         child.config.active = false;
       });

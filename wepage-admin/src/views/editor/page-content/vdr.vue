@@ -78,7 +78,6 @@ export default class Vdr extends BaseVue {
                 width: this.comp.config.width + "px",
                 height: this.comp.config.height + "px"
               }}>
-              <div>{this.comp.name}</div>
               {h(this.$components[this.comp.name], {
                 ref: "component",
                 props: this.comp.data
