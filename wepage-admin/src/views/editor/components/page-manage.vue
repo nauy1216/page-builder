@@ -17,7 +17,6 @@ export default class PageManage extends BaseVue {
 
   async created() {
     await this.list();
-    debugger;
     if (this.tableData && this.tableData.length > 0) {
       this.getPageConfig(this.tableData[0].id);
     } else {

@@ -22,7 +22,8 @@ export default class LayoutPosition extends BaseVue {
 
   get components() {
     const showLayouts = PageStore.layouts.filter(lay => lay.show).map(lay => lay.id);
-    return PageStore.children.filter(comp => showLayouts.indexOf(comp.layoutId) > -1);
+    const showAppLayout = layoutId => layoutId === "appLayout";
+    return PageStore.children.filter(comp => showLayouts.indexOf(comp.layoutId) > -1 || showAppLayout(comp.layoutId));
   }
 
   handleComponentContextMenu($event, comp) {

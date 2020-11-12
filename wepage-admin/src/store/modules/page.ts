@@ -6,6 +6,7 @@ function getDefaultLayout(): PageLyout {
   return {
     id: uuid(),
     name: "默认",
+    type: "page",
     zIndex: 0,
     show: true,
     mode: "position"

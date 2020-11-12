@@ -3,7 +3,7 @@ import { getDialog } from "wepage-admin/components/dialog/index";
 import { uuid } from "shared/utils";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
-import { PageStore } from "wepage-admin/store/modules";
+import { AppStore, PageStore } from "wepage-admin/store/modules";
 
 type TreeNode = {
   id: string;
@@ -14,7 +14,8 @@ type TreeNode = {
 @Component({})
 export default class CompTree extends BaseVue {
   formData = {
-    name: ""
+    name: "",
+    type: "app"
   };
 
   rules = {
@@ -24,6 +25,7 @@ export default class CompTree extends BaseVue {
     ]
   };
 
+  // 页面图层
   get treeData(): TreeNode[] {
     const treeData: TreeNode[] = [];
 
@@ -41,14 +43,40 @@ export default class CompTree extends BaseVue {
     }
 
     for (const child of PageStore.children) {
-      LayoutMap[child.layoutId].children.push({
-        id: child.id,
-        label: child.alias,
-        data: child,
-        children: []
-      });
+      // 当组件所在图层是页面图层时
+      if (LayoutMap[child.layoutId]) {
+        LayoutMap[child.layoutId].children.push({
+          id: child.id,
+          label: child.alias,
+          data: child,
+          children: []
+        });
+      }
     }
     return treeData;
+  }
+
+  // 应用图层
+  get appTreeData(): TreeNode[] {
+    // const;
+    return [
+      {
+        id: "appLayout",
+        label: "应用图层",
+        data: {
+          id: "appLayout",
+          key: "appLayout",
+          name: "应用图层", // 图层名称
+          type: "app",
+          zIndex: 0, // 图层层级
+          show: true, // 是否显示
+          mode: "position" // 图层模式
+        },
+        children: AppStore.appComponents.map(child => {
+          return { id: child.id, label: child.alias, data: child, children: [] };
+        })
+      }
+    ];
   }
 
   isActive(node, data) {
@@ -77,7 +105,7 @@ export default class CompTree extends BaseVue {
 
   active(data: TreeNode, node) {
     if (node.level === 1) {
-      PageStore.setActiveLayout(data.id);
+      PageStore.setActiveLayout(data.data as any);
     } else {
       PageStore.setActiveComp(data.id);
     }
@@ -102,6 +130,12 @@ export default class CompTree extends BaseVue {
             <el-form-item label="名称" prop="name">
               <el-input vModel={this.formData.name}></el-input>
             </el-form-item>
+            {/*             <el-form-item label="图层类型" prop="name">
+              <el-select v-model={this.formData.type} placeholder="请选择">
+                <el-option label="应用图层" value="app"></el-option>
+                <el-option label="页面图层" value="page"></el-option>
+              </el-select>
+            </el-form-item>*/}
           </el-form>
         </div>
       ),
@@ -111,6 +145,7 @@ export default class CompTree extends BaseVue {
             PageStore.addLayout({
               id: uuid(),
               name: this.formData.name,
+              type: this.formData.type as any,
               zIndex: 0,
               show: true,
               mode: "position"
@@ -128,6 +163,34 @@ export default class CompTree extends BaseVue {
         <div style="margin-bottom: 10px;">
           <el-button onClick={this.showAddDialog}>新增图层</el-button>
         </div>
+        <div class="title">应用图层</div>
+        <el-tree data={this.appTreeData} node-key="id" expand-on-click-node={false}>
+          {({ node, data }) => {
+            return (
+              <div style="flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center;">
+                <span>{node.label}</span>
+                <span style="float: right;">
+                  {this.isDeactive(node, data) && (
+                    <el-button type="text" size="mini" onClick={() => this.active(data, node)}>
+                      激活
+                    </el-button>
+                  )}
+                  {this.isActive(node, data) && (
+                    <el-button type="text" size="mini" onClick={() => this.deactive(node)}>
+                      取消激活
+                    </el-button>
+                  )}
+                  {node.level === 1 && (
+                    <el-button type="text" size="mini" onClick={() => (data.data.show = !data.data.show)}>
+                      {data.data.show ? "隐藏" : "显示"}
+                    </el-button>
+                  )}
+                </span>
+              </div>
+            );
+          }}
+        </el-tree>
+        <div class="title">页面图层</div>
         <el-tree data={this.treeData} node-key="id" expand-on-click-node={false}>
           {({ node, data }) => {
             return (
@@ -163,4 +226,9 @@ export default class CompTree extends BaseVue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.title {
+  margin: 10px 0;
+  color: var(--font-color-gray1);
+}
+</style>

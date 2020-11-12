@@ -17,6 +17,7 @@ declare interface PageLyout {
   id: string;
   key?: string;
   name: string; // 图层名称
+  type: "app" | "page";
   zIndex: number; // 图层层级
   show: boolean; // 是否显示
   mode: LayoutMode; // 图层模式

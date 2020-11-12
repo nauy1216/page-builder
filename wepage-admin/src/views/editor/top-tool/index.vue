@@ -80,6 +80,7 @@ export default class TopTool extends BaseVue {
             <el-button onClick={() => handleScale(-0.1)}>
               <i class="el-icon-zoom-out"></i>
             </el-button>
+            <el-button onClick={() => handleScale(-0.1)}>模板设置</el-button>
             <el-button>
               <el-dropdown trigger="click">
                 <span style="font-size:12px; line-height: 12px;">

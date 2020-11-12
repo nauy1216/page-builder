@@ -5,9 +5,9 @@ import TopTool from "./top-tool/index.vue";
 import PageContent from "./page-content/index.vue";
 import vHead from "wepage-admin/components/frame/Header.vue";
 import keepAlive from "shared/mixins/keepAliveMixin";
-import { EditorStore } from "wepage-admin/store/modules";
+import { EditorStore, AppStore } from "wepage-admin/store/modules";
 
-import Vue from "vue";
+import BaseVue from "wepage-admin/BaseVue";
 import { Component, Mixins } from "vue-property-decorator";
 const mixin = keepAlive(["/pageShow"]);
 
@@ -20,12 +20,26 @@ const mixin = keepAlive(["/pageShow"]);
     vHead
   }
 })
-export default class EditorIndex extends Mixins<Vue>(Vue.extend(mixin)) {
+export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) {
   get showLeftTool() {
     return EditorStore.showLeftTool;
   }
   get showRightTool() {
     return EditorStore.showRightTool;
+  }
+
+  created() {
+    this.getApp();
+  }
+
+  getApp() {
+    this.$ajax("get", this.$api.getApp, {
+      appId: this.$route.query.appId
+    }).then(res => {
+      console.log(res);
+      delete res.data.pages;
+      AppStore.setAppConfig(res);
+    });
   }
 
   render() {
