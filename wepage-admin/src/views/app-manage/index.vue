@@ -154,6 +154,13 @@ export default class AppManage extends BaseVue {
                   onClick={() => {
                     this.createApp(scope.row);
                   }}>
+                  编辑应用组件
+                </el-button>
+                <el-button
+                  type="text"
+                  onClick={() => {
+                    this.createApp(scope.row);
+                  }}>
                   编辑
                 </el-button>
                 <el-button

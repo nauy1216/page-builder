@@ -28,7 +28,7 @@ export default class Header extends BaseVue {
   font-size: 16px;
   background: #ffffff;
   box-shadow: rgba(141, 158, 167, 0.13) 0px 4px 10px 0px;
-  z-index: 100;
+  z-index: 500;
   @include e((name, logo)) {
     float: left;
     line-height: var(--header-height);
