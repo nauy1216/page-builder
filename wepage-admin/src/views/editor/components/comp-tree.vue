@@ -129,35 +129,33 @@ export default class CompTree extends BaseVue {
           <el-button onClick={this.showAddDialog}>新增图层</el-button>
         </div>
         <el-tree data={this.treeData} node-key="id" expand-on-click-node={false}>
-          <div style="flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center;" slot-scope="{ node, data }">
-            {({ node, data }) => {
-              return (
-                <template>
-                  <span>{node.label}</span>
-                  <span style="float: right;">
-                    {this.isDeactive(node, data) && (
-                      <el-button type="text" size="mini" onClick={() => this.active(data, node)}>
-                        激活
-                      </el-button>
-                    )}
-                    {this.isActive(node, data) && (
-                      <el-button type="text" size="mini" onClick="() => deactive(node)">
-                        取消激活
-                      </el-button>
-                    )}
-                    {node.level === 1 && (
-                      <el-button type="text" size="mini" onClick={() => (data.data.show = !data.data.show)}>
-                        {data.data.show ? "隐藏" : "显示"}
-                      </el-button>
-                    )}
-                    <el-button type="text" size="mini" onClick={() => this.remove(data, node)}>
-                      删除
+          {({ node, data }) => {
+            return (
+              <div style="flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center;">
+                <span>{node.label}</span>
+                <span style="float: right;">
+                  {this.isDeactive(node, data) && (
+                    <el-button type="text" size="mini" onClick={() => this.active(data, node)}>
+                      激活
                     </el-button>
-                  </span>
-                </template>
-              );
-            }}
-          </div>
+                  )}
+                  {this.isActive(node, data) && (
+                    <el-button type="text" size="mini" onClick={() => this.deactive(node)}>
+                      取消激活
+                    </el-button>
+                  )}
+                  {node.level === 1 && (
+                    <el-button type="text" size="mini" onClick={() => (data.data.show = !data.data.show)}>
+                      {data.data.show ? "隐藏" : "显示"}
+                    </el-button>
+                  )}
+                  <el-button type="text" size="mini" onClick={() => this.remove(data, node)}>
+                    删除
+                  </el-button>
+                </span>
+              </div>
+            );
+          }}
         </el-tree>
       </div>
     );

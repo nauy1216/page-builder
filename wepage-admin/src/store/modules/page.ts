@@ -29,6 +29,38 @@ const defaultPageConfig = getDefaultPageConfig();
 
 type CompId = string;
 
+// 获取指定组件的索引
+function getCompIndex(store: PageModule, comp: PageComponentOptions | CompId) {
+  if (!comp) return -1;
+  let index = -1;
+  if (typeof comp === "string") {
+    index = store.children.findIndex(child => child.id === comp);
+  } else {
+    index = store.children.indexOf(comp);
+  }
+  return index;
+}
+
+// 通过组件id获取组件
+function getCompById(store: PageModule, id: CompId): PageComp {
+  if (!id) {
+    return null;
+  }
+  return store.children.find(child => child.id === id) as PageComp;
+}
+
+function getLayoutById(store: PageModule, layoutId: string): PageLyout | null {
+  if (!layoutId) {
+    return null;
+  }
+  return store.layouts.find(child => child.id === layoutId) as PageLyout;
+}
+
+function getLayoutIndex(store: PageModule, layoutId: string) {
+  if (!layoutId) return -1;
+  return store.layouts.findIndex(child => child.id === layoutId);
+}
+
 @Module({ name: "page", dynamic: true, namespaced: true, store })
 export default class PageModule extends VuexModule implements PageConfig {
   dragComp: PureComp = null; // 从组件列表中拖动的组件
@@ -44,6 +76,8 @@ export default class PageModule extends VuexModule implements PageConfig {
   layouts = [defaultPageConfig.layouts[0]]; // 图层
   children = defaultPageConfig.children;
 
+  pageData: any = null; // 后台返回页面数据
+
   get config() {
     return {
       id: this.id,
@@ -57,43 +91,17 @@ export default class PageModule extends VuexModule implements PageConfig {
     };
   }
 
-  // 获取指定组件的索引
-  private getCompIndex(comp: PageComponentOptions | CompId) {
-    if (!comp) return -1;
-    let index = -1;
-    if (typeof comp === "string") {
-      index = this.children.findIndex(child => child.id === comp);
-    } else {
-      index = this.children.indexOf(comp);
-    }
-    return index;
-  }
-
-  // 通过组件id获取组件
-  private getCompById(id: CompId): PageComp {
-    if (!id) {
-      return null;
-    }
-    return this.children.find(child => child.id === id) as PageComp;
-  }
-
-  private getLayoutById(layoutId: string): PageLyout | null {
-    if (!layoutId) {
-      return null;
-    }
-    return this.layouts.find(child => child.id === layoutId) as PageLyout;
-  }
-
-  private getLayoutIndex(layoutId: string) {
-    if (!layoutId) return -1;
-    return this.layouts.findIndex(child => child.id === layoutId);
+  @Mutation
+  setPage(page) {
+    debugger;
+    this.pageData = page;
   }
 
   @Mutation
   setActiveComp(comp: PageComp | CompId) {
     let getComp: PageComp;
     if (typeof comp === "string") {
-      getComp = this.getCompById(comp);
+      getComp = getCompById(this, comp);
     } else {
       getComp = comp;
     }
@@ -123,7 +131,7 @@ export default class PageModule extends VuexModule implements PageConfig {
   @Mutation
   removeComponent(comp: PageComponentOptions | CompId) {
     if (!comp) return;
-    const index = this.getCompIndex(comp);
+    const index = getCompIndex(this, comp);
     if (index > -1) {
       if (typeof comp === "string") {
         if (this.activeComp && this.activeComp.id === comp) {
@@ -166,6 +174,7 @@ export default class PageModule extends VuexModule implements PageConfig {
   @Mutation
   initPageConfig() {
     const defaultState = getDefaultPageConfig();
+    store.commit("page/setPageConfig", defaultState);
     this.activeComp = null;
     this.dragComp = null;
     this.activeLayout = defaultState.layouts[0];
@@ -176,7 +185,7 @@ export default class PageModule extends VuexModule implements PageConfig {
     if (layout == null) {
       this.activeLayout = null;
     } else if (typeof layout === "string") {
-      this.activeLayout = this.getLayoutById(layout);
+      this.activeLayout = getLayoutById(this, layout);
     } else {
       this.activeLayout = layout;
     }
@@ -194,7 +203,7 @@ export default class PageModule extends VuexModule implements PageConfig {
 
   @Mutation
   removeLayout(layoutId: string) {
-    const index = this.getLayoutIndex(layoutId);
+    const index = getLayoutIndex(this, layoutId);
     if (index > -1) {
       this.layouts.splice(index, 1);
       this.children = this.children.filter(child => child.layoutId != layoutId);

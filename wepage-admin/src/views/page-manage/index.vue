@@ -79,14 +79,12 @@ export default class PageManage extends BaseVue {
                     type="text"
                     onClick={() => {
                       this.editPage(scope.row.id);
-                    }}
-                  >
+                    }}>
                     编辑页面
                   </el-button>
                 );
               }
-            }}
-          ></el-table-column>
+            }}></el-table-column>
         </el-table>
       </div>
     );

@@ -70,16 +70,14 @@ export default class Vdr extends BaseVue {
           onDragging={(left, right) => this.handleDrag(this.comp, left, right)}
           onResizing={(left, top, width, height) => this.handleResize(this.comp, left, top, width, height)}
           onDeactivated={this.handleDeactivated}
-          onActivated={() => this.handleActivated(this.comp)}
-        >
+          onActivated={() => this.handleActivated(this.comp)}>
           {
             <div
               onContextmenu={$event => this.handleComponentContextMenu($event, this.comp)}
               style={{
                 width: this.comp.config.width + "px",
                 height: this.comp.config.height + "px"
-              }}
-            >
+              }}>
               <div>{this.comp.name}</div>
               {h(this.$components[this.comp.name], {
                 ref: "component",

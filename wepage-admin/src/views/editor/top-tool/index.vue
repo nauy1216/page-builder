@@ -22,11 +22,11 @@ export default class TopTool extends BaseVue {
     config.children.forEach(child => {
       child.config.active = false;
     });
-    this.$ajax("postJson", this.$api.pageEdit, {
-      appId: this.$route.query.appId,
-      pageId: this.$route.query.pageId,
-      config
-    }).then(() => {
+    console.log("PageStore.pageData =====>", PageStore.pageData);
+    const pageData = JSON.parse(JSON.stringify(PageStore.pageData));
+    pageData.config = JSON.stringify(config);
+
+    this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
       this.$message.success("操作成功");
     });
   }
@@ -83,8 +83,7 @@ export default class TopTool extends BaseVue {
                     EditorStore.setEditorConfig({
                       showLeftTool: !EditorStore.showLeftTool
                     });
-                  }}
-                >
+                  }}>
                   显示左侧工具栏
                   {EditorStore.showLeftTool && <i class="el-icon-check"></i>}
                 </el-dropdown-item>
@@ -93,8 +92,7 @@ export default class TopTool extends BaseVue {
                     EditorStore.setEditorConfig({
                       showRightTool: !EditorStore.showRightTool
                     });
-                  }}
-                >
+                  }}>
                   显示右侧工具栏
                   {EditorStore.showRightTool && <i class="el-icon-check"></i>}
                 </el-dropdown-item>

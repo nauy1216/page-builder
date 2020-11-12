@@ -138,8 +138,7 @@ export default class AppManage extends BaseVue {
                   </div>
                 );
               }
-            }}
-          ></el-table-column>
+            }}></el-table-column>
           <el-table-column prop="createTime" label="创建时间" width="180"></el-table-column>
           <el-table-column prop="desc" label="描述" width="180"></el-table-column>
           <el-table-column label="操作">
@@ -149,24 +148,21 @@ export default class AppManage extends BaseVue {
                   type="text"
                   onClick={() => {
                     this.createApp(scope.row);
-                  }}
-                >
+                  }}>
                   编辑
                 </el-button>
                 <el-button
                   type="text"
                   onClick={() => {
                     this.remove(scope.row.id);
-                  }}
-                >
+                  }}>
                   删除
                 </el-button>
                 <el-button
                   type="text"
                   onClick={() => {
                     this.pageManage(scope.row.id);
-                  }}
-                >
+                  }}>
                   页面管理
                 </el-button>
               </div>

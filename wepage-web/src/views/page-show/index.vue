@@ -59,8 +59,7 @@ export default defineComponent({
           style={{
             width: pageConfig.width + unit,
             height: pageConfig.height + unit
-          }}
-        >
+          }}>
           {pageConfig.children &&
             pageConfig.children.map((comp, index) => {
               return (
@@ -73,8 +72,7 @@ export default defineComponent({
                     width: comp.config.width + unit,
                     height: comp.config.height + unit,
                     zIndex: comp.config.zIndex
-                  }}
-                >
+                  }}>
                   {h(compList[comp.name], {
                     key: comp.name + index,
                     props: {

@@ -37,8 +37,7 @@ export default class RightTool extends BaseVue {
           active={true}
           prevent-deactivation={true}
           class="right-tool-vdr"
-          onResizing={this.handleResize}
-        >
+          onResizing={this.handleResize}>
           <el-tabs vModel={this.activeName}>
             <el-tab-pane label="布局" name="1">
               <LayoutOperate></LayoutOperate>

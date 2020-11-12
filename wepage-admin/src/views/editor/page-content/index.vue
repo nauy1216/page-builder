@@ -56,10 +56,17 @@ export default class PageContent extends BaseVue {
       appId: this.$route.query.appId,
       pageId: this.$route.query.pageId
     }).then(res => {
-      const pageConfig: PageConfig = res.data;
-      if (pageConfig) {
-        PageStore.setActiveLayout(pageConfig.layouts[0]);
-        PageStore.setPageConfig(pageConfig);
+      PageStore.setPage(res.data);
+      if (res.data.config) {
+        try {
+          const pageConfig: PageConfig = JSON.parse(res.data.config);
+          if (pageConfig) {
+            PageStore.setActiveLayout(pageConfig.layouts[0]);
+            PageStore.setPageConfig(pageConfig);
+          }
+        } catch (e) {
+          console.error(e);
+        }
       }
     });
   }
@@ -237,8 +244,7 @@ export default class PageContent extends BaseVue {
         }}
         onDragover={this.handlePageDrageover}
         onDrop={this.handlePageDrop}
-        onContextmenu={this.handleCanvasContextMenu}
-      >
+        onContextmenu={this.handleCanvasContextMenu}>
         <div
           staticClass="page-content"
           class={{ "drag-mode": EditorStore.dragMode }}
@@ -249,8 +255,7 @@ export default class PageContent extends BaseVue {
             width: PageStore.width + "px",
             height: PageStore.height + "px",
             zoom: EditorStore.zoom
-          }}
-        >
+          }}>
           <LayoutPosition width={PageStore.height} height={PageStore.height} onContextmenu={this.handleComponentContextMenu}></LayoutPosition>
         </div>
         <ContextMenu options={this.componentMenu} ref="componentContextMenu"></ContextMenu>

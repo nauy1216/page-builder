@@ -5,7 +5,7 @@ const apis = {
   pageAdd: "/apis/page/addOrUpdate",
   pageList: "/apis/page/list",
   pageEdit: "/apis/page/edit",
-  getPageConfig: "/apis/page/getConfig"
+  getPageConfig: "/apis/page/getOne"
 };
 
 export default apis;

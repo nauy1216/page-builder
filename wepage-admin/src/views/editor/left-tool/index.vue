@@ -45,8 +45,7 @@ export default class LeftTool extends BaseVue {
           active={true}
           prevent-deactivation={true}
           class="left-tool-vdr"
-          onResizing={this.handleResize}
-        >
+          onResizing={this.handleResize}>
           <el-tabs vModel={this.activeName}>
             <el-tab-pane label="组件列表" name="1">
               <div calss="left-tool-list">
@@ -63,8 +62,7 @@ export default class LeftTool extends BaseVue {
                       onDragend={($event: MouseEvent) => {
                         $event.stopPropagation();
                         this.handleDragEnd();
-                      }}
-                    >
+                      }}>
                       <span class="name">{this.$components[compName].extendOptions.config.alias}</span>
                     </div>
                   );

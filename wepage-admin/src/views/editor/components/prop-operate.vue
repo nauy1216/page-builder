@@ -16,12 +16,12 @@ export default class PropOperate extends BaseVue {
   render(h) {
     return (
       <el-form label-position="right" label-width="100px">
-        {this.activeComp &&
-          this.activeCompProps.map((prop, index) => {
+        {this.activeCompProps &&
+          Object.keys(this.activeCompProps).map((prop, index) => {
             return (
-              <el-form-item key={index} label={prop.label}>
+              <el-form-item key={index} label={this.activeCompProps[prop].label}>
                 {this.activeComp &&
-                  h(prop.inputComponent, {
+                  h(this.activeCompProps[prop].inputComponent, {
                     key: index,
                     props: {
                       value: this.activeComp.data[index]

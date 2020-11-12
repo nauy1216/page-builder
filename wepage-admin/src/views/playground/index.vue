@@ -45,8 +45,7 @@ export default class Playground extends BaseVue {
                 class="rp-playground__components-item"
                 onClick={() => {
                   this.selectComponent(name, true);
-                }}
-              >
+                }}>
                 {name}
               </div>
             );
