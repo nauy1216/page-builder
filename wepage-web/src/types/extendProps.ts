@@ -7,6 +7,6 @@ import { VueConstructor } from "vue";
 export interface ExtendProps {
   $api: typeof apis;
   $eventBus: Pick<Vue, "$on" | "$emit">;
-  $compList: { [key: string]: VueConstructor & Record<string, any> };
+  $components: { [key: string]: VueConstructor & Record<string, any> };
   $ajax: typeof ajax;
 }

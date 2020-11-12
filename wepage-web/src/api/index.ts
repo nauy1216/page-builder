@@ -1,6 +1,6 @@
 const apis = {
-  getAppConfig: "/apis/app/getAppConfig",
-  getPageConfig: "/apis/page/getConfig"
+  getAppConfig: "/apis/app/getOne",
+  getPageConfig: "/apis/page/getOne"
 };
 
 export default apis;

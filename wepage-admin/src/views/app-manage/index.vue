@@ -117,6 +117,11 @@ export default class AppManage extends BaseVue {
       });
   }
 
+  preview(appId) {
+    const host = process.env.VUE_APP_PAGE_SHOW_HOST || location.origin;
+    window.open(`${host}/${appId}`);
+  }
+
   render() {
     return (
       <div class="rp-app-manage" {...directives({ loading: this.loading })}>
@@ -150,6 +155,13 @@ export default class AppManage extends BaseVue {
                     this.createApp(scope.row);
                   }}>
                   编辑
+                </el-button>
+                <el-button
+                  type="text"
+                  onClick={() => {
+                    this.preview(scope.row.id);
+                  }}>
+                  预览
                 </el-button>
                 <el-button
                   type="text"

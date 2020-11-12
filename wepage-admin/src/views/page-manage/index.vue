@@ -13,10 +13,26 @@ export default class PageManage extends BaseVue {
   rules = {};
 
   created() {
-    this.getPageList();
+    this.list();
   }
 
-  getPageList() {
+  addOrUpdate() {
+    this.formData.appId = this.$route.query.appId as any;
+    this.$ajax("postJson", this.$api.pageAdd, {
+      id: "",
+      appId: this.formData.appId,
+      pageName: this.formData.pageName,
+      designWidth: 1920,
+      designHeight: 1080,
+      desc: "",
+      config: ""
+    }).then(() => {
+      this.$message.success("操作成功");
+      this.list();
+    });
+  }
+
+  list() {
     this.$ajax("get", this.$api.pageList, {
       appId: this.$route.query.appId
     }).then(res => {
@@ -24,8 +40,20 @@ export default class PageManage extends BaseVue {
     });
   }
 
+  remove(id) {
+    this.$ajax("get", this.$api.pageDelete, { id }).then(() => {
+      this.$message.success("删除成功");
+      this.list();
+    });
+  }
+
   editPage(pageId) {
     this.$router.push(`/editor?appId=${this.$route.query.appId}&pageId=` + pageId);
+  }
+
+  preview(pageId) {
+    const host = process.env.VUE_APP_PAGE_SHOW_HOST || location.origin;
+    window.open(`${host}/${this.$route.query.appId}#/page/${pageId}`);
   }
 
   createPage() {
@@ -45,19 +73,7 @@ export default class PageManage extends BaseVue {
         }
       })
       .then(() => {
-        this.formData.appId = this.$route.query.appId as any;
-        this.$ajax("postJson", this.$api.pageAdd, {
-          id: "",
-          appId: this.formData.appId,
-          pageName: this.formData.pageName,
-          designWidth: 1920,
-          designHeight: 1080,
-          desc: "",
-          config: ""
-        }).then(() => {
-          this.$message.success("操作成功");
-          this.getPageList();
-        });
+        this.addOrUpdate();
       });
   }
 
@@ -75,13 +91,29 @@ export default class PageManage extends BaseVue {
             scopedSlots={{
               default: scope => {
                 return (
-                  <el-button
-                    type="text"
-                    onClick={() => {
-                      this.editPage(scope.row.id);
-                    }}>
-                    编辑页面
-                  </el-button>
+                  <div>
+                    <el-button
+                      type="text"
+                      onClick={() => {
+                        this.editPage(scope.row.id);
+                      }}>
+                      编辑页面
+                    </el-button>
+                    <el-button
+                      type="text"
+                      onClick={() => {
+                        this.preview(scope.row.id);
+                      }}>
+                      预览
+                    </el-button>
+                    <el-button
+                      type="text"
+                      onClick={() => {
+                        this.remove(scope.row.id);
+                      }}>
+                      删除
+                    </el-button>
+                  </div>
                 );
               }
             }}></el-table-column>
