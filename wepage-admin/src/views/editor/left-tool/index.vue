@@ -6,13 +6,15 @@ import EditorOperate from "../components/editor-operate.vue";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 import { PageStore } from "wepage-admin/store/modules";
+import PageManage from "../components/page-manage.vue";
 
 @Component({
   components: {
     CompTree,
     PageOperate,
     CodeOperate,
-    EditorOperate
+    EditorOperate,
+    PageManage
   }
 })
 export default class LeftTool extends BaseVue {
@@ -46,6 +48,7 @@ export default class LeftTool extends BaseVue {
           prevent-deactivation={true}
           class="left-tool-vdr"
           onResizing={this.handleResize}>
+          <PageManage></PageManage>
           <el-tabs vModel={this.activeName}>
             <el-tab-pane label="组件列表" name="1">
               <div calss="left-tool-list">

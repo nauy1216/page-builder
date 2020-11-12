@@ -52,7 +52,8 @@ export default class AppManage extends BaseVue {
   }
 
   pageManage(appId) {
-    this.$router.push("/pageManage?appId=" + appId);
+    this.$router.push("/editor?appId=" + appId);
+    // this.$router.push("/editor?appId=" + appId);
   }
 
   setFormData(data) {
@@ -149,13 +150,6 @@ export default class AppManage extends BaseVue {
           <el-table-column label="操作">
             {scope => (
               <div>
-                <el-button
-                  type="text"
-                  onClick={() => {
-                    this.createApp(scope.row);
-                  }}>
-                  编辑应用组件
-                </el-button>
                 <el-button
                   type="text"
                   onClick={() => {

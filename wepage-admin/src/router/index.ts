@@ -4,7 +4,6 @@ import Editor from "../views/editor/index.vue";
 import PageShow from "../views/page-show/index.vue";
 import Frame from "wepage-admin/components/frame/index.vue";
 import AppManage from "wepage-admin/views/app-manage/index.vue";
-import PageManage from "wepage-admin/views/page-manage/index.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -18,11 +17,6 @@ const routes: Array<RouteConfig> = [
         path: "/appManage",
         name: "AppManage",
         component: AppManage
-      },
-      {
-        path: "/pageManage",
-        name: "PageManage",
-        component: PageManage
       }
     ]
   },
