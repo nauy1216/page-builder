@@ -63,7 +63,6 @@ export default class PageContent extends BaseVue {
 
   // 从组件列表拖拽组件释放
   handlePageDrop(event) {
-    debugger;
     if (!PageStore.activeLayout) {
       this.$message.error("请先在图层管理中选择图层");
       return;
