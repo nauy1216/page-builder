@@ -94,7 +94,6 @@ export default class PageModule extends VuexModule implements PageConfig {
 
   @Mutation
   setPage(page) {
-    debugger;
     this.pageData = page;
   }
 
@@ -123,9 +122,13 @@ export default class PageModule extends VuexModule implements PageConfig {
   @Mutation
   addComponent(comp: PageComponentOptions) {
     if (comp) {
-      this.children.push(comp);
-      // this.setActiveComp(comp);
-      store.commit("page/setActiveComp", comp);
+      if (comp.layoutId === "appLayout") {
+        store.state.app.appComponents.push(comp);
+      } else {
+        this.children.push(comp);
+        // this.setActiveComp(comp);
+        store.commit("page/setActiveComp", comp);
+      }
     }
   }
 

@@ -8,9 +8,7 @@ export default class CodeOperate extends BaseVue {
   code = "";
 
   get pageConfig() {
-    return {
-      ...PageStore
-    };
+    return PageStore.config;
   }
 
   @Watch("pageConfig", {

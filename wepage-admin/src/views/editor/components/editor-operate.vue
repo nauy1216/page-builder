@@ -8,7 +8,7 @@ export default class EditorOperate extends BaseVue {
   editorCode = "";
 
   get editorConfig() {
-    return { ...EditorStore };
+    return EditorStore.config;
   }
 
   @Watch("editorConfig", {

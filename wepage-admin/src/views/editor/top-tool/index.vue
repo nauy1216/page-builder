@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
-import { PageStore, EditorStore } from "wepage-admin/store/modules";
+import { PageStore, EditorStore, AppStore } from "wepage-admin/store/modules";
 
 @Component({})
 export default class TopTool extends BaseVue {
@@ -17,17 +17,21 @@ export default class TopTool extends BaseVue {
   }
 
   save() {
-    console.log("pageConfig", JSON.parse(JSON.stringify(PageStore.config)));
     const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
     config.children.forEach(child => {
       child.config.active = false;
     });
-    console.log("PageStore.pageData =====>", PageStore.pageData);
     const pageData = JSON.parse(JSON.stringify(PageStore.pageData));
     pageData.config = JSON.stringify(config);
 
-    this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
+    const AppData = JSON.parse(JSON.stringify(AppStore.appData));
+    AppData.appComponents = JSON.stringify(AppStore.appComponents);
+
+    this.$ajax("postJson", this.$api.appAddOrUpdate, AppData).then(() => {
       this.$message.success("操作成功");
+      this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
+        this.$message.success("操作成功");
+      });
     });
   }
 
@@ -66,7 +70,8 @@ export default class TopTool extends BaseVue {
           onClick={() => {
             this.$router.go(-1);
           }}>
-          <i class="el-icon-arrow-left"></i>返回
+          <i class="el-icon-arrow-left"></i>
+          {AppStore.appData.appName} - {PageStore.pageData.pageName}
         </div>
         <div class="tool">
           <el-button-group>

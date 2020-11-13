@@ -27,6 +27,20 @@ export default class EditorModule extends VuexModule implements EditorConfig {
   showRightTool = true;
   dragMode = false;
 
+  get config() {
+    return {
+      gridX: this.gridX,
+      gridY: this.gridY,
+      showGrid: this.showGrid,
+      showScrollbar: this.showScrollbar,
+      parent: this.parent,
+      zoom: this.zoom,
+      showLeftTool: this.showLeftTool,
+      showRightTool: this.showRightTool,
+      dragMode: this.dragMode
+    };
+  }
+
   @Mutation
   setEditorConfig(data: Partial<EditorConfig> = getDefaultConfig()) {
     Object.keys(data).forEach(key => {

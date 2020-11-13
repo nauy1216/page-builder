@@ -38,7 +38,10 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
     }).then(res => {
       console.log(res);
       delete res.data.pages;
-      AppStore.setAppConfig(res);
+      AppStore.setApp(res.data);
+      AppStore.setAppConfig({
+        appComponents: JSON.parse(res.data.appComponents)
+      });
     });
   }
 
@@ -69,7 +72,7 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
   .right {
     position: fixed;
     z-index: 200;
-    width: 250px;
+    width: 260px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 4px 0px #e0e0e0;
     height: calc(100vh - var(--header-height));

@@ -57,7 +57,7 @@ export default class RightTool extends BaseVue {
 <style scoped lang="scss">
 .right-tool-vdr {
   box-sizing: border-box;
-  padding: 20px;
+  padding: 20px 10px;
   height: 100% !important;
   &::before {
     display: none;

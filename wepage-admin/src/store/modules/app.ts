@@ -3,26 +3,28 @@ import store from "wepage-admin/store";
 
 function getDefaultConfig(): AppConfig {
   return {
-    id: "",
-    appName: "",
-    appType: "",
-    designHeight: 0,
-    designWidth: 0,
     appComponents: []
   };
 }
 const defaultConfig = getDefaultConfig();
 @Module({ name: "app", dynamic: true, namespaced: true, store })
 export default class AppModule extends VuexModule implements AppConfig {
-  id = defaultConfig.id;
-  appName = defaultConfig.appName;
-  appType = defaultConfig.appType;
-  designHeight = defaultConfig.designHeight;
-  designWidth = defaultConfig.designWidth;
-  appComponents = defaultConfig.appComponents;
+  appComponents: PageComponentOptions[] = defaultConfig.appComponents;
+  appData: any = {};
+
+  get config() {
+    return {
+      appComponents: JSON.stringify(this.appComponents)
+    };
+  }
 
   @Mutation
-  setAppConfig(data: Partial<AppConfig>) {
+  setApp(data) {
+    this.appData = data;
+  }
+
+  @Mutation
+  setAppConfig(data: AppConfig) {
     Object.keys(data).forEach(key => {
       if (data[key] !== undefined) {
         this[key] = data[key];

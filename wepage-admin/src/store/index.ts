@@ -3,8 +3,12 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {},
+export default new Vuex.Store<{
+  page: PageConfig;
+  app: AppConfig;
+  editor: EditorConfig;
+}>({
+  state: {} as any,
   mutations: {},
   actions: {},
   modules: {}
