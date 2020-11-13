@@ -17,7 +17,6 @@ export default class TopTool extends BaseVue {
   }
 
   save() {
-    debugger;
     const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
     config.children.forEach(child => {
       child.config.active = false;

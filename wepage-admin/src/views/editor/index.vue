@@ -39,7 +39,6 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
       console.log(res);
       delete res.data.pages;
       AppStore.setApp(res.data);
-      debugger;
       try {
         if (res.data.config) {
           const config = JSON.parse(res.data.config);

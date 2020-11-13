@@ -26,7 +26,7 @@ export default class PageOperate extends BaseVue {
 
   render() {
     return (
-      <el-form label-position="right" label-width="100px">
+      <el-form label-position="top" label-width="300px">
         <el-form-item label="页面名称">
           <el-input vModel={this.pageConfig.alias}></el-input>
         </el-form-item>
@@ -57,4 +57,11 @@ export default class PageOperate extends BaseVue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+/deep/.el-form-item.el-form-item--mini {
+  margin-bottom: 5px !important;
+}
+/deep/.el-form-item__label {
+  padding-bottom: 0 !important;
+}
+</style>

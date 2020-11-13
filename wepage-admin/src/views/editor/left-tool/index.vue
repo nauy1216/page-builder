@@ -37,16 +37,16 @@ export default class LeftTool extends BaseVue {
     return (
       <div class="left-tool" style={{ width: this.width + 30 + "px", background: "#fff" }}>
         <div class="tool-list">
-          <el-popover placement="right-start" width="300" trigger="hover">
-            <CompTree></CompTree>
-            <div class="tool-list-item" slot="reference">
-              图层
-            </div>
-          </el-popover>
           <el-popover placement="right" width="400" trigger="hover">
             <EditorOperate></EditorOperate>
             <div class="tool-list-item" slot="reference">
               编辑器
+            </div>
+          </el-popover>
+          <el-popover placement="right-start" width="300" trigger="hover">
+            <CompTree></CompTree>
+            <div class="tool-list-item" slot="reference">
+              图层
             </div>
           </el-popover>
           <el-popover placement="right" width="400" trigger="hover">
@@ -93,7 +93,7 @@ export default class LeftTool extends BaseVue {
                   })}
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="页面" name="3">
+              <el-tab-pane label="页面设置" name="3">
                 <PageOperate></PageOperate>
               </el-tab-pane>
             </el-tabs>
