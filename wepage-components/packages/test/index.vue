@@ -7,12 +7,19 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-components/BaseVue";
-import config from "./config";
 
 @Component({
   name: "Test",
-  config: config.config,
-  props: config.props
+  props: {
+    msg: {
+      type: String,
+      default: "hello"
+    },
+    color: {
+      type: String,
+      default: "#ffffff"
+    }
+  }
 })
 export default class Test extends BaseVue {
   created() {

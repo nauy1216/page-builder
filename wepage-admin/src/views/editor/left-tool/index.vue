@@ -87,7 +87,7 @@ export default class LeftTool extends BaseVue {
                           $event.stopPropagation();
                           this.handleDragEnd();
                         }}>
-                        <span class="name">{this.$components[compName].extendOptions.config.alias}</span>
+                        <span class="name">{this.$componentsConfig[compName].config.alias}</span>
                       </div>
                     );
                   })}
@@ -144,8 +144,10 @@ export default class LeftTool extends BaseVue {
   display: inline-flex;
   padding: 10px;
   text-align: left;
+  color: var(--font-color-gray1);
   &:hover {
-    background-color: #e0e0e0;
+    background-color: #f5f7fa;
+    color: var(--theme-color);
   }
   .icon {
     margin-bottom: 10px;

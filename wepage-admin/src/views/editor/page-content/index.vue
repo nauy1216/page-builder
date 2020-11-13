@@ -63,6 +63,7 @@ export default class PageContent extends BaseVue {
 
   // 从组件列表拖拽组件释放
   handlePageDrop(event) {
+    debugger;
     if (!PageStore.activeLayout) {
       this.$message.error("请先在图层管理中选择图层");
       return;
@@ -71,7 +72,8 @@ export default class PageContent extends BaseVue {
     if (comp && comp.extendOptions) {
       // 设置组件所在位置
       const rect = event.target.getBoundingClientRect();
-      let config = JSON.parse(JSON.stringify(comp.extendOptions.config));
+      const componentConfig = JSON.parse(JSON.stringify(this.$componentsConfig[comp.options.name]));
+      let config = componentConfig.config;
       config.x = this.scalePosition(event.clientX - rect.left) + event.target.scrollLeft;
       config.y = this.scalePosition(event.clientY - rect.top) + event.target.scrollTop;
 
@@ -84,7 +86,7 @@ export default class PageContent extends BaseVue {
 
       // 设置默认属性
       const data = {};
-      const props = comp.extendOptions.props;
+      const props = componentConfig.props;
       props &&
         Object.keys(props).forEach(key => {
           if (typeof props[key].default == "function") {
@@ -98,8 +100,8 @@ export default class PageContent extends BaseVue {
         layoutId: PageStore.activeLayout.id,
         id: uuid(),
         key: uuid(),
-        name: comp.extendOptions.name,
-        alias: comp.extendOptions.config.alias,
+        name: comp.options.name,
+        alias: config.alias,
         config,
         data
       });

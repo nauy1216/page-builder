@@ -10,11 +10,12 @@ import VueDraggableResizable from "vue-draggable-resizable-gorkys";
 import "vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import WepageComponents from "wepage-components";
+import components, { componentsConfig } from "wepage-components";
 import apis from "wepage-admin/api";
 import ajax from "shared/utils/ajax";
 
-Vue.use(WepageComponents);
+Vue.prototype.$components = components;
+Vue.prototype.$componentsConfig = componentsConfig;
 Vue.prototype.$api = apis;
 Vue.prototype.$ajax = ajax;
 

@@ -1,8 +1,13 @@
 const path = require("path");
 const fs = require("fs");
 const CLIEngine = require("eslint").CLIEngine;
+const rootPath = "wepage-components/"
+const componentsPath = rootPath + "packages/"
+
 
 createComponentsIndex();
+
+
 
 function createComponentsIndex() {
     let contentHeader = `
@@ -14,27 +19,28 @@ function createComponentsIndex() {
     let contentExportComp = "export default { \n";
     let contentExportConfig = "export const componentsConfig = { \n";
     let result = "";
-    const paths = fs.readdirSync(path.resolve(process.cwd(), "src/components"));
+    const paths = fs.readdirSync(path.resolve(process.cwd(), componentsPath));
     paths.forEach(child => {
         const upper = upperCase(child);
-        if (fs.statSync(path.resolve(process.cwd(), "src/components/" + child)).isDirectory()) {
-            contentHeader += `import Rp${upper} from "./${child}/index.vue"; \n`;
-            contentHeader += `import Rp${upper}Config from "./${child}/config"; \n`;
-            contentExportComp += `  Rp${upper}, \n`;
-            contentExportConfig += `  Rp${upper}: Rp${upper}Config, \n`;
+        if (fs.statSync(path.resolve(process.cwd(), componentsPath + child)).isDirectory()) {
+            contentHeader += `import ${upper} from "./packages/${child}/index.vue"; \n`;
+            contentHeader += `import ${upper}Config from "./packages/${child}/config"; \n`;
+            contentExportComp += `  ${upper}, \n`;
+            contentExportConfig += `  ${upper}: ${upper}Config, \n`;
         }
     });
     contentExportComp += `}`;
     contentExportConfig += `}`;
     result = `${contentHeader}\n\n${contentExportComp}\n\n${contentExportConfig}`;
-    fs.writeFileSync(path.resolve(process.cwd(), "src/components/index.ts"), result);
+    fs.writeFileSync(path.resolve(process.cwd(), rootPath + "index.ts"), result);
     const engine = new CLIEngine({
         fix: true
     });
-    const report = engine.executeOnFiles(path.resolve(process.cwd(), "src/components/index.ts"));
+    const report = engine.executeOnFiles(path.resolve(process.cwd(), rootPath + "/index.ts"));
     CLIEngine.outputFixes(report);
 }
 
 function upperCase(str) {
+    str = str.replace(/(-[^-]?)/g, $1 => ($1.slice(1)).toUpperCase())
     return str[0].toUpperCase() + str.slice(1);
 }
