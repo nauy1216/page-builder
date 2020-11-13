@@ -113,4 +113,7 @@ export default class PageOperate extends BaseVue {
 /deep/.el-form-item__label {
   padding-bottom: 0 !important;
 }
+.el-input {
+  width: 130px;
+}
 </style>

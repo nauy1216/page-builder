@@ -41,7 +41,7 @@ export default class LayoutOperate extends BaseVue {
   render() {
     return (
       this.activeComp && (
-        <el-form label-position="right" label-width="100px">
+        <el-form label-position="top" label-width="100px">
           <el-form-item label="x(px)">
             <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.x}></el-input-number>
           </el-form-item>
@@ -64,4 +64,11 @@ export default class LayoutOperate extends BaseVue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+/deep/.el-form-item.el-form-item--mini {
+  margin-bottom: 5px !important;
+}
+/deep/.el-form-item__label {
+  padding-bottom: 0 !important;
+}
+</style>

@@ -9,7 +9,7 @@ export default class Vdr extends BaseVue {
     required: true,
     type: Object
   })
-  comp;
+  comp!: PageComponentOptions;
 
   mounted() {
     this.calcSize();
@@ -70,6 +70,7 @@ export default class Vdr extends BaseVue {
           y={this.comp.config.y}
           w={this.comp.config.width}
           h={this.comp.config.height}
+          style={{ zIndex: this.comp.config.zIndex }}
           parent={EditorStore.parent}
           draggable={this.isOperable(this.comp)}
           resizable={this.isOperable(this.comp)}
