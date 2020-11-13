@@ -2,18 +2,35 @@ import { Module, VuexModule, Mutation } from "vuex-module-decorators";
 import store from "wepage-admin/store";
 import { uuid } from "shared/utils";
 
-function getDefaultLayout(): PageLyout {
-  return {
-    id: uuid(),
-    name: "默认",
-    type: "page",
-    zIndex: 0,
-    show: true,
-    mode: "position"
-  };
-}
+// function getDefaultLayout(): PageLyout {
+//   return {
+//     id: uuid(),
+//     name: "默认",
+//     type: "page",
+//     zIndex: 0,
+//     show: true,
+//     mode: "position"
+//   };
+// }
 
-function getDefaultPageConfig(): PageConfig {
+function getDefaultPageConfig(isAppFrame?: boolean): PageConfig {
+  const defaultLayout: PageLyout = isAppFrame
+    ? {
+        id: "appLayout",
+        name: "应用框架",
+        type: "app",
+        zIndex: 0,
+        show: true,
+        mode: "position"
+      }
+    : {
+        id: uuid(),
+        name: "默认",
+        type: "page",
+        zIndex: 0,
+        show: true,
+        mode: "position"
+      };
   return {
     id: uuid(),
     key: uuid(),
@@ -21,7 +38,7 @@ function getDefaultPageConfig(): PageConfig {
     width: 1920,
     height: 1080,
     background: "",
-    layouts: [getDefaultLayout()], // 图层
+    layouts: [defaultLayout], // 图层
     children: []
   };
 }
@@ -121,14 +138,11 @@ export default class PageModule extends VuexModule implements PageConfig {
 
   @Mutation
   addComponent(comp: PageComponentOptions) {
+    debugger;
     if (comp) {
-      if (comp.layoutId === "appLayout") {
-        store.state.app.appComponents.push(comp);
-      } else {
-        this.children.push(comp);
-        // this.setActiveComp(comp);
-        store.commit("page/setActiveComp", comp);
-      }
+      this.children.push(comp);
+      // this.setActiveComp(comp);
+      store.commit("page/setActiveComp", comp);
     }
   }
 
@@ -147,6 +161,12 @@ export default class PageModule extends VuexModule implements PageConfig {
         }
       }
       this.children.splice(index, 1);
+      // 如果是appFrame则同步
+      if (this.activeLayout!.id === "appLayout") {
+        store.commit("app/setAppConfig", {
+          children: this.children
+        });
+      }
     }
   }
 
@@ -176,8 +196,8 @@ export default class PageModule extends VuexModule implements PageConfig {
   }
 
   @Mutation
-  initPageConfig() {
-    const defaultState = getDefaultPageConfig();
+  initPageConfig(isAppFrame?: boolean) {
+    const defaultState = getDefaultPageConfig(isAppFrame);
     store.commit("page/setPageConfig", defaultState);
     this.activeComp = null;
     this.dragComp = null;

@@ -21,7 +21,7 @@ export default class LayoutPosition extends BaseVue {
   height;
 
   get components() {
-    const components = AppStore.appComponents.concat(PageStore.children);
+    const components = PageStore.activeLayout?.id === "appLayout" ? PageStore.children : AppStore.children.concat(PageStore.children);
     const showLayouts = PageStore.layouts.filter(lay => lay.show).map(lay => lay.id);
     const showAppLayout = layoutId => layoutId === "appLayout";
     return components.filter(comp => showLayouts.indexOf(comp.layoutId) > -1 || showAppLayout(comp.layoutId));

@@ -2,7 +2,7 @@
 import { getDialog } from "wepage-admin/components/dialog/index";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
-import { PageStore } from "wepage-admin/store/modules";
+import { PageStore, AppStore } from "wepage-admin/store/modules";
 
 @Component({})
 export default class PageManage extends BaseVue {
@@ -85,24 +85,65 @@ export default class PageManage extends BaseVue {
 
   // 获取页面配置
   getPageConfig(pageId?: string) {
-    PageStore.initPageConfig();
     if (pageId) {
       this.currentPageId = pageId;
-      this.$ajax("get", this.$api.getPageConfig, { pageId }).then(res => {
-        PageStore.setPage(res.data);
-        if (res.data.config) {
-          try {
-            const pageConfig: PageConfig = JSON.parse(res.data.config);
-            if (pageConfig) {
-              PageStore.setActiveLayout(pageConfig.layouts[0]);
-              PageStore.setPageConfig(pageConfig);
+      this.$ajax("get", this.$api.getPageConfig, { pageId })
+        .then(res => {
+          PageStore.setPage(res.data);
+          if (res.data.config) {
+            try {
+              const pageConfig: PageConfig = JSON.parse(res.data.config);
+              if (pageConfig) {
+                PageStore.setActiveLayout(pageConfig.layouts[0]);
+                PageStore.setPageConfig(pageConfig);
+              }
+            } catch (e) {
+              console.error(e);
             }
-          } catch (e) {
-            console.error(e);
+          } else {
+            PageStore.initPageConfig();
           }
-        }
-      });
+        })
+        .catch(() => {
+          PageStore.initPageConfig();
+        });
     }
+  }
+
+  // 设置框架
+  setAppFrame() {
+    this.currentPageId = "appLayout";
+    PageStore.initPageConfig(true);
+    PageStore.setPageConfig(JSON.parse(AppStore.appData.config));
+  }
+
+  // 保存框架
+  saveAppFrame(ev) {
+    ev.stopPropagation();
+    const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
+    config.children.forEach(child => {
+      child.config.active = false;
+    });
+    const appData = JSON.parse(JSON.stringify(AppStore.appData));
+    appData.config = JSON.stringify(config);
+    this.$ajax("postJson", this.$api.appAddOrUpdate, appData).then(() => {
+      this.$message.success("操作成功");
+    });
+  }
+
+  // 保存页面
+  save(ev) {
+    ev.stopPropagation();
+    const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
+    config.children.forEach(child => {
+      child.config.active = false;
+    });
+    const pageData = JSON.parse(JSON.stringify(PageStore.pageData));
+    pageData.config = JSON.stringify(config);
+
+    this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
+      this.$message.success("操作成功");
+    });
   }
 
   render() {
@@ -114,6 +155,12 @@ export default class PageManage extends BaseVue {
           </el-button>
         </div>
         <ul class="page-list">
+          <div staticClass="page-list-item" class={{ "page-list-item--active": this.currentPageId === "appLayout" }} onClick={this.setAppFrame}>
+            页面框架设置
+            <el-button type="text" onClick={this.saveAppFrame} v-show={this.currentPageId === "appLayout"}>
+              保存
+            </el-button>
+          </div>
           {this.tableData.map(page => {
             return (
               <li
@@ -124,6 +171,9 @@ export default class PageManage extends BaseVue {
                 }}>
                 <div>{page.pageName}</div>
                 <div>
+                  <el-button type="text" style="margin-right:10px;" onClick={this.save} v-show={this.currentPageId === page.id}>
+                    保存
+                  </el-button>
                   <el-dropdown trigger="hover">
                     <i class="el-icon-more"></i>
                     <el-dropdown-menu slot="dropdown">

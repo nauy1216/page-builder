@@ -37,12 +37,15 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
       appId: this.$route.query.appId
     }).then(res => {
       console.log(res);
+      debugger;
       delete res.data.pages;
       AppStore.setApp(res.data);
       try {
         if (res.data.config) {
           const config = JSON.parse(res.data.config);
-          AppStore.setAppConfig(config);
+          AppStore.setAppConfig({
+            children: config.children
+          });
         }
       } catch (e) {
         console.error(e);

@@ -47,29 +47,7 @@ export default class PageContent extends BaseVue {
   created() {
     this.addMoveEvent();
     this.setContextMenuList();
-    // this.getPageConfig();
   }
-
-  // getPageConfig() {
-  //   PageStore.initPageConfig();
-  //   this.$ajax("get", this.$api.getPageConfig, {
-  //     appId: this.$route.query.appId,
-  //     pageId: this.$route.query.pageId
-  //   }).then(res => {
-  //     PageStore.setPage(res.data);
-  //     if (res.data.config) {
-  //       try {
-  //         const pageConfig: PageConfig = JSON.parse(res.data.config);
-  //         if (pageConfig) {
-  //           PageStore.setActiveLayout(pageConfig.layouts[0]);
-  //           PageStore.setPageConfig(pageConfig);
-  //         }
-  //       } catch (e) {
-  //         console.error(e);
-  //       }
-  //     }
-  //   });
-  // }
 
   createBackground(x, y) {
     if (!EditorStore.showGrid) return "";

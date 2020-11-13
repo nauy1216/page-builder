@@ -72,7 +72,7 @@ export default class CompTree extends BaseVue {
           show: true, // 是否显示
           mode: "position" // 图层模式
         },
-        children: AppStore.appComponents.map(child => {
+        children: AppStore.children.map(child => {
           return { id: child.id, label: child.alias, data: child, children: [] };
         })
       }
@@ -163,7 +163,8 @@ export default class CompTree extends BaseVue {
         <div style="margin-bottom: 10px;">
           <el-button onClick={this.showAddDialog}>新增图层</el-button>
         </div>
-        <div class="title">应用图层</div>
+        {/**
+                <div class="title">应用图层</div>
         <el-tree data={this.appTreeData} node-key="id" expand-on-click-node={false}>
           {({ node, data }) => {
             return (
@@ -189,8 +190,7 @@ export default class CompTree extends BaseVue {
               </div>
             );
           }}
-        </el-tree>
-        <div class="title">页面图层</div>
+        </el-tree>*/}
         <el-tree data={this.treeData} node-key="id" expand-on-click-node={false}>
           {({ node, data }) => {
             return (

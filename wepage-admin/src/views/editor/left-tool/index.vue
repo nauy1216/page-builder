@@ -52,7 +52,7 @@ export default class LeftTool extends BaseVue {
           <el-popover placement="right" width="400" trigger="hover">
             <CodeOperate></CodeOperate>
             <div class="tool-list-item" slot="reference">
-              页面代码
+              代码
             </div>
           </el-popover>
         </div>

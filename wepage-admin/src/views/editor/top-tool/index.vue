@@ -16,23 +16,23 @@ export default class TopTool extends BaseVue {
     }
   }
 
-  save() {
-    const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
-    config.children.forEach(child => {
-      child.config.active = false;
-    });
-    const pageData = JSON.parse(JSON.stringify(PageStore.pageData));
-    pageData.config = JSON.stringify(config);
+  // save() {
+  //   const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
+  //   config.children.forEach(child => {
+  //     child.config.active = false;
+  //   });
+  //   const pageData = JSON.parse(JSON.stringify(PageStore.pageData));
+  //   pageData.config = JSON.stringify(config);
 
-    const AppData = JSON.parse(JSON.stringify(AppStore.appData));
-    AppData.config = JSON.stringify(AppStore.config);
+  //   const AppData = JSON.parse(JSON.stringify(AppStore.appData));
+  //   AppData.config = JSON.stringify(AppStore.config);
 
-    this.$ajax("postJson", this.$api.appAddOrUpdate, AppData).then(() => {
-      this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
-        this.$message.success("操作成功");
-      });
-    });
-  }
+  //   this.$ajax("postJson", this.$api.appAddOrUpdate, AppData).then(() => {
+  //     this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
+  //       this.$message.success("操作成功");
+  //     });
+  //   });
+  // }
 
   handleScale(num) {
     EditorStore.zoom += num;
@@ -61,7 +61,7 @@ export default class TopTool extends BaseVue {
   }
 
   render() {
-    const { top, save, handleScale, requestFullScreen, preview, changeDragMode } = this;
+    const { top, handleScale, requestFullScreen, preview, changeDragMode } = this;
     return (
       <div class="top-tool" style={{ top: top + "px" }}>
         <div
@@ -74,7 +74,7 @@ export default class TopTool extends BaseVue {
         </div>
         <div class="tool">
           <el-button-group>
-            <el-button onClick={save}>保存</el-button>
+            {/**<el-button onClick={save}>保存</el-button> */}
             <el-button onClick={preview}>预览</el-button>
             <el-button onClick={requestFullScreen}>{this.isFullScreen ? "退出全屏" : "全屏"}</el-button>
             <el-button onClick={changeDragMode}>拖拽模式{EditorStore.dragMode ? <i class="el-icon-check"></i> : null}</el-button>

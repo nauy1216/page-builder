@@ -7,7 +7,7 @@ function getDefaultConfig(): EditorConfig {
     gridY: 20,
     showGrid: true,
     showScrollbar: true,
-    parent: true,
+    parent: false,
     zoom: 1,
     showLeftTool: true,
     showRightTool: true,
@@ -15,17 +15,18 @@ function getDefaultConfig(): EditorConfig {
   };
 }
 
+const defaultConfig = getDefaultConfig();
 @Module({ name: "editor", dynamic: true, namespaced: true, store })
 export default class EditorModule extends VuexModule implements EditorConfig {
-  gridX = 20;
-  gridY = 20;
-  showGrid = true;
-  showScrollbar = true;
-  parent = true;
-  zoom = 1;
-  showLeftTool = true;
-  showRightTool = true;
-  dragMode = false;
+  gridX = defaultConfig.gridX;
+  gridY = defaultConfig.gridY;
+  showGrid = defaultConfig.showGrid;
+  showScrollbar = defaultConfig.showScrollbar;
+  parent = defaultConfig.parent;
+  zoom = defaultConfig.zoom;
+  showLeftTool = defaultConfig.showRightTool;
+  showRightTool = defaultConfig.showRightTool;
+  dragMode = defaultConfig.dragMode;
 
   get config() {
     return {

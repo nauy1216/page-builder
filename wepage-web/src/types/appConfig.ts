@@ -2,7 +2,7 @@ export type AppConfig = {
   id: string;
   appName: string;
   config: {
-    appComponents: PageComponentOptions[];
+    children: PageComponentOptions[];
   };
   pages: {
     id: string;

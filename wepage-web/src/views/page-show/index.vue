@@ -45,7 +45,7 @@ export default defineComponent({
     const { unit, isRem } = this;
     const px2rem = px => px / this.fontSize;
 
-    const components = this.appConfig.config.appComponents.concat(pageConfig.children);
+    const components = this.appConfig.config.children.concat(pageConfig.children);
 
     if (isRem) {
       pageConfig.width = px2rem(pageConfig.width);

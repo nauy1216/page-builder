@@ -1,7 +1,7 @@
 export default {
   id: "app1",
   appName: "测试",
-  appComponents: [
+  children: [
     {
       layoutId: "16034361706947317",
       id: "1603436202714439",

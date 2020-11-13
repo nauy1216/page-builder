@@ -3,18 +3,18 @@ import store from "wepage-admin/store";
 
 function getDefaultConfig(): AppConfig {
   return {
-    appComponents: []
+    children: []
   };
 }
 const defaultConfig = getDefaultConfig();
 @Module({ name: "app", dynamic: true, namespaced: true, store })
 export default class AppModule extends VuexModule implements AppConfig {
-  appComponents: PageComponentOptions[] = defaultConfig.appComponents;
+  children: PageComponentOptions[] = defaultConfig.children!;
   appData: any = {};
 
   get config() {
     return {
-      appComponents: this.appComponents
+      children: this.children
     };
   }
 
