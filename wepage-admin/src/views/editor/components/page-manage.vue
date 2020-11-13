@@ -20,7 +20,7 @@ export default class PageManage extends BaseVue {
     if (this.tableData && this.tableData.length > 0) {
       this.getPageConfig(this.tableData[0].id);
     } else {
-      this.getPageConfig();
+      this.setAppFrame();
     }
   }
 
