@@ -43,19 +43,19 @@ export default class LayoutOperate extends BaseVue {
       this.activeComp && (
         <el-form label-position="right" label-width="100px">
           <el-form-item label="x(px)">
-            <el-input-number precision={2} step={1} vModel={this.activeComp.config.x}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.x}></el-input-number>
           </el-form-item>
           <el-form-item label="y(px)">
-            <el-input-number precision={2} step={1} vModel={this.activeComp.config.y}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.y}></el-input-number>
           </el-form-item>
           <el-form-item label="width(px)">
-            <el-input-number precision={2} step={1} vModel={this.activeComp.config.width}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.width}></el-input-number>
           </el-form-item>
           <el-form-item label="height(px)">
-            <el-input-number precision={2} step={1} vModel={this.activeComp.config.height}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.height}></el-input-number>
           </el-form-item>
           <el-form-item label="z-index(px)">
-            <el-input-number precision={2} step={1} vModel={this.activeComp.config.zIndex}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.zIndex}></el-input-number>
           </el-form-item>
         </el-form>
       )
