@@ -156,7 +156,7 @@ export default class PageManage extends BaseVue {
         </div>
         <ul class="page-list">
           <div staticClass="page-list-item" class={{ "page-list-item--active": this.currentPageId === "appLayout" }} onClick={this.setAppFrame}>
-            页面框架设置
+            应用框架设置
             <el-button type="text" onClick={this.saveAppFrame} v-show={this.currentPageId === "appLayout"}>
               保存
             </el-button>
@@ -175,7 +175,7 @@ export default class PageManage extends BaseVue {
                     保存
                   </el-button>
                   <el-dropdown trigger="hover">
-                    <i class="el-icon-more"></i>
+                    <i class="el-icon-more" onClick={ev => ev.stopPropagation()}></i>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
                         nativeOnclick={() => {
@@ -220,6 +220,7 @@ export default class PageManage extends BaseVue {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
     &--active {
       background-color: #f5f7fa;
     }
@@ -228,7 +229,7 @@ export default class PageManage extends BaseVue {
     }
     border-bottom: 1px solid rgb(235, 238, 245);
     .el-icon-more {
-      cursor: pointer;
+      cursor: auto;
     }
   }
 }

@@ -25,7 +25,7 @@ export default class Vdr extends BaseVue {
     comp.config.y = top;
     comp.config.width = width;
     comp.config.height = height;
-    PageStore.refreshComponent(comp);
+    // PageStore.refreshComponent(comp);
   }
 
   handleDeactivated() {

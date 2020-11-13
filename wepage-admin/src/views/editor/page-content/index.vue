@@ -106,8 +106,18 @@ export default class PageContent extends BaseVue {
     }
   }
 
+  isOperable(comp: PageComponentOptions) {
+    if (comp.layoutId === "appLayout" && PageStore.activeLayout?.id !== "appLayout") {
+      return false;
+    }
+    return true;
+  }
+
   // 组件右键菜单
   handleComponentContextMenu(event, comp) {
+    if (!this.isOperable(comp)) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     (this.$refs.contextMenu as ContextMenu).show(event.clientX, event.clientY, [
