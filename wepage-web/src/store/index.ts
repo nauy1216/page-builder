@@ -33,7 +33,9 @@ const actions = {
         appId,
         pageId
       }).then(res => {
-        context.commit("setPageConfig", JSON.parse(res.data.config));
+        if (res.data.config) {
+          context.commit("setPageConfig", JSON.parse(res.data.config));
+        }
       });
     } else {
       frameMessage

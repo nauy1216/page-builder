@@ -93,9 +93,9 @@ export default class LeftTool extends BaseVue {
                   })}
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="页面设置" name="3">
+              {/**              <el-tab-pane label="页面设置" name="3">
                 <PageOperate></PageOperate>
-              </el-tab-pane>
+              </el-tab-pane> */}
             </el-tabs>
           </vue-draggable-resizable>
         </div>

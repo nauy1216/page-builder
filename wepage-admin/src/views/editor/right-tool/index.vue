@@ -4,6 +4,7 @@ import PropOperate from "../components/prop-operate.vue";
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 import { PageStore } from "wepage-admin/store/modules";
+import PageOperate from "../components/page-operate.vue";
 
 @Component({
   components: {
@@ -47,6 +48,9 @@ export default class RightTool extends BaseVue {
             </el-tab-pane>
             <el-tab-pane label="数据" name="3"></el-tab-pane>
             <el-tab-pane label="交互" name="4"></el-tab-pane>
+            <el-tab-pane label="页面设置" name="5">
+              <PageOperate></PageOperate>
+            </el-tab-pane>
           </el-tabs>
         </vue-draggable-resizable>
       </div>

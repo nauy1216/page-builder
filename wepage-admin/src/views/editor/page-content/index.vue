@@ -1,6 +1,6 @@
 <script lang="tsx">
 // https://tingtas.com/vue-draggable-resizable-gorkys/
-import ContextMenu, { MenuCommand } from "../components/ContextMenu.vue";
+import ContextMenu, { MenuCommand } from "../components/context-menu.vue";
 import { uuid } from "shared/utils";
 import LayoutPosition from "./layout-position.vue";
 import { Component } from "vue-property-decorator";

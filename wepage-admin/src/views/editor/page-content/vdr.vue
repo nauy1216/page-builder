@@ -33,7 +33,9 @@ export default class Vdr extends BaseVue {
   }
 
   handleActivated(comp) {
-    PageStore.setActiveComp(comp);
+    if (this.isOperable(comp)) {
+      PageStore.setActiveComp(comp);
+    }
   }
 
   handleComponentContextMenu($event, comp) {
@@ -50,6 +52,13 @@ export default class Vdr extends BaseVue {
     });
   }
 
+  isOperable(comp: PageComponentOptions) {
+    if (comp.layoutId === "appLayout" && PageStore.activeLayout?.id !== "appLayout") {
+      return false;
+    }
+    return true;
+  }
+
   render(h) {
     if (!this.comp) return;
     return (
@@ -62,6 +71,9 @@ export default class Vdr extends BaseVue {
           w={this.comp.config.width}
           h={this.comp.config.height}
           parent={EditorStore.parent}
+          draggable={this.isOperable(this.comp)}
+          resizable={this.isOperable(this.comp)}
+          disableUserSelect={this.isOperable(this.comp)}
           debug={false}
           prevent-deactivation={true}
           isConflictCheck={false}

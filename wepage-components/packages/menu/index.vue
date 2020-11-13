@@ -1,7 +1,7 @@
 <template>
   <div class="test" :style="{ background: color }">
-    <div @click="$router.push(`/page/033f61c0-2557-11eb-a2ff-f1529f21fa06`)">页面1</div>
-    <div @click="$router.push(`/page/37d1a240-2557-11eb-a2ff-f1529f21fa06`)">页面2</div>
+    <div @click="$router.push(`/page/033f61c0-2557-11eb-a2ff-f1529f21fa06`)">首页</div>
+    <div @click="$router.push(`/page/37d1a240-2557-11eb-a2ff-f1529f21fa06`)">集团简介</div>
     <div @click="$router.push(`/gage/`)">页面3</div>
   </div>
 </template>
