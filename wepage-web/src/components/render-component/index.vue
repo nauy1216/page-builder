@@ -33,19 +33,19 @@ export default defineComponent({
   },
   methods: {
     getPageConfig(): any {
-      if (this.$route.params.pageId == "1") {
-        import("wepage-web/mock/page1").then(res => {
-          console.log("res", res);
-          this.pageConfig = res.default as any;
-          (this.pageConfig as any).children = (this.pageConfig as any).children.concat(JSON.parse(JSON.stringify(this.appConfig.children)));
-        });
-      } else if (this.$route.params.pageId == "2") {
-        import("wepage-web/mock/page2").then(res => {
-          console.log("res", res);
-          this.pageConfig = res.default as any;
-          (this.pageConfig as any).children = (this.pageConfig as any).children.concat(JSON.parse(JSON.stringify(this.appConfig.children)));
-        });
-      }
+      // if (this.$route.params.pageId == "1") {
+      //   import("wepage-web/mock/page1").then(res => {
+      //     console.log("res", res);
+      //     this.pageConfig = res.default as any;
+      //     (this.pageConfig as any).children = (this.pageConfig as any).children.concat(JSON.parse(JSON.stringify(this.appConfig.children)));
+      //   });
+      // } else if (this.$route.params.pageId == "2") {
+      //   import("wepage-web/mock/page2").then(res => {
+      //     console.log("res", res);
+      //     this.pageConfig = res.default as any;
+      //     (this.pageConfig as any).children = (this.pageConfig as any).children.concat(JSON.parse(JSON.stringify(this.appConfig.children)));
+      //   });
+      // }
     }
   },
   render(h) {

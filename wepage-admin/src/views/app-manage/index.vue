@@ -16,7 +16,12 @@ export default class AppManage extends BaseVue {
     config: "",
     desc: ""
   };
-  rules = {};
+  rules = {
+    appName: [
+      { required: true, message: "请输入应用名称", trigger: "blur" },
+      { min: 1, max: 10, message: "长度不超过10个字符", trigger: "blur" }
+    ]
+  };
   loading = false;
 
   created() {
@@ -82,44 +87,46 @@ export default class AppManage extends BaseVue {
     }
   }
 
-  createApp(data) {
+  createApp(data?: any) {
     this.setFormData(data);
-    getDialog()
-      .show({
-        dialogProps: {
-          width: "400px",
-          title: "创建应用"
-        },
-        renderContent: () => {
-          return (
-            <el-form ref="form" {...{ props: { model: this.formData } }} rules={this.rules} label-width="80px">
-              <el-form-item label="应用名称" prop="name">
-                <el-input style="width:193px" vModel={this.formData.appName}></el-input>
-              </el-form-item>
-              <el-form-item label="屏幕尺寸" prop="name">
-                <el-input vModel={this.formData.width} placeholder="宽" style="width: 80px;text-align:center"></el-input>
-                <span style="margin: 0 10px;">x</span>
-                <el-input vModel={this.formData.height} placeholder="高" style="width: 80px;text-align:center"></el-input>
-              </el-form-item>
-              <el-form-item label="应用类型" prop="name">
-                <el-select vModel={this.formData.appType} placeholder="请选择">
-                  <el-option label="大屏可视化" value="1"></el-option>
-                  <el-option label="h5" value="2" disabled></el-option>
-                  <el-option label="小程序" value="3" disabled></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="描述" prop="name">
-                <el-input style="width:193px" vModel={this.formData.desc}></el-input>
-              </el-form-item>
-            </el-form>
-          );
-        }
-      })
-      .then(action => {
-        if (action === "confirm") {
-          this.addOrUpdate();
-        }
-      });
+    getDialog().show({
+      dialogProps: {
+        width: "400px",
+        title: "创建应用"
+      },
+      renderContent: () => {
+        return (
+          <el-form ref="form" {...{ props: { model: this.formData, rules: this.rules } }} rules={this.rules} label-width="80px">
+            <el-form-item label="应用名称" prop="appName">
+              <el-input style="width:193px" vModel={this.formData.appName}></el-input>
+            </el-form-item>
+            <el-form-item label="屏幕尺寸" prop="name">
+              <el-input vModel={this.formData.width} placeholder="宽" style="width: 80px;text-align:center"></el-input>
+              <span style="margin: 0 10px;">x</span>
+              <el-input vModel={this.formData.height} placeholder="高" style="width: 80px;text-align:center"></el-input>
+            </el-form-item>
+            <el-form-item label="应用类型" prop="name">
+              <el-select vModel={this.formData.appType} placeholder="请选择">
+                <el-option label="大屏可视化" value="1"></el-option>
+                <el-option label="h5" value="2" disabled></el-option>
+                <el-option label="小程序" value="3" disabled></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="描述" prop="name">
+              <el-input style="width:193px" vModel={this.formData.desc}></el-input>
+            </el-form-item>
+          </el-form>
+        );
+      },
+      confirm: close => {
+        (this.$refs.form as any).validate(valid => {
+          if (valid) {
+            this.addOrUpdate();
+            close();
+          }
+        });
+      }
+    });
   }
 
   preview(appId) {
@@ -131,7 +138,12 @@ export default class AppManage extends BaseVue {
     return (
       <div class="rp-app-manage" {...directives({ loading: this.loading })}>
         <div class="opera">
-          <el-button onClick={this.createApp}>创建应用</el-button>
+          <el-button
+            onClick={() => {
+              this.createApp();
+            }}>
+            创建应用
+          </el-button>
         </div>
         <el-table data={this.tableData} style="width: 100%">
           <el-table-column prop="id" label="ID" width="300"></el-table-column>
