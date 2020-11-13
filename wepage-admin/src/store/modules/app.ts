@@ -14,7 +14,7 @@ export default class AppModule extends VuexModule implements AppConfig {
 
   get config() {
     return {
-      appComponents: JSON.stringify(this.appComponents)
+      appComponents: this.appComponents
     };
   }
 

@@ -93,23 +93,9 @@ export default class LeftTool extends BaseVue {
                   })}
                 </div>
               </el-tab-pane>
-              {/**
-              <el-tab-pane label="图层管理" name="2">
-                <CompTree></CompTree>
-              </el-tab-pane>
-              */}
               <el-tab-pane label="页面" name="3">
                 <PageOperate></PageOperate>
               </el-tab-pane>
-
-              {/**
-             代码出现死循环
-            <el-tab-pane label="代码" name="4">
-              <CodeOperate></CodeOperate>
-            </el-tab-pane>
-            <el-tab-pane label="编辑器" name="5">
-              <EditorOperate></EditorOperate>
-            </el-tab-pane> */}
             </el-tabs>
           </vue-draggable-resizable>
         </div>

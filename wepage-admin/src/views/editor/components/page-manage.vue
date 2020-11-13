@@ -55,10 +55,6 @@ export default class PageManage extends BaseVue {
     });
   }
 
-  editPage(pageId) {
-    this.$router.push(`/editor?appId=${this.$route.query.appId}&pageId=` + pageId);
-  }
-
   preview(pageId) {
     const host = process.env.VUE_APP_PAGE_SHOW_HOST || location.origin;
     window.open(`${host}/${this.$route.query.appId}#/page/${pageId}`);
@@ -133,12 +129,6 @@ export default class PageManage extends BaseVue {
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
                         nativeOnclick={() => {
-                          this.editPage(page.id);
-                        }}>
-                        编辑页面
-                      </el-dropdown-item>
-                      <el-dropdown-item
-                        nativeOnclick={() => {
                           this.preview(page.id);
                         }}>
                         预览
@@ -149,6 +139,7 @@ export default class PageManage extends BaseVue {
                         }}>
                         删除
                       </el-dropdown-item>
+                      <el-dropdown-item>复制</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </div>

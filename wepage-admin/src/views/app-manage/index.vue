@@ -13,6 +13,7 @@ export default class AppManage extends BaseVue {
     appType: "1",
     width: 1920,
     height: 1080,
+    config: "",
     desc: ""
   };
   rules = {};
@@ -44,7 +45,8 @@ export default class AppManage extends BaseVue {
       appType: this.formData.appType,
       designWidth: this.formData.width,
       designHeight: this.formData.height,
-      desc: this.formData.desc
+      desc: this.formData.desc,
+      config: this.formData.config || ""
     }).then(() => {
       this.$message.success("添加成功");
       this.list();
@@ -64,7 +66,8 @@ export default class AppManage extends BaseVue {
         appType: data.appType,
         width: data.designWidth,
         height: data.designHeight,
-        desc: data.desc
+        desc: data.desc,
+        config: data.config
       };
     } else {
       this.formData = {
@@ -73,7 +76,8 @@ export default class AppManage extends BaseVue {
         appType: "1",
         width: 1920,
         height: 1080,
-        desc: ""
+        desc: "",
+        config: ""
       };
     }
   }

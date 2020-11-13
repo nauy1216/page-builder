@@ -17,6 +17,7 @@ export default class TopTool extends BaseVue {
   }
 
   save() {
+    debugger;
     const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
     config.children.forEach(child => {
       child.config.active = false;
@@ -25,10 +26,9 @@ export default class TopTool extends BaseVue {
     pageData.config = JSON.stringify(config);
 
     const AppData = JSON.parse(JSON.stringify(AppStore.appData));
-    AppData.appComponents = JSON.stringify(AppStore.appComponents);
+    AppData.config = JSON.stringify(AppStore.config);
 
     this.$ajax("postJson", this.$api.appAddOrUpdate, AppData).then(() => {
-      this.$message.success("操作成功");
       this.$ajax("postJson", this.$api.pageAdd, pageData).then(() => {
         this.$message.success("操作成功");
       });
@@ -71,7 +71,7 @@ export default class TopTool extends BaseVue {
             this.$router.go(-1);
           }}>
           <i class="el-icon-arrow-left"></i>
-          {AppStore.appData.appName} - {PageStore.pageData.pageName}
+          {AppStore.appData && PageStore.pageData ? `${AppStore.appData.appName} - ${PageStore.pageData.pageName}` : "返回"}
         </div>
         <div class="tool">
           <el-button-group>
