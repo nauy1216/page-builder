@@ -35,9 +35,12 @@ export default class TopTool extends BaseVue {
   // }
 
   handleScale(num) {
-    EditorStore.zoom += num;
-    EditorStore.zoom = Math.max(0, EditorStore.zoom);
-    EditorStore.zoom = Math.min(10, EditorStore.zoom);
+    let zoom = EditorStore.zoom + num;
+    zoom = Math.max(0, zoom);
+    zoom = Math.min(10, zoom);
+    EditorStore.setEditorConfig({
+      zoom
+    });
   }
 
   requestFullScreen() {
@@ -57,7 +60,9 @@ export default class TopTool extends BaseVue {
   }
 
   changeDragMode() {
-    EditorStore.dragMode = !EditorStore.dragMode;
+    EditorStore.setEditorConfig({
+      dragMode: !EditorStore.dragMode
+    });
   }
 
   render() {
@@ -84,7 +89,6 @@ export default class TopTool extends BaseVue {
             <el-button onClick={() => handleScale(-0.1)}>
               <i class="el-icon-zoom-out"></i>
             </el-button>
-            <el-button onClick={() => handleScale(-0.1)}>模板设置</el-button>
             <el-button>
               <el-dropdown trigger="click">
                 <span style="font-size:12px; line-height: 12px;">

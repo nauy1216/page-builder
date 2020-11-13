@@ -36,7 +36,7 @@ export default class LayoutPosition extends BaseVue {
       <div style={{ width: this.width + "px", height: this.height + "px" }} class="layout-position">
         {this.components.length > 0 &&
           this.components.map(comp => {
-            return <Vdr key={comp.id} comp={comp} onContextmenu={this.handleComponentContextMenu}></Vdr>;
+            return <Vdr key={comp.key} comp={comp} onContextmenu={this.handleComponentContextMenu}></Vdr>;
           })}
       </div>
     );

@@ -1,37 +1,30 @@
 <script lang="tsx">
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 
 export interface MenuCommand {
   command: string;
   name: string;
-  handle: (comp: any) => void;
+  handle: () => void;
 }
 
 @Component
 export default class ContextMenu extends BaseVue {
-  @Prop({
-    type: Array,
-    required: true,
-    default: () => [] as MenuCommand[]
-  })
-  options;
-
   x = 0;
   y = 0;
-  component: Vue | null = null;
+  options: MenuCommand[] = [];
 
-  show(x: number, y: number, component: Vue) {
+  show(x: number, y: number, options: MenuCommand[]) {
     this.x = x;
     this.y = y;
-    this.component = component;
+    this.options = options;
     (this.$refs.trigger as HTMLElement).click();
   }
 
   handleCommand(command: string) {
     for (const c of this.options as MenuCommand[]) {
       if (c.command === command) {
-        c.handle(this.component);
+        c.handle();
         break;
       }
     }

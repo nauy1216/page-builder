@@ -60,8 +60,8 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
         </vHead>
         <div class="main">
           <PageContent class="content"></PageContent>
-          <LeftTool class="left" v-show="showLeftTool"></LeftTool>
-          <RightTool class="right" v-show="showRightTool"></RightTool>
+          <LeftTool class="left" v-show={this.showLeftTool}></LeftTool>
+          <RightTool class="right" v-show={this.showRightTool}></RightTool>
         </div>
       </div>
     );

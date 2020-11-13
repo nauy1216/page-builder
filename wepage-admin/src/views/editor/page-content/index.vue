@@ -1,6 +1,6 @@
 <script lang="tsx">
 // https://tingtas.com/vue-draggable-resizable-gorkys/
-import ContextMenu, { MenuCommand } from "../components/context-menu.vue";
+import ContextMenu from "../components/context-menu.vue";
 import { uuid } from "shared/utils";
 import LayoutPosition from "./layout-position.vue";
 import { Component } from "vue-property-decorator";
@@ -24,8 +24,6 @@ const defaultConfig: PageComponentOptionsConfig = {
   }
 })
 export default class PageContent extends BaseVue {
-  componentMenu = [] as MenuCommand[];
-  canvasMenu = [] as MenuCommand[];
   isStartMove = false;
   scrollLeft = 0; // 页面横向滚动距离
   scrollTop = 0;
@@ -46,7 +44,7 @@ export default class PageContent extends BaseVue {
 
   created() {
     this.addMoveEvent();
-    this.setContextMenuList();
+    // this.setContextMenuList();
   }
 
   createBackground(x, y) {
@@ -112,19 +110,104 @@ export default class PageContent extends BaseVue {
   handleComponentContextMenu(event, comp) {
     event.preventDefault();
     event.stopPropagation();
-    (this.$refs.componentContextMenu as any).show(event.clientX, event.clientY, comp);
+    (this.$refs.contextMenu as ContextMenu).show(event.clientX, event.clientY, [
+      {
+        command: "delete-component",
+        name: "删除",
+        handle: () => {
+          PageStore.removeComponent(comp);
+        }
+      },
+      {
+        command: "copy-component",
+        name: "复制",
+        handle: () => {
+          const copy = JSON.parse(JSON.stringify(comp));
+          copy.id = uuid();
+          copy.key = uuid();
+          copy.component = (comp as any).component;
+          PageStore.addComponent(copy);
+        }
+      },
+      {
+        command: "auto-width",
+        name: "设置宽度与页面宽度一致",
+        handle: () => {
+          comp.config.width = PageStore.width;
+        }
+      },
+      {
+        command: "auto-height",
+        name: "设置高度与页面高度一致",
+        handle: () => {
+          comp.config.height = PageStore.height;
+        }
+      },
+      {
+        command: "horizontal-left",
+        name: "左对齐",
+        handle: () => {
+          comp.config.x = 0;
+        }
+      },
+      {
+        command: "horizontal-right",
+        name: "右对齐",
+        handle: () => {
+          comp.config.x = PageStore.width - comp.config.width;
+        }
+      },
+      {
+        command: "horizontal-center",
+        name: "水平居中",
+        handle: () => {
+          comp.config.x = (PageStore.width - comp.config.width) / 2;
+        }
+      },
+      {
+        command: "vertical-top",
+        name: "顶部对齐",
+        handle: () => {
+          comp.config.y = 0;
+        }
+      },
+      {
+        command: "vertical-bottom",
+        name: "底部对齐",
+        handle: () => {
+          comp.config.y = PageStore.height - comp.config.height;
+        }
+      },
+      {
+        command: "vertical-center",
+        name: "垂直居中",
+        handle: () => {
+          comp.config.y = (PageStore.height - comp.config.height) / 2;
+        }
+      },
+      {
+        command: "center",
+        name: "中心居中",
+        handle: () => {
+          comp.config.x = (PageStore.width - comp.config.width) / 2;
+          comp.config.y = (PageStore.height - comp.config.height) / 2;
+        }
+      },
+      {
+        command: "refresh",
+        name: "刷新组件",
+        handle: () => {
+          comp.key = uuid();
+        }
+      }
+    ]);
   }
 
   // 画布右键菜单
   handleCanvasContextMenu(event) {
     event.preventDefault();
     event.stopPropagation();
-    (this.$refs.canvasContextMenu as any).show(event.clientX, event.clientY, this.$refs.viewport);
-  }
-
-  // 设置右键菜单列表
-  setContextMenuList() {
-    this.canvasMenu = [
+    (this.$refs.contextMenu as ContextMenu).show(event.clientX, event.clientY, [
       {
         command: "delete-all-component",
         name: "删除所有组件",
@@ -132,27 +215,7 @@ export default class PageContent extends BaseVue {
           PageStore.clearAllComponent();
         }
       }
-    ];
-    this.componentMenu = [
-      {
-        command: "delete-component",
-        name: "删除",
-        handle: comp => {
-          PageStore.removeComponent(comp);
-        }
-      },
-      {
-        command: "copy-component",
-        name: "复制",
-        handle: comp => {
-          const copy = JSON.parse(JSON.stringify(comp));
-          copy.id = uuid();
-          copy.key = uuid();
-          copy.component = (comp as any).component;
-          PageStore.addComponent(copy);
-        }
-      }
-    ];
+    ]);
   }
 
   // 视口增加拖动事件
@@ -236,8 +299,7 @@ export default class PageContent extends BaseVue {
           }}>
           <LayoutPosition width={PageStore.height} height={PageStore.height} onContextmenu={this.handleComponentContextMenu}></LayoutPosition>
         </div>
-        <ContextMenu options={this.componentMenu} ref="componentContextMenu"></ContextMenu>
-        <ContextMenu options={this.canvasMenu} ref="canvasContextMenu"></ContextMenu>
+        <ContextMenu ref="contextMenu"></ContextMenu>
       </div>
     );
   }
