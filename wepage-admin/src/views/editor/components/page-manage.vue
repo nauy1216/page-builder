@@ -128,6 +128,7 @@ export default class PageManage extends BaseVue {
     AppStore.appData.config = appData.config = JSON.stringify(config);
     this.$ajax("postJson", this.$api.appAddOrUpdate, appData).then(() => {
       this.$message.success("操作成功");
+      AppStore.initApp(this.$route.query.appId as string);
     });
   }
 
