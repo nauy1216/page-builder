@@ -33,23 +33,24 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
   }
 
   getApp() {
-    this.$ajax("get", this.$api.getApp, {
-      appId: this.$route.query.appId
-    }).then(res => {
-      console.log(res);
-      delete res.data.pages;
-      AppStore.setApp(res.data);
-      try {
-        if (res.data.config) {
-          const config = JSON.parse(res.data.config);
-          AppStore.setAppConfig({
-            children: config.children
-          });
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    });
+    AppStore.initApp(this.$route.query.appId as string);
+    // this.$ajax("get", this.$api.getApp, {
+    //   appId: this.$route.query.appId
+    // }).then(res => {
+    //   console.log(res);
+    //   delete res.data.pages;
+    //   AppStore.setApp(res.data);
+    //   try {
+    //     if (res.data.config) {
+    //       const config = JSON.parse(res.data.config);
+    //       AppStore.setAppConfig({
+    //         children: config.children
+    //       });
+    //     }
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // });
   }
 
   render() {

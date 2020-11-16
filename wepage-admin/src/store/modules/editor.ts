@@ -1,4 +1,4 @@
-import { Module, VuexModule, Mutation } from "vuex-module-decorators";
+import { Module, VuexModule, Mutation, getModule } from "vuex-module-decorators";
 import store from "wepage-admin/store";
 
 function getDefaultConfig(): EditorConfig {
@@ -27,6 +27,10 @@ export default class EditorModule extends VuexModule implements EditorConfig {
   showLeftTool = defaultConfig.showRightTool;
   showRightTool = defaultConfig.showRightTool;
   dragMode = defaultConfig.dragMode;
+
+  static module() {
+    return getModule(EditorModule);
+  }
 
   get config() {
     return {

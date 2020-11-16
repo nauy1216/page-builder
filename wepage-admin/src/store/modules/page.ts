@@ -1,4 +1,4 @@
-import { Module, VuexModule, Mutation } from "vuex-module-decorators";
+import { Module, VuexModule, Mutation, getModule } from "vuex-module-decorators";
 import store from "wepage-admin/store";
 import { uuid } from "shared/utils";
 
@@ -95,6 +95,10 @@ export default class PageModule extends VuexModule implements PageConfig {
   children = defaultPageConfig.children;
 
   pageData: any = null; // 后台返回页面数据
+
+  static module() {
+    return getModule(PageModule);
+  }
 
   get config() {
     return {
