@@ -9,3 +9,4 @@ declare module "throttle-debounce" {
   export function debounce(...args: any[]): any;
   export function throttle(...args: any[]): any;
 }
+declare module "tyshemo";

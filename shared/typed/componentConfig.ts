@@ -4,6 +4,7 @@ type ComponentConfig = {
   layoutConfig: PageComponentOptions["layoutConfig"];
   componentProps: PackageComponentProps<PageComponentOptions["componentProps"]>;
   mockData: PageComponentOptions["mockData"];
+  checkData: any;
 };
 
 type PackageComponentProps<T> = {

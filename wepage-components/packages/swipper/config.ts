@@ -1,3 +1,4 @@
+import { Dict, List } from "tyshemo";
 const config: ComponentConfig = {
   alias: "品牌矩阵",
   layoutConfig: {
@@ -34,7 +35,16 @@ const config: ComponentConfig = {
       inputComponent: "el-color-picker"
     }
   },
-
+  checkData: new Dict({
+    code: 200,
+    data: new List([
+      new Dict({
+        id: String,
+        name: String,
+        img: String
+      })
+    ])
+  }),
   mockData: {
     imgList: [
       { id: "1", name: "你我它", img: "http://10.1.1.6/wp-content/uploads/2019/09/编组-53-2.png" },
