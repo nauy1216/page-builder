@@ -1,11 +1,10 @@
-const config = {
+const config: ComponentConfig = {
   alias: "品牌矩阵",
   layoutConfig: {
     x: 0,
     y: 0,
     width: 400,
     height: 200,
-    rotate: 0,
     zIndex: 0
   },
   componentProps: {

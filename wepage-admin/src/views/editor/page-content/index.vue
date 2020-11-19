@@ -6,14 +6,6 @@ import { PageStore, EditorStore } from "wepage-admin/store/modules";
 import ContexMenuMixin from "./context-menu-mixin";
 import DragMixin from "./drag-mixin";
 
-const defaultConfig: PageComponentOptionsConfig = {
-  x: 0,
-  y: 0,
-  width: 200,
-  height: 200,
-  zIndex: 0
-};
-
 @Component({
   components: {
     LayoutPosition
@@ -47,29 +39,27 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
 
   // 从组件列表拖拽组件释放
   handlePageDrop(event) {
+    debugger;
     if (!PageStore.activeLayout) {
       this.$message.error("请先在图层管理中选择图层");
       return;
     }
     const comp = PageStore.dragComp;
-    if (comp && comp.extendOptions) {
+    if (comp && comp.options) {
       // 设置组件所在位置
       const rect = event.target.getBoundingClientRect();
-      const componentConfig = JSON.parse(JSON.stringify(this.$componentsConfig[comp.options.name]));
-      let config = componentConfig.config;
+      const componentConfig: ComponentConfig = JSON.parse(JSON.stringify(this.$componentsConfig[comp.options.name]));
+      const config = componentConfig.layoutConfig;
       config.x = this.scalePosition(event.clientX - rect.left) + event.target.scrollLeft;
       config.y = this.scalePosition(event.clientY - rect.top) + event.target.scrollTop;
-
       config.x = Math.max(0, config.x);
       config.y = Math.max(0, config.y);
       config.x = Math.min(event.target.scrollWidth - config.width, config.x);
       config.y = Math.min(event.target.scrollHeight - config.height, config.y);
 
-      config = Object.assign({}, defaultConfig, config);
-
       // 设置默认属性
       const data = {};
-      const props = componentConfig.props;
+      const props = componentConfig.componentProps;
       props &&
         Object.keys(props).forEach(key => {
           if (typeof props[key].default == "function") {
@@ -83,11 +73,11 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
         layoutId: PageStore.activeLayout.id,
         id: uuid(),
         name: comp.options.name,
-        alias: config.alias,
+        alias: componentConfig.alias,
         layoutConfig: config,
         componentProps: data,
         useMockData: false,
-        mockData: {},
+        mockData: JSON.parse(JSON.stringify(componentConfig.mockData)),
         tempData: {
           active: true,
           key: uuid()

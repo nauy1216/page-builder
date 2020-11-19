@@ -23,10 +23,10 @@ function createComponentsIndex() {
     paths.forEach(child => {
         const upper = upperCase(child);
         if (fs.statSync(path.resolve(process.cwd(), componentsPath + child)).isDirectory()) {
-            contentHeader += `import ${upper} from "./packages/${child}/index.vue"; \n`;
-            contentHeader += `import ${upper}Config from "./packages/${child}/config"; \n`;
-            contentExportComp += `  ${upper}, \n`;
-            contentExportConfig += `  ${upper}: ${upper}Config, \n`;
+            contentHeader += `import Wui${upper} from "./packages/${child}/index.vue"; \n`;
+            contentHeader += `import Wui${upper}Config from "./packages/${child}/config"; \n`;
+            contentExportComp += `  Wui${upper}, \n`;
+            contentExportConfig += `  Wui${upper}: Wui${upper}Config, \n`;
         }
     });
     contentExportComp += `}`;

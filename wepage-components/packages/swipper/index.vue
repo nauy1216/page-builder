@@ -5,9 +5,9 @@ import "swiper/swiper-bundle.min.css";
 import Swiper from "swiper/swiper-bundle.cjs";
 
 @Component({
-  name: "RpSwipper"
+  name: "WuiSwipper"
 })
-export default class RpSwipper extends BaseVue {
+export default class WuiSwipper extends BaseVue {
   @Prop({
     required: true,
     type: Number

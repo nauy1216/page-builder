@@ -26,7 +26,6 @@ export default class Vdr extends BaseVue {
     comp.layoutConfig.y = top;
     comp.layoutConfig.width = width;
     comp.layoutConfig.height = height;
-    // PageStore.refreshComponent(comp);
   }
 
   handleDeactivated() {
@@ -99,7 +98,14 @@ export default class Vdr extends BaseVue {
               }}>
               {h(this.$components[this.comp.name], {
                 ref: "component",
-                props: this.comp.componentProps
+                props: {
+                  ...this.comp.componentProps,
+                  width: this.comp.layoutConfig.width,
+                  height: this.comp.layoutConfig.height
+                },
+                attrs: {
+                  mockData: this.comp.mockData
+                }
               })}
             </div>
           }

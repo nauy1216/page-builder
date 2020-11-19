@@ -6,7 +6,7 @@ import ajax from "shared/utils/ajax";
 export default class BaseVue extends Vue {
   $eventBus!: Pick<Vue, "$on" | "$emit" | "$off">;
   $components!: Record<string, VueConstructor & Record<string, any>>;
-  $componentsConfig!: Record<string, any>;
+  $componentsConfig!: Record<string, ComponentConfig>;
   $ajax!: typeof ajax;
   $api!: typeof apis;
 }

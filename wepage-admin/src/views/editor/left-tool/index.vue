@@ -87,7 +87,7 @@ export default class LeftTool extends BaseVue {
                         $event.stopPropagation();
                         this.handleDragEnd();
                       }}>
-                      <span class="name">{this.$componentsConfig[compName].config.alias}</span>
+                      <span class="name">{this.$componentsConfig[compName].alias}</span>
                     </div>
                   );
                 })}
