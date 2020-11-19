@@ -21,6 +21,11 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
 
   created() {
     this.addMoveEvent();
+    const htmlFontSize = document.documentElement.style.fontSize;
+    document.documentElement.style.fontSize = `${process.env.VUE_APP_HTML_FONT_SIZE}px`;
+    this.$on("hook:destoryed", () => {
+      document.documentElement.style.fontSize = htmlFontSize;
+    });
   }
 
   createBackground(x, y) {
@@ -39,7 +44,6 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
 
   // 从组件列表拖拽组件释放
   handlePageDrop(event) {
-    debugger;
     if (!PageStore.activeLayout) {
       this.$message.error("请先在图层管理中选择图层");
       return;

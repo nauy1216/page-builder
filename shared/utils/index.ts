@@ -24,3 +24,21 @@ export function serialize(obj) {
 }
 
 export * from "./useDirectives";
+
+export function isTypeOf<T>(p: any): p is T {
+  if (typeof p === "string") {
+    return true;
+  }
+  return false;
+}
+
+export function px2rem(pxValue: number | string): string {
+  const htmlFontSize = process.env.VUE_APP_HTML_FONT_SIZE;
+  if (isTypeOf<number>(pxValue)) {
+    return pxValue / htmlFontSize + "rem";
+  }
+  if (/px$/.test(pxValue)) {
+    pxValue = pxValue.replace(/px$/, "");
+  }
+  return Number(pxValue) / htmlFontSize + "rem";
+}

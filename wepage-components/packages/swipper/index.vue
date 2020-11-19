@@ -3,6 +3,7 @@ import BaseVue from "wepage-components/BaseVue";
 import { Component, Prop, Watch } from "vue-property-decorator";
 import "swiper/swiper-bundle.min.css";
 import Swiper from "swiper/swiper-bundle.cjs";
+import { px2rem } from "shared/utils";
 
 @Component({
   name: "WuiSwipper"
@@ -116,7 +117,7 @@ export default class WuiSwipper extends BaseVue {
 
   render() {
     return (
-      <div class="swiper-container" ref="swiper" style={{ width: this.width + "px", height: this.height + "px", background: this.background }}>
+      <div class="swiper-container" ref="swiper" style={{ width: px2rem(this.width), height: px2rem(this.height), background: this.background }}>
         <div class="swiper-wrapper">
           {this.imgList.length > 0 &&
             this.imgList.map((item, index) => {
@@ -127,7 +128,7 @@ export default class WuiSwipper extends BaseVue {
                   onClick={() => {
                     this.handleClickSlide(item);
                   }}
-                  style={{ width: this.slideWidth + "px", height: this.slideHeight + "px" }}>
+                  style={{ width: px2rem(this.slideWidth), height: px2rem(this.slideHeight) }}>
                   <img src={item.img} alt="" />
                 </div>
               );
@@ -144,6 +145,7 @@ export default class WuiSwipper extends BaseVue {
 }
 .swiper-slide {
   background: #e0e0e0;
+  font-size: 100px;
 }
 img {
   width: 100%;
