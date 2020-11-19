@@ -16,16 +16,16 @@ export default class Vdr extends BaseVue {
     this.calcSize();
   }
 
-  handleDrag(comp, left, top) {
-    comp.config.x = left;
-    comp.config.y = top;
+  handleDrag(comp: PageComponentOptions, left, top) {
+    comp.layoutConfig.x = left;
+    comp.layoutConfig.y = top;
   }
 
-  handleResize(comp, left, top, width, height) {
-    comp.config.x = left;
-    comp.config.y = top;
-    comp.config.width = width;
-    comp.config.height = height;
+  handleResize(comp: PageComponentOptions, left, top, width, height) {
+    comp.layoutConfig.x = left;
+    comp.layoutConfig.y = top;
+    comp.layoutConfig.width = width;
+    comp.layoutConfig.height = height;
     // PageStore.refreshComponent(comp);
   }
 
@@ -39,7 +39,7 @@ export default class Vdr extends BaseVue {
     }
   }
 
-  handleComponentContextMenu($event, comp) {
+  handleComponentContextMenu($event, comp: PageComponentOptions) {
     this.$emit("contextmenu", $event, comp);
   }
 
@@ -69,8 +69,8 @@ export default class Vdr extends BaseVue {
     return (
       this.comp && (
         <vue-draggable-resizable
-          on={{ "update:active": value => (this.comp.layoutConfig.active = value) }}
-          active={this.comp.layoutConfig.active}
+          on={{ "update:active": value => (this.comp.tempData.active = value) }}
+          active={this.comp.tempData.active}
           x={this.comp.layoutConfig.x}
           y={this.comp.layoutConfig.y}
           w={this.comp.layoutConfig.width}

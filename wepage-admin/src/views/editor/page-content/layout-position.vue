@@ -45,7 +45,7 @@ export default class LayoutPosition extends BaseVue {
       <div style={{ width: this.width + "px", height: this.height + "px" }} class="l-layout-position">
         {this.components.length > 0 &&
           this.components.map(comp => {
-            return <Vdr key={comp.key} comp={comp} onRefLineParams={this.getRefLineParams} onContextmenu={this.handleComponentContextMenu}></Vdr>;
+            return <Vdr key={comp.tempData.key} comp={comp} onRefLineParams={this.getRefLineParams} onContextmenu={this.handleComponentContextMenu}></Vdr>;
           })}
         {this.vLine.map(item => {
           return <span class="ref-line v-line l-layout-position__line" key={uuid()} v-show={item.display} style={{ left: item.position, top: item.origin, height: item.lineLength }} />;

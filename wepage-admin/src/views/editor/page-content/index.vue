@@ -11,9 +11,7 @@ const defaultConfig: PageComponentOptionsConfig = {
   y: 0,
   width: 200,
   height: 200,
-  zIndex: 0,
-  lockAspectRatio: true,
-  active: true
+  zIndex: 0
 };
 
 @Component({
@@ -84,7 +82,6 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
       PageStore.addComponent({
         layoutId: PageStore.activeLayout.id,
         id: uuid(),
-        key: uuid(),
         name: comp.options.name,
         alias: config.alias,
         layoutConfig: config,

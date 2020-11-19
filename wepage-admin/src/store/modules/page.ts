@@ -127,10 +127,10 @@ export default class PageModule extends VuexModule implements PageConfig {
       getComp = comp;
     }
     if (this.activeComp) {
-      this.activeComp.layoutConfig.active = false;
+      this.activeComp.tempData.active = false;
     }
     if (getComp) {
-      getComp.layoutConfig.active = true;
+      getComp.tempData.active = true;
     }
     this.activeComp = getComp;
   }
@@ -176,7 +176,7 @@ export default class PageModule extends VuexModule implements PageConfig {
   @Mutation
   refreshComponent(comp: PageComponentOptions) {
     // TODO 做节流处理
-    comp.key = uuid();
+    comp.tempData.key = uuid();
   }
 
   @Mutation
