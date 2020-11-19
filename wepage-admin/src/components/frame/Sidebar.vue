@@ -27,7 +27,7 @@ export default class Sidebar extends BaseVue {
 
   render() {
     return (
-      <div class="rp-sidebar">
+      <div class="l-sidebar">
         <el-menu default-active={this.onRoutes} collapse={this.collapse} unique-opened router>
           {this.items.map(item => {
             if (item.subs && item.subs.length > 0) {

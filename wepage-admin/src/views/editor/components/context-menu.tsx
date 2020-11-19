@@ -1,4 +1,3 @@
-<script lang="tsx">
 import { Component } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 
@@ -34,7 +33,7 @@ export default class ContextMenu extends BaseVue {
     return (
       <div style={{ left: this.x + "px", top: this.y + "px", position: "fixed" }}>
         <el-dropdown trigger="click" onCommand={this.handleCommand}>
-          <span ref="trigger" class="trigger"></span>
+          <span ref="trigger" class="trigger" style={{ position: "fixed", zIndex: 1000 }}></span>
           <el-dropdown-menu slot="dropdown">
             {this.options.map(command => (
               <el-dropdown-item key={command.command} command={command.command}>
@@ -47,11 +46,3 @@ export default class ContextMenu extends BaseVue {
     );
   }
 }
-</script>
-
-<style lang="scss" scoped>
-.trigger {
-  position: fixed;
-  z-index: 1000;
-}
-</style>

@@ -12,11 +12,11 @@ import vSidebar from "./Sidebar.vue";
 export default class Sidebar extends BaseVue {
   render() {
     return (
-      <div class="rp-frame">
+      <div class="l-frame">
         <v-head></v-head>
         <v-sidebar></v-sidebar>
-        <div staticClass="rp-frame__content-box">
-          <div class="rp-frame__content">
+        <div staticClass="l-frame__content-box">
+          <div class="l-frame__content">
             <router-view></router-view>
           </div>
         </div>

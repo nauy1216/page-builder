@@ -136,7 +136,7 @@ export default class AppManage extends BaseVue {
 
   render() {
     return (
-      <div class="rp-app-manage" {...directives({ loading: this.loading })}>
+      <div class="l-app-manage" {...directives({ loading: this.loading })}>
         <div class="opera">
           <el-button
             onClick={() => {

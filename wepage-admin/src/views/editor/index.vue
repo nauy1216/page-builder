@@ -55,14 +55,14 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
 
   render() {
     return (
-      <div class="editor">
+      <div class="l-editor">
         <vHead>
           <TopTool></TopTool>
         </vHead>
-        <div class="main">
-          <PageContent class="content"></PageContent>
-          <LeftTool class="left" v-show={this.showLeftTool}></LeftTool>
-          <RightTool class="right" v-show={this.showRightTool}></RightTool>
+        <div class="l-editor__main">
+          <LeftTool class="l-editor__left" v-show={this.showLeftTool}></LeftTool>
+          <PageContent class="l-editor__content"></PageContent>
+          <RightTool class="l-editor__right" v-show={this.showRightTool}></RightTool>
         </div>
       </div>
     );
@@ -70,32 +70,38 @@ export default class EditorIndex extends Mixins<BaseVue>(BaseVue.extend(mixin)) 
 }
 </script>
 <style scoped lang="scss">
-.main {
+@import "shared/style/bem.scss";
+@include b(editor) {
   width: 100vw;
-  height: calc(100vh - var(--header-height));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .left,
-  .right {
-    position: fixed;
-    z-index: 200;
-    width: 260px;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 4px 0px #e0e0e0;
+  height: 100vh;
+  @include e(main) {
+    width: 100vw;
     height: calc(100vh - var(--header-height));
-    top: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .l-editor__left,
+    .l-editor__right {
+      flex: 0 0 260px;
+      box-sizing: border-box;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 4px 0px #e0e0e0;
+      height: calc(100vh - var(--header-height));
+      top: var(--header-height);
+    }
+    .l-editor__left {
+      width: 260px;
+    }
+    .l-editor__right {
+      width: 340px;
+      padding: 20px;
+    }
   }
-  .left {
-    left: 0px;
-  }
-  .right {
-    right: 0px;
-  }
-  .content {
-    max-width: calc(100vw - 540px);
+  .l-editor__content {
+    max-width: calc(100vw - 600px - 40px);
     max-height: calc(100vh - var(--header-height) - 40px);
     box-shadow: 0 0 4px 0 #e0e0e0;
+    // flex: 1 1 100%;
   }
 }
 </style>

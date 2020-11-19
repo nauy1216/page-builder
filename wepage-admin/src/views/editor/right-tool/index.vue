@@ -26,8 +26,8 @@ export default class RightTool extends BaseVue {
 
   render() {
     return (
-      <div class="right-tool" style={{ width: this.width + "px" }}>
-        <vue-draggable-resizable
+      <div class="right-tool">
+        {/**      <vue-draggable-resizable
           x={0}
           y={0}
           w={this.width}
@@ -38,7 +38,8 @@ export default class RightTool extends BaseVue {
           active={true}
           prevent-deactivation={true}
           class="right-tool-vdr"
-          onResizing={this.handleResize}>
+          onResizing={this.handleResize}> */}
+        <div class="right-tool-vdr">
           <el-tabs vModel={this.activeName}>
             <el-tab-pane label="布局" name="1">
               <LayoutOperate></LayoutOperate>
@@ -52,7 +53,8 @@ export default class RightTool extends BaseVue {
               <PageOperate></PageOperate>
             </el-tab-pane>
           </el-tabs>
-        </vue-draggable-resizable>
+        </div>
+        {/**</vue-draggable-resizable> */}
       </div>
     );
   }

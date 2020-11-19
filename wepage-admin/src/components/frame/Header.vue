@@ -6,10 +6,10 @@ import { Component } from "vue-property-decorator";
 export default class Header extends BaseVue {
   render() {
     return (
-      <div class="rp-header">
+      <div class="l-header">
         {this.$slots.default || (
           <slot>
-            <div class="rp-header__name">大屏后台管理</div>
+            <div class="l-header__name">大屏后台管理</div>
           </slot>
         )}
       </div>

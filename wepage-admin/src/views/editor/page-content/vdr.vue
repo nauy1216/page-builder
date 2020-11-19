@@ -59,6 +59,10 @@ export default class Vdr extends BaseVue {
     return true;
   }
 
+  getRefLineParams(params) {
+    this.$emit("refLineParams", params);
+  }
+
   render(h) {
     if (!this.comp) return;
     return (
@@ -83,7 +87,8 @@ export default class Vdr extends BaseVue {
           onDragging={(left, right) => this.handleDrag(this.comp, left, right)}
           onResizing={(left, top, width, height) => this.handleResize(this.comp, left, top, width, height)}
           onDeactivated={this.handleDeactivated}
-          onActivated={() => this.handleActivated(this.comp)}>
+          onActivated={() => this.handleActivated(this.comp)}
+          onRefLineParams={this.getRefLineParams}>
           {
             <div
               onContextmenu={$event => this.handleComponentContextMenu($event, this.comp)}

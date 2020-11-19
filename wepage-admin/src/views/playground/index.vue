@@ -37,12 +37,12 @@ export default class Playground extends BaseVue {
 
   render(h) {
     return (
-      <div class="rp-playground">
-        <div class="rp-playground__components-list">
+      <div class="l-playground">
+        <div class="l-playground__components-list">
           {Object.keys(this.$components).map(name => {
             return (
               <div
-                class="rp-playground__components-item"
+                class="l-playground__components-item"
                 onClick={() => {
                   this.selectComponent(name, true);
                 }}>
@@ -51,7 +51,7 @@ export default class Playground extends BaseVue {
             );
           })}
         </div>
-        <div class="rp-playground__content">
+        <div class="l-playground__content">
           {this.cuerrentComponents.map((comp, index) => {
             return h(comp, {
               props: {
