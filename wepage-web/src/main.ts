@@ -5,12 +5,12 @@ import router from "./router";
 import store from "./store";
 import "./style/reset.scss";
 import "./style/index.scss";
-import WepageComponents from "wepage-components";
+import components, { componentsConfig } from "wepage-components";
 import apis from "wepage-web/api";
 import ajax from "shared/utils/ajax";
 
-Vue.use(WepageComponents);
-
+Vue.prototype.$components = components;
+Vue.prototype.$componentsConfig = componentsConfig;
 Vue.prototype.$api = apis;
 Vue.prototype.$ajax = ajax;
 
