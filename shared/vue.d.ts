@@ -10,3 +10,10 @@ declare module "throttle-debounce" {
   export function throttle(...args: any[]): any;
 }
 declare module "tyshemo";
+
+declare module "v-charts" {
+  export const VeBar: any;
+  export const VeHistogram: any;
+  export const VePie: any;
+  export const VeRing: any;
+}
