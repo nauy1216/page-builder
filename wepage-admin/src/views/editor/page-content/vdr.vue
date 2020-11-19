@@ -83,7 +83,7 @@ export default class Vdr extends BaseVue {
           prevent-deactivation={true}
           isConflictCheck={false}
           snap={true}
-          snapTolerance={10}
+          snapTolerance={20}
           onDragging={(left, right) => this.handleDrag(this.comp, left, right)}
           onResizing={(left, top, width, height) => this.handleResize(this.comp, left, top, width, height)}
           onDeactivated={this.handleDeactivated}
@@ -92,6 +92,7 @@ export default class Vdr extends BaseVue {
           {
             <div
               onContextmenu={$event => this.handleComponentContextMenu($event, this.comp)}
+              class="vdr-component-wrap"
               style={{
                 width: this.comp.layoutConfig.width + "px",
                 height: this.comp.layoutConfig.height + "px"

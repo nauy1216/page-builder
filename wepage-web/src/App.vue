@@ -23,8 +23,10 @@ export default defineComponent({
         appId
       }).then(res => {
         const appConfig = res.data;
-        appConfig.config = JSON.parse(appConfig.config);
-        this.setAppConfig(appConfig);
+        if (appConfig.config) {
+          appConfig.config = JSON.parse(appConfig.config);
+          this.setAppConfig(appConfig);
+        }
         if (appConfig.pages.length > 0 && !pageId) {
           this.$router.replace("/page/" + appConfig.pages[0].id);
         }

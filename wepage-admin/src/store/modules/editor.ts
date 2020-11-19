@@ -7,7 +7,7 @@ function getDefaultConfig(): EditorConfig {
     gridY: 20,
     showGrid: true,
     showScrollbar: true,
-    parent: false,
+    parent: true,
     zoom: 1,
     showLeftTool: true,
     showRightTool: true,

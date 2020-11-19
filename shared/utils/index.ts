@@ -25,8 +25,12 @@ export function serialize(obj) {
 
 export * from "./useDirectives";
 
-export function isTypeOf<T>(p: any): p is T {
-  if (typeof p === "string") {
+type VarType = "String" | "Number" | "Boolean" | "Undefined" | "Null";
+function getType(v: any): string {
+  return Object.prototype.toString.call(v);
+}
+export function isTypeOf<T>(type: VarType, v: any): v is T {
+  if (getType(v) === type) {
     return true;
   }
   return false;
@@ -34,11 +38,14 @@ export function isTypeOf<T>(p: any): p is T {
 
 export function px2rem(pxValue: number | string): string {
   const htmlFontSize = process.env.VUE_APP_HTML_FONT_SIZE;
-  if (isTypeOf<number>(pxValue)) {
-    return pxValue / htmlFontSize + "rem";
+  if (isTypeOf<number>("Number", pxValue)) {
+    return (pxValue / htmlFontSize).toFixed(8) + "rem";
+  }
+  if (/rem$/.test(pxValue)) {
+    return pxValue;
   }
   if (/px$/.test(pxValue)) {
     pxValue = pxValue.replace(/px$/, "");
   }
-  return Number(pxValue) / htmlFontSize + "rem";
+  return (Number(pxValue) / htmlFontSize).toFixed(8) + "rem";
 }

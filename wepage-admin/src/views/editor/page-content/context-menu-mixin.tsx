@@ -29,7 +29,7 @@ export default class ContexMenuMixin extends BaseVue {
   }
 
   // 组件右键菜单
-  handleComponentContextMenu(event, comp) {
+  handleComponentContextMenu(event, comp: PageComponentOptions) {
     if (!this.isOperable(comp)) {
       return;
     }
@@ -58,71 +58,71 @@ export default class ContexMenuMixin extends BaseVue {
         command: "auto-width",
         name: "设置宽度与页面宽度一致",
         handle: () => {
-          comp.config.width = PageStore.width;
+          comp.layoutConfig.width = PageStore.width;
         }
       },
       {
         command: "auto-height",
         name: "设置高度与页面高度一致",
         handle: () => {
-          comp.config.height = PageStore.height;
+          comp.layoutConfig.height = PageStore.height;
         }
       },
       {
         command: "horizontal-left",
         name: "左对齐",
         handle: () => {
-          comp.config.x = 0;
+          comp.layoutConfig.x = 0;
         }
       },
       {
         command: "horizontal-right",
         name: "右对齐",
         handle: () => {
-          comp.config.x = PageStore.width - comp.config.width;
+          comp.layoutConfig.x = PageStore.width - comp.layoutConfig.width;
         }
       },
       {
         command: "horizontal-center",
         name: "水平居中",
         handle: () => {
-          comp.config.x = (PageStore.width - comp.config.width) / 2;
+          comp.layoutConfig.x = (PageStore.width - comp.layoutConfig.width) / 2;
         }
       },
       {
         command: "vertical-top",
         name: "顶部对齐",
         handle: () => {
-          comp.config.y = 0;
+          comp.layoutConfig.y = 0;
         }
       },
       {
         command: "vertical-bottom",
         name: "底部对齐",
         handle: () => {
-          comp.config.y = PageStore.height - comp.config.height;
+          comp.layoutConfig.y = PageStore.height - comp.layoutConfig.height;
         }
       },
       {
         command: "vertical-center",
         name: "垂直居中",
         handle: () => {
-          comp.config.y = (PageStore.height - comp.config.height) / 2;
+          comp.layoutConfig.y = (PageStore.height - comp.layoutConfig.height) / 2;
         }
       },
       {
         command: "center",
         name: "中心居中",
         handle: () => {
-          comp.config.x = (PageStore.width - comp.config.width) / 2;
-          comp.config.y = (PageStore.height - comp.config.height) / 2;
+          comp.layoutConfig.x = (PageStore.width - comp.layoutConfig.width) / 2;
+          comp.layoutConfig.y = (PageStore.height - comp.layoutConfig.height) / 2;
         }
       },
       {
         command: "refresh",
         name: "刷新组件",
         handle: () => {
-          comp.key = uuid();
+          comp.tempData.key = uuid();
         }
       }
     ]);

@@ -1,28 +1,18 @@
 <script lang="tsx">
 import defineComponent from "wepage-web/types/defineComponent";
 import { mapStateTyped, mapActionsTyped } from "wepage-web/types/store";
+import { px2rem } from "shared/utils";
+
 export default defineComponent({
-  data() {
-    return {
-      unit: "px",
-      fontSize: 100
-    };
-  },
   created() {
-    if (this.isRem) {
-      document.documentElement.style.fontSize = this.fontSize + "px";
-    }
     this.getPageConfig();
-  },
-  beforeDestroy() {
-    if (this.isRem) {
-      document.documentElement.style.fontSize = "14px";
-    }
+    const htmlFontSize = document.documentElement.style.fontSize;
+    document.documentElement.style.fontSize = `${process.env.VUE_APP_HTML_FONT_SIZE}px`;
+    this.$on("hook:destoryed", () => {
+      document.documentElement.style.fontSize = htmlFontSize || "12px";
+    });
   },
   computed: {
-    isRem(): boolean {
-      return this.unit === "rem";
-    },
     ...mapStateTyped(["appConfig", "pageConfig"])
   },
   watch: {
@@ -41,21 +31,11 @@ export default defineComponent({
   },
   render(h) {
     if (this.pageConfig === null) return <div></div>;
-    const pageConfig = this.pageConfig as any;
-    const { unit, isRem } = this;
-    const px2rem = px => px / this.fontSize;
+    const pageConfig = this.pageConfig as PageConfig;
 
-    const components = this.appConfig.config.children.concat(pageConfig.children);
-
-    if (isRem) {
-      pageConfig.width = px2rem(pageConfig.width);
-      pageConfig.height = px2rem(pageConfig.height);
-      components.forEach(comp => {
-        comp.config.x = px2rem(comp.config.x);
-        comp.config.y = px2rem(comp.config.y);
-        comp.config.width = px2rem(comp.config.width);
-        comp.config.height = px2rem(comp.config.height);
-      });
+    let components = pageConfig.children;
+    if (this.appConfig?.config?.children) {
+      components = pageConfig.children.concat(this.appConfig.config.children as any);
     }
 
     const compList = this.$components;
@@ -65,8 +45,8 @@ export default defineComponent({
         <div
           class="page-content"
           style={{
-            width: pageConfig.width + unit,
-            height: pageConfig.height + unit
+            width: px2rem(pageConfig.width),
+            height: px2rem(pageConfig.height)
           }}>
           {components &&
             components.map((comp, index) => {
@@ -75,16 +55,21 @@ export default defineComponent({
                   key={this.createKey(comp)}
                   style={{
                     position: "absolute",
-                    left: comp.config.x + unit,
-                    top: comp.config.y + unit,
-                    width: comp.config.width + unit,
-                    height: comp.config.height + unit,
-                    zIndex: comp.config.zIndex
+                    left: px2rem(comp.layoutConfig.x),
+                    top: px2rem(comp.layoutConfig.y),
+                    width: px2rem(comp.layoutConfig.width),
+                    height: px2rem(comp.layoutConfig.height),
+                    zIndex: comp.layoutConfig.zIndex
                   }}>
                   {h(compList[comp.name], {
                     key: comp.name + index,
                     props: {
-                      ...comp.data
+                      ...comp.componentProps,
+                      width: comp.layoutConfig.width,
+                      height: comp.layoutConfig.height
+                    },
+                    attrs: {
+                      mockData: comp.mockData
                     }
                   })}
                 </div>
