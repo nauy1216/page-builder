@@ -44,12 +44,14 @@ export default class Vdr extends BaseVue {
 
   // 计算内容组件的尺寸，并且自适应宽高
   calcSize() {
-    this.$nextTick(() => {
-      const ele = (this.$refs.component as Vue).$el as HTMLElement;
-      const rect = ele.getBoundingClientRect();
-      this.comp.layoutConfig.width = rect.width;
-      this.comp.layoutConfig.height = rect.height;
-    });
+    setTimeout(() => {
+      if (this.$refs.component) {
+        const ele = (this.$refs.component as Vue).$el as HTMLElement;
+        const rect = ele.getBoundingClientRect();
+        this.comp.layoutConfig.width = rect.width;
+        this.comp.layoutConfig.height = rect.height;
+      }
+    }, 50);
   }
 
   isOperable(comp: PageComponentOptions) {

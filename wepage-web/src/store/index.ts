@@ -29,7 +29,7 @@ const actions = {
     const appId = getAppId();
     const pageId = getPageId();
     if (!context.state.isFrame) {
-      ajax("get", api.getPageConfig, {
+      return ajax("get", api.getPageConfig, {
         appId,
         pageId
       }).then(res => {
@@ -38,7 +38,7 @@ const actions = {
         }
       });
     } else {
-      frameMessage
+      return frameMessage
         .getData("getPageConfig", {
           appId,
           pageId

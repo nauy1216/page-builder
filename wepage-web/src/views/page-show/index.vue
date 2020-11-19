@@ -4,10 +4,12 @@ import { mapStateTyped, mapActionsTyped } from "wepage-web/types/store";
 import { px2rem } from "shared/utils";
 
 export default defineComponent({
-  created() {
-    this.getPageConfig();
+  async created() {
+    await this.getPageConfig();
     const htmlFontSize = document.documentElement.style.fontSize;
-    document.documentElement.style.fontSize = `${process.env.VUE_APP_HTML_FONT_SIZE}px`;
+    const width = document.documentElement.getBoundingClientRect().width;
+    const scale = width / this.pageConfig.width;
+    document.documentElement.style.fontSize = `${(process.env.VUE_APP_HTML_FONT_SIZE * scale).toFixed(8)}px`;
     this.$on("hook:destoryed", () => {
       document.documentElement.style.fontSize = htmlFontSize || "12px";
     });
