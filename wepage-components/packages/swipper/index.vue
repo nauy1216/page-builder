@@ -143,9 +143,6 @@ export default class WuiSwipper extends BaseVue {
 .swiper-wrapper {
   height: 100%;
 }
-.swiper-slide {
-  background: #e0e0e0;
-}
 img {
   width: 100%;
   height: 100%;

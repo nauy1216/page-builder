@@ -31,7 +31,7 @@ const config: ComponentConfig = {
     background: {
       label: "背景",
       default: "#ffffff",
-      inputComponent: "el-input"
+      inputComponent: "el-color-picker"
     }
   },
 
