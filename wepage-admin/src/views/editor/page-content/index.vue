@@ -1,10 +1,10 @@
 <script lang="tsx">
-// https://tingtas.com/vue-draggable-resizable-gorkys/
 import { uuid } from "shared/utils";
 import LayoutPosition from "./layout-position.vue";
 import { Component, Mixins } from "vue-property-decorator";
 import { PageStore, EditorStore } from "wepage-admin/store/modules";
 import ContexMenuMixin from "./context-menu-mixin";
+import DragMixin from "./drag-mixin";
 
 const defaultConfig: PageComponentOptionsConfig = {
   x: 0,
@@ -21,18 +21,7 @@ const defaultConfig: PageComponentOptionsConfig = {
     LayoutPosition
   }
 })
-export default class PageContent extends Mixins(ContexMenuMixin) {
-  isStartMove = false;
-  scrollLeft = 0; // 页面横向滚动距离
-  scrollTop = 0;
-  maxScrollLeft = 0; // 页面最大横向滚动距离
-  maxScrollTop = 0;
-  startX = 0;
-  startY = 0;
-  viewportWidth = 0; // 编辑器视口宽度
-  viewportHeight = 0; // 编辑器视口高度
-  refreshKey = 0;
-
+export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
   get transform(): string {
     if (EditorStore.showScrollbar) {
       return `translate(0px, 0px})`;
@@ -104,88 +93,34 @@ export default class PageContent extends Mixins(ContexMenuMixin) {
     }
   }
 
-  // 视口增加拖动事件
-  addMoveEvent() {
-    const handlePageMouseMove = ev => {
-      if (this.isStartMove) {
-        const dom = this.$refs.viewport as HTMLElement;
-        this.viewportWidth = dom.clientWidth;
-        this.viewportHeight = dom.clientHeight;
-
-        if (EditorStore.showScrollbar) {
-          this.maxScrollLeft = dom.scrollWidth - this.viewportWidth;
-          this.maxScrollTop = dom.scrollHeight - this.viewportHeight;
-        } else {
-          this.maxScrollLeft = PageStore.width - this.viewportWidth;
-          this.maxScrollTop = PageStore.height - this.viewportHeight;
-        }
-
-        this.scrollLeft += this.startX - ev.clientX;
-        this.scrollTop += this.startY - ev.clientY;
-
-        this.scrollLeft = Math.max(0, this.scrollLeft);
-        this.scrollTop = Math.max(0, this.scrollTop);
-        this.scrollLeft = Math.min(this.maxScrollLeft, this.scrollLeft);
-        this.scrollTop = Math.min(this.maxScrollTop, this.scrollTop);
-
-        if (EditorStore.showScrollbar) {
-          dom.scrollTo(this.scrollLeft, this.scrollTop);
-        }
-
-        this.startX = ev.clientX;
-        this.startY = ev.clientY;
-      }
-    };
-
-    const handlePageMouseDown = ev => {
-      if (ev.target.className.indexOf("page-content") > -1) {
-        this.isStartMove = true;
-        this.startX = ev.clientX;
-        this.startY = ev.clientY;
-        document.body.addEventListener("mousemove", handlePageMouseMove);
-      }
-    };
-
-    const handlePageMouseUp = () => {
-      this.isStartMove = false;
-      document.body.removeEventListener("mousemove", handlePageMouseMove);
-    };
-
-    document.body.addEventListener("mousedown", handlePageMouseDown);
-    document.body.addEventListener("mouseup", handlePageMouseUp);
-    this.$once("hook:beforeDestroy", () => {
-      document.body.removeEventListener("mousedown", handlePageMouseDown);
-      document.body.removeEventListener("mouseup", handlePageMouseUp);
-    });
-  }
-
   render() {
     return (
       <div
-        class="view-port"
-        ref="viewport"
-        style={{
-          overflow: EditorStore.showScrollbar ? "auto" : "hidden",
-          background: this.createBackground(EditorStore.gridX, EditorStore.gridY),
-          cursor: this.isStartMove ? "pointer" : ""
-        }}
+        class="view-port l-page-canvas"
         onDragover={this.handlePageDrageover}
         onDrop={this.handlePageDrop}
-        onContextmenu={this.handleCanvasContextMenu}>
-        <div
-          staticClass="page-content"
-          class={{ "drag-mode": EditorStore.dragMode }}
-          ref="pageContent"
-          key={PageStore.key}
-          style={{
-            transform: this.transform,
-            width: PageStore.width + "px",
-            height: PageStore.height + "px",
-            zoom: EditorStore.zoom
-          }}>
-          <LayoutPosition width={PageStore.height} height={PageStore.height} onContextmenu={this.handleComponentContextMenu}></LayoutPosition>
-        </div>
-        {this.renderContextMenu()}
+        onContextmenu={this.handleCanvasContextMenu}
+        style={{
+          // overflow: EditorStore.showScrollbar ? "auto" : "hidden",
+          background: this.createBackground(EditorStore.gridX, EditorStore.gridY),
+          cursor: this.isStartMove ? "pointer" : ""
+        }}>
+        <el-scrollbar viewClass="l-page-canvas__scrollbar" ref="viewport">
+          <div
+            staticClass="page-content"
+            class={{ "drag-mode": EditorStore.dragMode }}
+            ref="pageContent"
+            key={PageStore.key}
+            style={{
+              transform: this.transform,
+              width: PageStore.width + "px",
+              height: PageStore.height + "px",
+              zoom: EditorStore.zoom
+            }}>
+            <LayoutPosition width={PageStore.height} height={PageStore.height} onContextmenu={this.handleComponentContextMenu}></LayoutPosition>
+          </div>
+          {this.renderContextMenu()}
+        </el-scrollbar>
       </div>
     );
   }
@@ -202,53 +137,9 @@ export default class PageContent extends Mixins(ContexMenuMixin) {
 }
 </style>
 <style lang="scss">
-.vdr {
-  border: 0 !important;
-  &:before {
-    content: "";
-    width: calc(100%);
-    height: calc(100%);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    box-sizing: border-box;
-    border: 1px solid red;
-  }
-  .handle {
-    z-index: 100;
-    border: 0;
-    background: red;
-  }
-  .handle-tl {
-    top: 0px !important;
-    left: 0px !important;
-  }
-  .handle-tm {
-    top: 0px !important;
-  }
-  .handle-tr {
-    top: 0px !important;
-    right: 0px !important;
-  }
-  .handle-ml {
-    left: 0px !important;
-  }
-  .handle-mr {
-    right: 0px !important;
-  }
-
-  .handle-bl {
-    bottom: 0px !important;
-    left: 0px !important;
-  }
-  .handle-bm {
-    bottom: 0px !important;
-  }
-  .handle-br {
-    bottom: 0px !important;
-    right: 0px !important;
-  }
+.l-page-canvas__scrollbar {
+  width: 100%;
+  max-height: calc(100vh - var(--header-height) - 40px);
 }
 .drag-mode * {
   pointer-events: none !important;

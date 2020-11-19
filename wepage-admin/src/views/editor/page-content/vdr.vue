@@ -1,4 +1,5 @@
 <script lang="tsx">
+// https://tingtas.com/vue-draggable-resizable-gorkys/
 import { Component, Prop } from "vue-property-decorator";
 import BaseVue from "wepage-admin/BaseVue";
 import { PageStore, EditorStore } from "wepage-admin/store/modules";
@@ -109,4 +110,53 @@ export default class Vdr extends BaseVue {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.vdr {
+  border: 0 !important;
+  &:before {
+    content: "";
+    width: calc(100%);
+    height: calc(100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    box-sizing: border-box;
+    border: 1px solid var(--theme-color);
+  }
+  .handle {
+    z-index: 100;
+    border: 0;
+    background: var(--theme-color);
+  }
+  .handle-tl {
+    top: 0px !important;
+    left: 0px !important;
+  }
+  .handle-tm {
+    top: 0px !important;
+  }
+  .handle-tr {
+    top: 0px !important;
+    right: 0px !important;
+  }
+  .handle-ml {
+    left: 0px !important;
+  }
+  .handle-mr {
+    right: 0px !important;
+  }
+
+  .handle-bl {
+    bottom: 0px !important;
+    left: 0px !important;
+  }
+  .handle-bm {
+    bottom: 0px !important;
+  }
+  .handle-br {
+    bottom: 0px !important;
+    right: 0px !important;
+  }
+}
+</style>

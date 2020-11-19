@@ -42,7 +42,7 @@ export default class LayoutPosition extends BaseVue {
 
   render() {
     return (
-      <div style={{ width: this.width + "px", height: this.height + "px" }} class="layout-position">
+      <div style={{ width: this.width + "px", height: this.height + "px" }} class="l-layout-position">
         {this.components.length > 0 &&
           this.components.map(comp => {
             return <Vdr key={comp.key} comp={comp} onRefLineParams={this.getRefLineParams} onContextmenu={this.handleComponentContextMenu}></Vdr>;
