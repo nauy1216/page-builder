@@ -127,10 +127,10 @@ export default class PageModule extends VuexModule implements PageConfig {
       getComp = comp;
     }
     if (this.activeComp) {
-      this.activeComp.config.active = false;
+      this.activeComp.layoutConfig.active = false;
     }
     if (getComp) {
-      getComp.config.active = true;
+      getComp.layoutConfig.active = true;
     }
     this.activeComp = getComp;
   }
@@ -142,7 +142,6 @@ export default class PageModule extends VuexModule implements PageConfig {
 
   @Mutation
   addComponent(comp: PageComponentOptions) {
-    debugger;
     if (comp) {
       this.children.push(comp);
       // this.setActiveComp(comp);

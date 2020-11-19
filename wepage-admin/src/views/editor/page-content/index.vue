@@ -87,8 +87,14 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
         key: uuid(),
         name: comp.options.name,
         alias: config.alias,
-        config,
-        data
+        layoutConfig: config,
+        componentProps: data,
+        useMockData: false,
+        mockData: {},
+        tempData: {
+          active: true,
+          key: uuid()
+        }
       });
     }
   }

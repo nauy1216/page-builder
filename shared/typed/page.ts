@@ -29,8 +29,17 @@ declare interface PageComponentOptions {
   layoutId: string; // 所属图层
   name: string; // 组件名称
   alias: string; // 组件别名， 用于展示
-  config: PageComponentOptionsConfig; // 组件配置对象用于组件布局
-  data: Record<string, any>; // 组件内部定义的属性
+  layoutConfig: PageComponentOptionsConfig; // 组件配置对象用于组件布局
+  componentProps: Record<string, any>; // 组件内部定义的属性
+  // 是否使用了用户定义的模拟数据
+  useMockData: boolean;
+  // 测试数据
+  mockData: Record<string, any> | null;
+  // 临时数据
+  tempData: {
+    active: boolean;
+    key: string;
+  } & Record<string, any>;
 }
 
 // declare type CustomVueConstructor = VueConstructor & Record<string, any>;

@@ -48,8 +48,8 @@ export default class Vdr extends BaseVue {
     this.$nextTick(() => {
       const ele = (this.$refs.component as Vue).$el as HTMLElement;
       const rect = ele.getBoundingClientRect();
-      this.comp.config.width = rect.width;
-      this.comp.config.height = rect.height;
+      this.comp.layoutConfig.width = rect.width;
+      this.comp.layoutConfig.height = rect.height;
     });
   }
 
@@ -69,13 +69,13 @@ export default class Vdr extends BaseVue {
     return (
       this.comp && (
         <vue-draggable-resizable
-          on={{ "update:active": value => (this.comp.config.active = value) }}
-          active={this.comp.config.active}
-          x={this.comp.config.x}
-          y={this.comp.config.y}
-          w={this.comp.config.width}
-          h={this.comp.config.height}
-          style={{ zIndex: this.comp.config.zIndex }}
+          on={{ "update:active": value => (this.comp.layoutConfig.active = value) }}
+          active={this.comp.layoutConfig.active}
+          x={this.comp.layoutConfig.x}
+          y={this.comp.layoutConfig.y}
+          w={this.comp.layoutConfig.width}
+          h={this.comp.layoutConfig.height}
+          style={{ zIndex: this.comp.layoutConfig.zIndex }}
           parent={EditorStore.parent}
           draggable={this.isOperable(this.comp)}
           resizable={this.isOperable(this.comp)}
@@ -94,12 +94,12 @@ export default class Vdr extends BaseVue {
             <div
               onContextmenu={$event => this.handleComponentContextMenu($event, this.comp)}
               style={{
-                width: this.comp.config.width + "px",
-                height: this.comp.config.height + "px"
+                width: this.comp.layoutConfig.width + "px",
+                height: this.comp.layoutConfig.height + "px"
               }}>
               {h(this.$components[this.comp.name], {
                 ref: "component",
-                props: this.comp.data
+                props: this.comp.componentProps
               })}
             </div>
           }

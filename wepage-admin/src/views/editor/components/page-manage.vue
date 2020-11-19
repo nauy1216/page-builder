@@ -114,7 +114,9 @@ export default class PageManage extends BaseVue {
   setAppFrame() {
     this.currentPageId = "appLayout";
     PageStore.initPageConfig(true);
-    PageStore.setPageConfig(JSON.parse(AppStore.appData.config));
+    if (AppStore.appData.config) {
+      PageStore.setPageConfig(JSON.parse(AppStore.appData.config));
+    }
   }
 
   // 保存框架
@@ -122,7 +124,7 @@ export default class PageManage extends BaseVue {
     ev.stopPropagation();
     const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
     config.children.forEach(child => {
-      child.config.active = false;
+      child.layoutConfig.active = false;
     });
     const appData = JSON.parse(JSON.stringify(AppStore.appData));
     AppStore.appData.config = appData.config = JSON.stringify(config);
@@ -137,7 +139,7 @@ export default class PageManage extends BaseVue {
     ev.stopPropagation();
     const config: PageConfig = JSON.parse(JSON.stringify(PageStore.config));
     config.children.forEach(child => {
-      child.config.active = false;
+      child.layoutConfig.active = false;
     });
     const pageData = JSON.parse(JSON.stringify(PageStore.pageData));
     pageData.config = JSON.stringify(config);

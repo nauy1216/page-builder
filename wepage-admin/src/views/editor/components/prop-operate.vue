@@ -24,12 +24,12 @@ export default class PropOperate extends BaseVue {
                   h(this.activeCompProps[prop].inputComponent, {
                     key: index,
                     props: {
-                      value: this.activeComp.data[index]
+                      value: this.activeComp.componentProps[index]
                     },
                     on: {
                       input: value => {
                         if (PageStore.activeComp) {
-                          PageStore.activeComp.data[index] = value;
+                          PageStore.activeComp.componentProps[index] = value;
                         }
                       }
                     }

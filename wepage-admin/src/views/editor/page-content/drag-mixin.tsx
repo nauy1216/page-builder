@@ -14,7 +14,6 @@ export default class ContexMenuMixin extends BaseVue {
   viewportHeight = 0; // 编辑器视口高度
 
   created() {
-    debugger;
     this.addMoveEvent();
   }
 

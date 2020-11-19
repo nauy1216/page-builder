@@ -21,7 +21,7 @@ export default class LayoutOperate extends BaseVue {
     this.$watch(
       () => {
         if (PageStore.activeComp) {
-          return PageStore.activeComp.config.width + " " + PageStore.activeComp.config.height;
+          return PageStore.activeComp.layoutConfig.width + " " + PageStore.activeComp.layoutConfig.height;
         }
         return null;
       },
@@ -43,19 +43,19 @@ export default class LayoutOperate extends BaseVue {
       this.activeComp && (
         <el-form label-position="top" label-width="100px">
           <el-form-item label="x(px)">
-            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.x}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.layoutConfig.x}></el-input-number>
           </el-form-item>
           <el-form-item label="y(px)">
-            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.y}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.layoutConfig.y}></el-input-number>
           </el-form-item>
           <el-form-item label="width(px)">
-            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.width}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.layoutConfig.width}></el-input-number>
           </el-form-item>
           <el-form-item label="height(px)">
-            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.height}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.layoutConfig.height}></el-input-number>
           </el-form-item>
           <el-form-item label="z-index(px)">
-            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.config.zIndex}></el-input-number>
+            <el-input-number controls-position="right" precision={2} step={1} vModel={this.activeComp.layoutConfig.zIndex}></el-input-number>
           </el-form-item>
         </el-form>
       )
