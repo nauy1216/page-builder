@@ -105,10 +105,8 @@ export default class Vdr extends BaseVue {
                 props: {
                   ...this.comp.componentProps,
                   width: this.comp.layoutConfig.width,
-                  height: this.comp.layoutConfig.height
-                },
-                attrs: {
-                  mockData: this.comp.mockData
+                  height: this.comp.layoutConfig.height,
+                  componentData: this.comp.mockData
                 }
               })}
               <div class="l-vdr-wrap__tool">

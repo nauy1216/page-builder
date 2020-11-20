@@ -10,6 +10,14 @@ import { px2rem } from "shared/utils";
 })
 export default class WuiSwipper extends BaseVue {
   @Prop({
+    type: Object,
+    default: () => {
+      return {};
+    }
+  })
+  componentData!: Record<string, any>;
+
+  @Prop({
     required: true,
     type: Number
   })
@@ -38,7 +46,6 @@ export default class WuiSwipper extends BaseVue {
   })
   background!: string;
 
-  imgList: any[] = [];
   oSwiper!: Swiper;
 
   $refs!: {
@@ -53,9 +60,12 @@ export default class WuiSwipper extends BaseVue {
     return this.height / this.rows;
   }
 
+  get imgList() {
+    return this.componentData.imgList || [];
+  }
+
   mounted() {
     this.initSwiper();
-    this.imgList = (this.$attrs.mockData as any).imgList;
   }
 
   @Watch("imgList")

@@ -40,7 +40,6 @@ export default class PropOperate extends BaseVue {
             );
           })*/}
         {Object.keys(this.activeCompProps).map((prop, index) => {
-          debugger;
           const propConfig = this.activeCompProps![prop];
           let compName = "";
           let props: Record<string, any>;

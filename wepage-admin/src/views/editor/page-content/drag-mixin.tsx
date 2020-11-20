@@ -20,7 +20,7 @@ export default class ContexMenuMixin extends BaseVue {
   // 视口增加拖动事件
   addMoveEvent() {
     const handlePageMouseMove = (ev: MouseEvent) => {
-      if (this.isStartMove) {
+      if (this.isStartMove && this.$refs.viewport) {
         const dom = (this.$refs.viewport as Vue).$el.querySelector(".el-scrollbar__wrap")!;
         this.viewportWidth = dom.clientWidth;
         this.viewportHeight = dom.clientHeight;
@@ -54,14 +54,14 @@ export default class ContexMenuMixin extends BaseVue {
 
     const handlePageMouseUp = () => {
       this.isStartMove = false;
-      document.body.removeEventListener("mousemove", handlePageMouseMove);
+      document.body.removeEventListener("mousemove", handlePageMouseMove, true);
     };
 
-    document.body.addEventListener("mousedown", handlePageMouseDown);
-    document.body.addEventListener("mouseup", handlePageMouseUp);
+    document.body.addEventListener("mousedown", handlePageMouseDown, true);
+    document.body.addEventListener("mouseup", handlePageMouseUp, true);
     this.$once("hook:beforeDestroy", () => {
-      document.body.removeEventListener("mousedown", handlePageMouseDown);
-      document.body.removeEventListener("mouseup", handlePageMouseUp);
+      document.body.removeEventListener("mousedown", handlePageMouseDown, true);
+      document.body.removeEventListener("mouseup", handlePageMouseUp, true);
     });
   }
 }
