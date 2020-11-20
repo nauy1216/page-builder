@@ -94,10 +94,11 @@ export default class Vdr extends BaseVue {
           {
             <div
               onContextmenu={$event => this.handleComponentContextMenu($event, this.comp)}
-              class="vdr-component-wrap"
+              class="l-vdr-wrap"
               style={{
                 width: this.comp.layoutConfig.width + "px",
-                height: this.comp.layoutConfig.height + "px"
+                height: this.comp.layoutConfig.height + "px",
+                position: "relative"
               }}>
               {h(this.$components[this.comp.name], {
                 ref: "component",
@@ -110,6 +111,11 @@ export default class Vdr extends BaseVue {
                   mockData: this.comp.mockData
                 }
               })}
+              <div class="l-vdr-wrap__tool">
+                <div class="l-vdr-wrap__drag-handle">
+                  <i class="el-icon-rank"></i>
+                </div>
+              </div>
             </div>
           }
         </vue-draggable-resizable>
@@ -120,6 +126,33 @@ export default class Vdr extends BaseVue {
 </script>
 
 <style lang="scss">
+@import "shared/style/bem.scss";
+@include b(vdr-wrap) {
+  @include e(tool) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999999999;
+    padding: 4px;
+    background-color: #ffffff;
+    display: none;
+    .el-icon-rank {
+      color: var(--theme-color);
+    }
+  }
+  @include e(drag-handle) {
+    color: var(--font-color-gray1);
+    font-size: 16px;
+    &:hover {
+      cursor: move;
+    }
+  }
+  &:hover {
+    @include e(tool) {
+      display: flex;
+    }
+  }
+}
 .vdr {
   border: 0 !important;
   &:before {

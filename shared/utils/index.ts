@@ -30,7 +30,6 @@ function getType(v: any): string {
   return Object.prototype.toString.call(v).slice(8, -1);
 }
 export function isTypeOf<T>(type: VarType, v: any): v is T {
-  console.log(v, getType(v), type);
   if (getType(v) === type) {
     return true;
   }

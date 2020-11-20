@@ -114,7 +114,7 @@ export default class PageContent extends Mixins(ContexMenuMixin, DragMixin) {
               height: PageStore.height + "px",
               zoom: EditorStore.zoom
             }}>
-            <LayoutPosition width={PageStore.height} height={PageStore.height} onContextmenu={this.handleComponentContextMenu}></LayoutPosition>
+            <LayoutPosition width={PageStore.width} height={PageStore.height} onContextmenu={this.handleComponentContextMenu}></LayoutPosition>
           </div>
           {this.renderContextMenu()}
         </el-scrollbar>

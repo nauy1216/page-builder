@@ -2,16 +2,24 @@
 import defineComponent from "wepage-web/types/defineComponent";
 import { mapStateTyped, mapActionsTyped } from "wepage-web/types/store";
 import { px2rem } from "shared/utils";
+import { debounce } from "throttle-debounce";
 
 export default defineComponent({
+  data() {
+    return {
+      scale: 1
+    };
+  },
   async created() {
     await this.getPageConfig();
     const htmlFontSize = document.documentElement.style.fontSize;
-    const width = document.documentElement.getBoundingClientRect().width;
-    const scale = width / this.pageConfig.width;
-    document.documentElement.style.fontSize = `${(process.env.VUE_APP_HTML_FONT_SIZE * scale).toFixed(8)}px`;
+    this.calcHtmlFontSize();
+
+    const handeleResize = debounce(50, this.calcHtmlFontSize);
+    window.addEventListener("resize", handeleResize);
     this.$on("hook:destoryed", () => {
       document.documentElement.style.fontSize = htmlFontSize || "12px";
+      window.removeEventListener("resize", handeleResize);
     });
   },
   computed: {
@@ -24,6 +32,13 @@ export default defineComponent({
   },
   methods: {
     ...mapActionsTyped(["getPageConfig"]),
+
+    calcHtmlFontSize() {
+      const width = document.documentElement.getBoundingClientRect().width;
+      this.scale = width / this.pageConfig.width;
+      document.documentElement.style.fontSize = `${(process.env.VUE_APP_HTML_FONT_SIZE * this.scale).toFixed(8)}px`;
+    },
+
     createKey(comp) {
       if (comp.layoutId === "appLayout") {
         return "appLayout-" + comp.id;
@@ -47,8 +62,8 @@ export default defineComponent({
         <div
           class="page-content"
           style={{
-            width: px2rem(pageConfig.width),
-            height: px2rem(pageConfig.height)
+            width: px2rem(pageConfig.width * this.scale),
+            height: px2rem(pageConfig.height * this.scale)
           }}>
           {components &&
             components.map((comp, index) => {
