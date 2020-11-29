@@ -1,12 +1,12 @@
 import Transform from "./TransformType";
 
 export default class ObjectTransform extends Transform<Record<string, any>> {
-  value = {};
+  val = {};
 
   constructor(value?: any) {
     super();
     if (value) {
-      this.value = value;
+      this.val = value;
     }
   }
 

@@ -2,16 +2,16 @@
 import Transform from "./TransformType";
 import StringTransform from "./StringTransform";
 export default class NumberTransform extends Transform<number> {
-  value!: number;
+  val!: number;
 
   constructor(value?: any) {
     super();
     if (value) {
-      this.value = Number(value);
+      this.val = Number(value);
     }
   }
 
   toString(): StringTransform {
-    return new StringTransform(this.value);
+    return new StringTransform(this.val);
   }
 }

@@ -9,8 +9,8 @@ describe("映射", () => {
       data,
       `{
       a: "a",
-      b: $string("a").get(),
-      c: $string("b").get(),
+      b: $string("a").value,
+      c: $string("b").value,
       d: "a"
     }`
     );
@@ -27,8 +27,8 @@ describe("映射", () => {
 
     const res = {
       a: "a",
-      b: $string("a").get(),
-      c: $string("b").get(),
+      b: $string("a").value,
+      c: $string("b").value,
       d: "a"
     };
 
@@ -70,7 +70,8 @@ describe("映射", () => {
           b: _.concat($string("t.b.f").value, $string("t.b.f").value, "123456"),
           c: $number("v.0.a").value
         }
-      }
+      },
+      i: $string("liu", 0).value
     };
 
     expect(res).toEqual({
@@ -86,7 +87,8 @@ describe("映射", () => {
         b: "lhhlhh123456",
         c: 1,
         d: { a: "a个", b: "lhhlhh123456", c: 1 }
-      }
+      },
+      i: "liu"
     });
   });
 

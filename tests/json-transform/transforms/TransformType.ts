@@ -1,10 +1,12 @@
 export default abstract class Transform<T> {
-  abstract value: T;
-  get(): T {
-    return this.value;
+  abstract val: T;
+
+  get value() {
+    return this.val;
   }
+
   set(value: T) {
-    this.value = value;
+    this.val = value;
     return this;
   }
 }
