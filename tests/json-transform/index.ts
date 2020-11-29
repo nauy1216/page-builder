@@ -6,8 +6,8 @@ import ObjectTransform from "./transforms/ObjectTransform";
 
 type bool = 0 | 1;
 
-export function newJsonTransform(data) {
-  const context = new TransformContext(data);
+export function newJsonTransform<T>(data: T) {
+  const context: TransformContext<T> = new TransformContext(data);
 
   function $string(path: string, isPath: bool = 1): StringTransform {
     const value = isPath ? JTUtil.getVal(path, context.data) : path;
@@ -24,35 +24,36 @@ export function newJsonTransform(data) {
     return new ObjectTransform(value);
   }
 
-  function $var(name: string, value: any) {
+  function $var(name: string, value: any): any {
     if (context.isCreateElement) {
-      return [`$var`, name, value];
+      return [`$var`, name, value] as any;
     } else {
       context.vars[name] = value;
+      return value;
     }
   }
 
-  function $getVar(path: string) {
+  function $getVar(path: string): any {
     if (context.isCreateElement) {
       return [`$getVar`, path];
     } else {
-      return JTUtil.getVal(path, context);
+      return JTUtil.getVal(path, context.vars);
     }
   }
 
-  function $call(func: Function, ...args: any[]) {
+  function $call(func: Function, ...args: any[]): () => any {
     if (context.isCreateElement) {
-      return [`$call`, func, args];
+      return [`$call`, func, args] as any;
     } else {
       return () => {
-        func.apply({}, args);
+        return func.apply({}, args);
       };
     }
   }
 
-  function $func(...funcs: ReturnType<typeof $call>[]) {
+  function $func(...funcs: ReturnType<typeof $call>[]): () => any {
     if (context.isCreateElement) {
-      return [`$func`, ...funcs];
+      return [`$func`, ...funcs] as any;
     } else {
       return function() {
         for (const func of funcs) {
@@ -67,7 +68,7 @@ export function newJsonTransform(data) {
   }
   $func.__isFunc = true;
 
-  function $return(returnVal) {
+  function $return(returnVal): any {
     if (context.isCreateElement) {
       return [`$return`, returnVal];
     } else {

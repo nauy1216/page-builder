@@ -1,38 +1,55 @@
 import transform, { newJsonTransform } from "../json-transform";
 describe("映射", () => {
-  it("模板: 变量 常量", () => {
-    const data = {
-      a: "1",
-      b: "144"
-    };
-    const res = transform(
-      data,
-      `{
-      a: "a",
-      b: $string("a").value,
-      c: $string("b").value,
-      d: "a"
-    }`
-    );
-    expect(res).toEqual({ a: "a", b: "1", c: "144", d: "a" });
-  });
+  //   it("模板: 变量 常量", () => {
+  //     const data = {
+  //       a: "1",
+  //       b: "144"
+  //     };
+  //     const res = transform(
+  //       data,
+  //       `{
+  //       a: "a",
+  //       b: $string("a").value,
+  //       c: $string("b").value,
+  //       d: "a"
+  //     }`
+  //     );
+  //     expect(res).toEqual({ a: "a", b: "1", c: "144", d: "a" });
+  //   });
 
   it("调用方法：变量 常量", () => {
     const data = {
       a: "1",
-      b: "144"
+      b: "144",
+      c: {
+        s: "144",
+        g: {
+          f: "144"
+        }
+      }
     };
 
-    const { $string } = newJsonTransform(data);
+    const { $string, _ } = newJsonTransform(data);
+    // type D = typeof data;
+    // type K1<T> = keyof T;
+    // type V1<T, K extends K1<T>> = T[K];
+    // type K2<T> = keyof V1<T>;
+    // type V2<T> = V1<T>[K2<T>];
+    // type K3<T> = keyof V2<T>;
+    // type V3<T> = V2<T>[K3<T>];
+    // type Keys1<T> = [K1<T>];
+    // type Keys2<T> = [K1<T>, K2<T>];
+    // type Keys3<T> = [K1<T>, K2<T>, K3<T>];
 
     const res = {
       a: "a",
       b: $string("a").value,
       c: $string("b").value,
-      d: "a"
+      d: "a",
+      e: _.getVal(["c"], data)
     };
 
-    expect(res).toEqual({ a: "a", b: "1", c: "144", d: "a" });
+    expect(res).toEqual({ a: "a", b: "1", c: "144", d: "a", e: "144" });
   });
 
   it("调用方法： 处理器", () => {
