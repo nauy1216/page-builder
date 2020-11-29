@@ -2,6 +2,7 @@ import { JTUtil } from "./utils";
 import _ from "lodash";
 import NumberTransform from "./transforms/NumberTransform";
 import StringTransform from "./transforms/StringTransform";
+import ObjectTransform from "./transforms/ObjectTransform";
 
 export const EnvironmentVars = {
   $e: "$e",
@@ -28,34 +29,24 @@ export default class JsonTransform {
   };
 
   protected value: any = null;
-  protected stringTransform!: StringTransform;
-  protected numberTransform!: NumberTransform;
 
   constructor(data: Record<string, any>) {
     this.context.data = data;
     this.value = null;
-    this.stringTransform = new StringTransform();
-    this.numberTransform = new NumberTransform();
-  }
-
-  $(path: string) {
-    this.value = JTUtil.getVal(path, this.context.data);
-    return this;
   }
 
   $string(path: string): StringTransform {
     this.value = JTUtil.getVal(path, this.context.data);
-    this.stringTransform.set(this.value);
-    return this.stringTransform;
+    return new StringTransform(this.value);
   }
 
-  $number(path: string) {
+  $number(path: string): NumberTransform {
     this.value = JTUtil.getVal(path, this.context.data);
-    this.numberTransform.set(this.value);
-    return this.numberTransform;
+    return new NumberTransform(this.value);
   }
 
-  get() {
-    return this.value;
+  $object(path: string): ObjectTransform {
+    this.value = JTUtil.getVal(path, this.context.data);
+    return new ObjectTransform(this.value);
   }
 }

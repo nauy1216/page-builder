@@ -9,8 +9,8 @@ describe("映射", () => {
       data,
       `{
       a: "a",
-      b: $("a").get(),
-      c: $("b").get(),
+      b: $string("a").get(),
+      c: $string("b").get(),
       d: "a"
     }`
     );
@@ -23,12 +23,12 @@ describe("映射", () => {
       b: "144"
     };
 
-    const { $ } = newJsonTransform(data);
+    const { $string } = newJsonTransform(data);
 
     const res = {
       a: "a",
-      b: $("a").get(),
-      c: $("b").get(),
+      b: $string("a").get(),
+      c: $string("b").get(),
       d: "a"
     };
 
@@ -51,26 +51,24 @@ describe("映射", () => {
       ]
     };
 
-    const { $string, $number, $, _ } = newJsonTransform(data);
+    const { $string, $number, $object, _ } = newJsonTransform(data);
 
     const res = {
-      a: $string("a")
-        .appendAfter("个")
-        .get(),
-      b: _.appendAfter($("a").get(), "个"),
-      c: _.appendAfter($("a").get(), $("c").get()),
-      d: _.appendAfter($("t.b.f").get(), "hello"),
-      e: $("t.b").get(),
-      f: _.concat($("t.b.f").get(), $("t.b.f").get(), "123456"),
-      g: $("v.0.a").get(),
+      a: $string("a").appendAfter("个").value,
+      b: _.appendAfter($string("a").value, "个"),
+      c: _.appendAfter($string("a").value, $number("c").toString().value),
+      d: _.appendAfter($string("t.b.f").value, "hello"),
+      e: $object("t.b").value,
+      f: _.concat($string("t.b.f").value, $string("t.b.f").value, "123456"),
+      g: $number("v.0.a").value,
       h: {
         a: _.appendAfter("a", "个"),
-        b: _.concat($("t.b.f").get(), $("t.b.f").get(), "123456"),
-        c: $("v.0.a").get(),
+        b: _.concat($string("t.b.f").value, $string("t.b.f").value, "123456"),
+        c: $number("v.0.a").value,
         d: {
           a: _.appendAfter("a", "个"),
-          b: _.concat($("t.b.f").get(), $("t.b.f").get(), "123456"),
-          c: $("v.0.a").get()
+          b: _.concat($string("t.b.f").value, $string("t.b.f").value, "123456"),
+          c: $number("v.0.a").value
         }
       }
     };
