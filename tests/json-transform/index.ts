@@ -1,20 +1,19 @@
 import JsonTransform from "./BaseJsonTransform";
-export { JTUtil } from "./utils";
+import { JTUtil } from "./utils";
 
 export function newJsonTransform(data) {
-  return function(path: string) {
-    const jt = new JsonTransform(data);
-    return jt.$(path);
+  const jt = new JsonTransform(data);
+  return {
+    $: jt.$.bind(jt),
+    $string: jt.$string.bind(jt),
+    $number: jt.$number.bind(jt),
+    _: JTUtil
   };
 }
 
 export default function transform(data: any, transform: string) {
   // eslint-disable-next-line
-  const jt = new JsonTransform(data)
-  // eslint-disable-next-line
-  const $ = function(path: string) {
-    return jt.$(path);
-  };
+  const { $string, $number, $, _ } = newJsonTransform(data);
   const res = eval(`(${transform})`);
   return res;
 }

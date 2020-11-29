@@ -1,4 +1,4 @@
-import transform, { newJsonTransform, JTUtil } from "../json-transform";
+import transform, { newJsonTransform } from "../json-transform";
 describe("映射", () => {
   it("模板: 变量 常量", () => {
     const data = {
@@ -9,8 +9,8 @@ describe("映射", () => {
       data,
       `{
       a: "a",
-      b: $("a").val(),
-      c: $("b").val(),
+      b: $("a").get(),
+      c: $("b").get(),
       d: "a"
     }`
     );
@@ -23,12 +23,12 @@ describe("映射", () => {
       b: "144"
     };
 
-    const $ = newJsonTransform(data);
+    const { $ } = newJsonTransform(data);
 
     const res = {
       a: "a",
-      b: $("a").val(),
-      c: $("b").val(),
+      b: $("a").get(),
+      c: $("b").get(),
       d: "a"
     };
 
@@ -51,31 +51,32 @@ describe("映射", () => {
       ]
     };
 
-    const $ = newJsonTransform(data);
-    const _ = JTUtil;
+    const { $string, $number, $, _ } = newJsonTransform(data);
 
     const res = {
-      a: _.appendAfter("a", "个"),
-      b: _.appendAfter($("a").val(), "个"),
-      c: _.appendAfter($("a").val(), $("c").val()),
-      d: _.appendAfter($("t.b.f").val(), "hello"),
-      e: $("t.b").val(),
-      f: _.concat($("t.b.f").val(), $("t.b.f").val(), "123456"),
-      g: $("v.0.a").val(),
+      a: $string("a")
+        .appendAfter("个")
+        .get(),
+      b: _.appendAfter($("a").get(), "个"),
+      c: _.appendAfter($("a").get(), $("c").get()),
+      d: _.appendAfter($("t.b.f").get(), "hello"),
+      e: $("t.b").get(),
+      f: _.concat($("t.b.f").get(), $("t.b.f").get(), "123456"),
+      g: $("v.0.a").get(),
       h: {
         a: _.appendAfter("a", "个"),
-        b: _.concat($("t.b.f").val(), $("t.b.f").val(), "123456"),
-        c: $("v.0.a").val(),
+        b: _.concat($("t.b.f").get(), $("t.b.f").get(), "123456"),
+        c: $("v.0.a").get(),
         d: {
           a: _.appendAfter("a", "个"),
-          b: _.concat($("t.b.f").val(), $("t.b.f").val(), "123456"),
-          c: $("v.0.a").val()
+          b: _.concat($("t.b.f").get(), $("t.b.f").get(), "123456"),
+          c: $("v.0.a").get()
         }
       }
     };
 
     expect(res).toEqual({
-      a: "a个",
+      a: "1个",
       b: "1个",
       c: "11",
       d: "lhhhello",

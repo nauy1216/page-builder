@@ -1,7 +1,7 @@
 import { JTUtil } from "./utils";
 import _ from "lodash";
-
-// const INTERNAL_PREFIX = "internal_";
+import NumberTransform from "./transforms/NumberTransform";
+import StringTransform from "./transforms/StringTransform";
 
 export const EnvironmentVars = {
   $e: "$e",
@@ -18,33 +18,8 @@ type Context = {
   $i: number;
 };
 
-function defineTransform<T>(obj) {
-  return obj;
-}
-
-type StringTransform = ThisType<{
-  value: string;
-}>;
-
-const stringTransform: StringTransform = {
-  appendAfter(...after: string[]): StringTransform {
-    JTUtil.appendAfter(this.value, ...after);
-    return this;
-  }
-};
-
-type NumberTransform = {
-  value: number;
-};
-
-const numberTransform = defineTransform({
-  appendAfter(this: NumberTransform): NumberTransform {
-    return this;
-  }
-});
-
-export default class BaseJsonTransform extends Object.create(stringTransform) {
-  context: Context = {
+export default class JsonTransform {
+  protected context: Context = {
     isCreateElement: false,
     data: null,
     vars: {},
@@ -53,18 +28,34 @@ export default class BaseJsonTransform extends Object.create(stringTransform) {
   };
 
   protected value: any = null;
+  protected stringTransform!: StringTransform;
+  protected numberTransform!: NumberTransform;
 
   constructor(data: Record<string, any>) {
-    super();
     this.context.data = data;
+    this.value = null;
+    this.stringTransform = new StringTransform();
+    this.numberTransform = new NumberTransform();
   }
 
-  $<T extends BaseJsonTransform>(path: string): T {
+  $(path: string) {
     this.value = JTUtil.getVal(path, this.context.data);
-    return this as any;
+    return this;
   }
 
-  val() {
+  $string(path: string): StringTransform {
+    this.value = JTUtil.getVal(path, this.context.data);
+    this.stringTransform.set(this.value);
+    return this.stringTransform;
+  }
+
+  $number(path: string) {
+    this.value = JTUtil.getVal(path, this.context.data);
+    this.numberTransform.set(this.value);
+    return this.numberTransform;
+  }
+
+  get() {
     return this.value;
   }
 }
