@@ -61,7 +61,7 @@ export default class WuiSwipper extends BaseVue {
   }
 
   get imgList() {
-    return this.componentData.imgList || [];
+    return this.componentData?.imgList || [];
   }
 
   mounted() {
